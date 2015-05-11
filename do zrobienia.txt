@@ -1,0 +1,1 @@
+popraw htacces w web directory

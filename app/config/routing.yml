@@ -1,0 +1,11 @@
+pawel_wiki:
+    resource: "@PawelWikiBundle/Resources/config/routing.yml"
+    prefix:   /
+
+hello:
+    resource: "@HelloBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
