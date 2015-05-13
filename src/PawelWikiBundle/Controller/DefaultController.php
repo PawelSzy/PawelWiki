@@ -10,4 +10,8 @@ class DefaultController extends Controller
     {
         return $this->render('PawelWikiBundle:Default:index.html.twig', array('name' => $name));
     }
+
+
+    // ... do something, like pass the $product object into a template
+
 }
