@@ -1,0 +1,26 @@
+PawelWikiBundle\Entity\ArtykulDB:
+    type: entity
+    table: null
+    uniqueConstraints:
+        uniqueConstraint:
+            columns: [id, tytul]    
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        tytul:
+            type: string    
+        artykul:
+            type: text    
+        dataZmiany:
+            type: datetimetz
+            gedmo:
+                timestampable:
+                    on: create            
+        idHistori:
+            type: integer
+            column: id_Histori
+    lifecycleCallbacks: {  }

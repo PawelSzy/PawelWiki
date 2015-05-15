@@ -8,11 +8,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity
  * @UniqueEntity("tytul")
- * Table(name="artykul")
+ * @ORM\Table(name="artykul")
  */
 
 /**
+ *
  * Artykul
+ * @ORM\Entity
+ * @UniqueEntity("tytul")
+ * @ORM\Table(name="artykul")
  */
 class ArtykulDB
 {

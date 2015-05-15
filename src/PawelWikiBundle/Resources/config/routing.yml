@@ -2,6 +2,6 @@ pawel_wiki_homepage:
     path:     /hello/{name}
     defaults: { _controller: PawelWikiBundle:Default:index }
 
-# pawel_wiki_db_test:
-# 	path: 	/artykul/{id}
-# 	defaults: { _controller: PawelWikiBundle:ArtykulDB_test:testDB }
+pawel_wiki_db_test:
+    path:     /artykul/{id}
+    defaults: { _controller: PawelWikiBundle:ArtykulDB:testDB }
