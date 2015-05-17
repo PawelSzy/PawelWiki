@@ -8,13 +8,15 @@ class ArtykulDBController extends Controller
 {
 
 
-    public function testDBAction($id)
+    public function testDBAction($tytul)
     {
-	echo "id: ".$id."\n";
+	echo "tytul: ".$tytul."\n";
+
+    $product = $this->getDoctrine()->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB')->findOneBy(array('tytul' => $tytul));
     
-    $product = $this->getDoctrine()
-        ->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB')
-        ->find($id);
+    // $product = $this->getDoctrine()
+    //     ->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB')
+    //     ->find($id);
 
     if (!$product) 
     {
@@ -23,7 +25,7 @@ class ArtykulDBController extends Controller
         );
     }
     var_dump($product);
-    return $this->render('PawelWikiBundle:Default:index.html.twig', array('name' => $id));
+    return $this->render('PawelWikiBundle:Default:index.html.twig', array('name' => $tytul));
 
     // ... do something, like pass the $product object into a template
     }

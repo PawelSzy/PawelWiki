@@ -4,6 +4,7 @@ namespace PawelWikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -28,6 +29,7 @@ class ArtykulDB
      /**
      * @var string
      * @ORM\Column(name="tytul", type="string", unique=true)
+     * @Assert\NotBlank()
      */
     private $tytul;
 
@@ -37,7 +39,7 @@ class ArtykulDB
     private $artykul;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $dataZmiany;
 

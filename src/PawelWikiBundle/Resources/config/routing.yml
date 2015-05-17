@@ -3,5 +3,5 @@ pawel_wiki_homepage:
     defaults: { _controller: PawelWikiBundle:Default:index }
 
 pawel_wiki_db_test:
-    path:     /artykul/{id}
+    path:     /artykul/{tytul}
     defaults: { _controller: PawelWikiBundle:ArtykulDB:testDB }
