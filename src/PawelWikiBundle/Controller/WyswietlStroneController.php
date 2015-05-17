@@ -4,11 +4,11 @@ namespace PawelWikiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ArtykulDBController extends Controller
+class WyswietlStroneController extends Controller
 {
 
 
-    public function testDBAction($tytul)
+    public function WyswietlStroneAction($tytul)
     {
 	echo "tytul: ".$tytul."\n";
 

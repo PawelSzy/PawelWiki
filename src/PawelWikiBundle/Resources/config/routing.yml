@@ -4,4 +4,4 @@ pawel_wiki_homepage:
 
 pawel_wiki_db_test:
     path:     /artykul/{tytul}
-    defaults: { _controller: PawelWikiBundle:ArtykulDB:testDB }
+    defaults: { _controller: PawelWikiBundle:WyswietlStrone:WyswietlStrone }
