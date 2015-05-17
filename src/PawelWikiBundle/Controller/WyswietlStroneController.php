@@ -8,25 +8,63 @@ class WyswietlStroneController extends Controller
 {
 
 
+    // function __construct()
+    // {
+    //     //parent::__construct();
+    //     $this->repository = $this->getDoctrine()->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB');
+    //     $this->ArtykulFactory = new ArtykulFactory($this->repository);
+
+    // }
+
+
     public function WyswietlStroneAction($tytul)
     {
 	echo "tytul: ".$tytul."\n";
 
-    $product = $this->getDoctrine()->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB')->findOneBy(array('tytul' => $tytul));
-    
-    // $product = $this->getDoctrine()
-    //     ->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB')
-    //     ->find($id);
+    $this->repository = $this->getDoctrine()->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB');
+    $this->ArtykulFactory = new ArtykulFactory($this->repository);
 
-    if (!$product) 
-    {
-        throw $this->createNotFoundException(
-            'No product found for id '.$id
-        );
-    }
-    var_dump($product);
+    $artykul = $this->ArtykulFactory->odczytajArtykul($tytul); 
+
+
+    var_dump($artykul);
     return $this->render('PawelWikiBundle:Default:index.html.twig', array('name' => $tytul));
 
     // ... do something, like pass the $product object into a template
     }
+}
+
+
+/**
+* 
+*/
+class ArtykulFactory extends Controller
+{
+    /***************************************************
+    *Funkcja zwraca artykulu pozwala na zapis i odczyt
+    ***************************************************/
+    
+    function __construct($repository)
+    {
+        $this->repository = $repository;
+    }
+
+    public function odczytajArtykul($tytul)
+    {
+    /*****************************************
+    //Pobierz artykul o nazwie i zwroc obiekt
+    ******************************************/
+        $artykul = $this->repository
+                        ->findOneBy(array('tytul' => $tytul));
+
+
+        if (!$artykul) 
+        {
+            throw $this->createNotFoundException(
+                'Nie znaleziono tytulu '.$tytul
+            );
+        }
+        return($artykul);
+    }
+
 }
