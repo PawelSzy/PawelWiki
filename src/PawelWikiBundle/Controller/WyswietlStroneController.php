@@ -26,7 +26,7 @@ class WyswietlStroneController extends Controller
 
     $artykul = $this->ArtykulFactory->odczytajArtykul($tytul); 
 
-
+    //print_r($artykul);
     var_dump($artykul);
     return $this->render('PawelWikiBundle:Default:index.html.twig', array('name' => $tytul));
 
@@ -54,17 +54,81 @@ class ArtykulFactory extends Controller
     /*****************************************
     //Pobierz artykul o nazwie i zwroc obiekt
     ******************************************/
-        $artykul = $this->repository
+        $artykulObject = $this->repository
                         ->findOneBy(array('tytul' => $tytul));
 
 
-        if (!$artykul) 
+        if (!$artykulObject) 
         {
             throw $this->createNotFoundException(
                 'Nie znaleziono tytulu '.$tytul
             );
         }
+
+        $artykul = $artykulObject;
+        //$artykul = new Artykul();
+
         return($artykul);
     }
 
+}
+
+class Artykul implements ArtykulInterface
+{
+
+    private $id;
+    private $tytul;
+    private $tresc;
+    private $data;
+    private $idHistori;
+    function __construct($artykulObject)
+    {
+        $this->id = $artykulObject["id"];
+        $this->tytul = $artykulObject["tytul"];
+        $this->tresc = $artykulObject["tresc"];
+        $this->data = $artykulObject["date"];
+        $this->idHistory = $artykulObject["idHistori"];
+    }
+
+
+    public function odczytajID()
+    {
+        return $this->id;
+    }
+
+    public function odczytajTytul()
+    {
+        return $this->tytul;
+    }
+
+    public function odczytajTresc()
+    {
+        return $this->tresc;
+    }    
+
+    public function odczytajDateUtworzenia()
+    {
+        return $this->data;
+    }
+
+    public function pobierzLinkDoHistori()
+    {
+        return $this->idHistori;
+    }    
+
+    // public function var_dumpArtykul()
+    // {
+    //     echo $this->odczytajID()
+    // }
+
+
+}
+
+interface ArtykulInterface 
+{
+    public function odczytajID();
+    public function odczytajTytul();
+    public function odczytajTresc();
+    public function odczytajDateUtworzenia();
+    public function pobierzLinkDoHistori();
 }
