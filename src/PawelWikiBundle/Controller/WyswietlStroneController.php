@@ -6,17 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class WyswietlStroneController extends Controller
 {
-
-
-    // function __construct()
-    // {
-    //     //parent::__construct();
-    //     $this->repository = $this->getDoctrine()->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB');
-    //     $this->ArtykulFactory = new ArtykulFactory($this->repository);
-
-    // }
-
-
     public function WyswietlStroneAction($tytul)
     {
 	echo "tytul: ".$tytul."\n";
@@ -44,6 +33,19 @@ class ArtykulFactory extends Controller
     *Funkcja zwraca artykulu pozwala na zapis i odczyt
     ***************************************************/
     
+    function artykulEntintyIntoArray( $artykulEntity )
+    {
+        // var_dump($artykulEntity);
+        // exit();
+        $artykulObject["id"] = $artykulEntity->getId(); 
+        $artykulObject["tytul"] = $artykulEntity->getTytul();
+        $artykulObject["tresc"] = $artykulEntity->getArtykul();
+        $artykulObject["dataZmiany"] = $artykulEntity->getDataZmiany();
+        $artykulObject["idHistori"] = $artykulEntity->getIdHistori();   
+
+        return $artykulObject;     
+    }
+
     function __construct($repository)
     {
         $this->repository = $repository;
@@ -54,19 +56,21 @@ class ArtykulFactory extends Controller
     /*****************************************
     //Pobierz artykul o nazwie i zwroc obiekt
     ******************************************/
-        $artykulObject = $this->repository
+        $artykulEntity = $this->repository
                         ->findOneBy(array('tytul' => $tytul));
 
 
-        if (!$artykulObject) 
+        if (!$artykulEntity) 
         {
             throw $this->createNotFoundException(
                 'Nie znaleziono tytulu '.$tytul
             );
         }
 
-        $artykul = $artykulObject;
-        //$artykul = new Artykul();
+
+        $artykulArray = $this->artykulEntintyIntoArray( $artykulEntity );
+
+        $artykul = new Artykul( $artykulArray );
 
         return($artykul);
     }
@@ -79,14 +83,14 @@ class Artykul implements ArtykulInterface
     private $id;
     private $tytul;
     private $tresc;
-    private $data;
+    private $dataZmiany;
     private $idHistori;
     function __construct($artykulObject)
     {
         $this->id = $artykulObject["id"];
         $this->tytul = $artykulObject["tytul"];
         $this->tresc = $artykulObject["tresc"];
-        $this->data = $artykulObject["date"];
+        $this->dataZmiany = $artykulObject["dataZmiany"];
         $this->idHistory = $artykulObject["idHistori"];
     }
 
@@ -108,19 +112,13 @@ class Artykul implements ArtykulInterface
 
     public function odczytajDateUtworzenia()
     {
-        return $this->data;
+        return $this->dataZmiany;
     }
 
     public function pobierzLinkDoHistori()
     {
         return $this->idHistori;
     }    
-
-    // public function var_dumpArtykul()
-    // {
-    //     echo $this->odczytajID()
-    // }
-
 
 }
 
