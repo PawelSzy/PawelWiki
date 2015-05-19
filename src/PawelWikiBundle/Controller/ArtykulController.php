@@ -19,7 +19,7 @@ public function __construct($entityManager) {
 	/*****************************************
 	//Pobierz artykul o nazwie i zwroc obiekt
 	******************************************/
-	    $artykul = $this->getDoctrine()->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB')
+	    $artykul = $this->entityManager // getDoctrine()->getRepository('PawelWikiBundle:ArtykulDB:ArtykulDB')
 	    				->findOneBy(array('tytul' => $tytul));
 
 
