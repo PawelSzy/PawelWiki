@@ -5,6 +5,7 @@
 namespace PawelWikiBundle\Controller;
 
 use PawelWikiBundle\Controller\ArtykulInterface;
+use PawelWikiBundle\Controller\getActualRepository;
 
 class Artykul implements ArtykulInterface
 {
@@ -20,7 +21,7 @@ class Artykul implements ArtykulInterface
         $this->tytul = $artykulObject["tytul"];
         $this->tresc = $artykulObject["tresc"];
         $this->dataZmiany = $artykulObject["dataZmiany"];
-        $this->idHistory = $artykulObject["idHistori"];
+        $this->idHistori = $artykulObject["idHistori"];
     }
 
 
