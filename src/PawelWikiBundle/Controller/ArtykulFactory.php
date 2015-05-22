@@ -17,8 +17,7 @@ class ArtykulFactory extends Controller
     
     function artykulEntintyIntoArray( $artykulEntity )
     {
-        // var_dump($artykulEntity);
-        // exit();
+        
         $artykulObject["id"] = $artykulEntity->getId(); 
         $artykulObject["tytul"] = $artykulEntity->getTytul();
         $artykulObject["tresc"] = $artykulEntity->getArtykul();
