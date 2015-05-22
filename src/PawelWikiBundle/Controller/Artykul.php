@@ -45,7 +45,13 @@ class Artykul implements ArtykulInterface
         return $this->dataZmiany;
     }
 
-    public function pobierzLinkDoHistori()
+     public function pobierzLinkDoHistori()
+    {
+        pass;
+        //return $this->idHistori;
+    }  
+
+    public function pobierzIDHistori()
     {
         return $this->idHistori;
     }    

@@ -11,4 +11,5 @@ interface ArtykulInterface
     public function odczytajTresc();
     public function odczytajDateUtworzenia();
     public function pobierzLinkDoHistori();
+    public function pobierzIDHistori();
 }

@@ -26,6 +26,6 @@ class testArtykul extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( $daneArtykulu["tytul"], $artykul->odczytajTytul() );
 		$this->assertEquals( $daneArtykulu["tresc"], $artykul->odczytajTresc() );
 		$this->assertEquals( $daneArtykulu["dataZmiany"], $artykul->odczytajDateUtworzenia() );
-		$this->assertEquals( $daneArtykulu["idHistori"], $artykul->pobierzLinkDoHistori() );
+		$this->assertEquals( $daneArtykulu["idHistori"], $artykul->pobierzIDHistori() );
 	}
 }
