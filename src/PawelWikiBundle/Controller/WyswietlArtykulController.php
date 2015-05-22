@@ -12,18 +12,20 @@ define('artykulRepository','PawelWikiBundle:ArtykulDB:ArtykulDB');
 
 class WyswietlArtykulController extends Controller
 {
-    public function WyswietlArtykulAction($tytul)
+    public function WyswietlArtykulAction( $tytul )
     {
-	echo "tytul: ".$tytul."\n";
+	
 
-    $this->repository = $this->getDoctrine()->getRepository(artykulRepository);
+    $this->repository = $this->getDoctrine()->getRepository( artykulRepository );
     
-    $this->ArtykulFactory = new ArtykulFactory($this->repository);
-    $artykul = $this->ArtykulFactory->odczytajArtykul($tytul); 
+    $this->ArtykulFactory = new ArtykulFactory( $this->repository );
+    $artykul = $this->ArtykulFactory->odczytajArtykul( $tytul ); 
 
 
-    var_dump($artykul);
-    echo "***********".$artykul->odczytajTytul()."*******************************";
-    return $this->render('PawelWikiBundle:Default:index.html.twig', array('name' => $tytul));
+    // var_dump($artykul);
+    // echo "***********".$artykul->odczytajTytul()."*******************************";
+    return $this->render( 'PawelWikiBundle:Default:artykul.html.twig', array('tytul' => $artykul->odczytajTytul(),
+            'tresc' => $artykul->odczytajTresc()
+        ));
     }
 }
