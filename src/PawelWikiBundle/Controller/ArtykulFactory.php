@@ -15,18 +15,6 @@ class ArtykulFactory extends Controller
     *Funkcja zwraca artykulu pozwala na zapis i odczyt
     ***************************************************/
     
-    function artykulEntintyIntoArray( $artykulEntity )
-    {
-        
-        $artykulObject["id"] = $artykulEntity->getId(); 
-        $artykulObject["tytul"] = $artykulEntity->getTytul();
-        $artykulObject["tresc"] = $artykulEntity->getArtykul();
-        $artykulObject["dataZmiany"] = $artykulEntity->getDataZmiany();
-        $artykulObject["idHistori"] = $artykulEntity->getIdHistori();   
-
-        return $artykulObject;     
-    }
-
     function __construct($repository)
     {
         $this->repository = $repository;
@@ -40,7 +28,6 @@ class ArtykulFactory extends Controller
         $artykulEntity = $this->repository
                         ->findOneBy(array('tytul' => $tytul));
 
-
         if (!$artykulEntity) 
         {
             throw $this->createNotFoundException(
@@ -48,12 +35,20 @@ class ArtykulFactory extends Controller
             );
         }
 
-
         $artykulArray = $this->artykulEntintyIntoArray( $artykulEntity );
-
         $artykul = new Artykul( $artykulArray );
-
         return($artykul);
     }
 
+    private function artykulEntintyIntoArray( $artykulEntity )
+    {
+        
+        $artykulObject["id"] = $artykulEntity->getId(); 
+        $artykulObject["tytul"] = $artykulEntity->getTytul();
+        $artykulObject["tresc"] = $artykulEntity->getArtykul();
+        $artykulObject["dataZmiany"] = $artykulEntity->getDataZmiany();
+        $artykulObject["idHistori"] = $artykulEntity->getIdHistori();   
+
+        return $artykulObject;     
+    }
 }
