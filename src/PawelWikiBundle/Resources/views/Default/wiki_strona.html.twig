@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{tytul}}</title>
-    </head>
-    <body>
-        {{ render(controller("PawelWikiBundle:WyswietlArtykul:WyswietlArtykul", {'tytul': tytul} )) }}
-        {% include "PawelWikiBundle:Default:stopka.html.twig" %}
-    </body>
-</html>
+{% extends "PawelWikiBundle:Default:szablon_wiki_strona.html.twig" %}
+     {% block content %}
+     	 {{ render(controller("PawelWikiBundle:WyswietlArtykul:WyswietlArtykul", {'tytul': tytul} )) }}
+     {% endblock %}
+       
