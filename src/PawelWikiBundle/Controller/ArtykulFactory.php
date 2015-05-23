@@ -36,8 +36,16 @@ class ArtykulFactory extends Controller
         }
 
         $artykulArray = $this->artykulEntintyIntoArray( $artykulEntity );
+        $artykul = $this->nowyArtykul( $artykulArray );
+        return $artykul;
+    }
+
+    public function nowyArtykul( $artykulArray )
+    {
+       //utworz nowy Artykul z podanego tytulu i tekstu 
         $artykul = new Artykul( $artykulArray );
-        return($artykul);
+        return $artykul; 
+
     }
 
     private function artykulEntintyIntoArray( $artykulEntity )
