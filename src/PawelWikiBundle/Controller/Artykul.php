@@ -17,11 +17,16 @@ class Artykul implements ArtykulInterface
     private $idHistori;
     function __construct($artykulObject)
     {
-        $this->id = $artykulObject["id"];
+        
+        $this->id = isset(  $artykulObject["id"] )? $artykulObject["id"] : NULL;
+
         $this->tytul = $artykulObject["tytul"];
         $this->tresc = $artykulObject["tresc"];
-        $this->dataZmiany = $artykulObject["dataZmiany"];
-        $this->idHistori = $artykulObject["idHistori"];
+
+        $this->dataZmiany= isset(  $artykulObject["dataZmiany"] )? $artykulObject["dataZmiany"] : NULL;
+
+        $this->idHistori= isset(  $artykulObject["idHistori"] )? $artykulObject["idHistori"] : NULL;        
+        //$this->idHistori = $artykulObject["idHistori"];
     }
 
 

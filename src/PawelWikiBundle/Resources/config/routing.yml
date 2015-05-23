@@ -9,3 +9,7 @@ pawel_wiki_db_test:
 pawel_wiki_artykul_test:
     path:     /artykul/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlArtykul:WyswietlArtykul }
+
+pawel_wiki_nowy_artykul_:
+    path:     /nowy_artykul}
+    defaults: { _controller: PawelWikiBundle:NowyArtykul:NowyArtykul }    
