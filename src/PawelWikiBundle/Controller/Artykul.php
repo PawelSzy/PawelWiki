@@ -56,5 +56,10 @@ class Artykul implements ArtykulInterface
         return $this->idHistori;
     }    
 
+    public function zapiszArtykul()
+    {
+        pass;
+    }
+
 }
 

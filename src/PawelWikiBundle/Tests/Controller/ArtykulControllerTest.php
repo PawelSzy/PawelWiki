@@ -4,7 +4,7 @@ namespace PawelWikiBundle\Tests\Controller;
 
 use PawelWikiBundle\Controller\Artykul;
 
-
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 
 class testArtykul extends \PHPUnit_Framework_TestCase
@@ -27,5 +27,27 @@ class testArtykul extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( $daneArtykulu["tresc"], $artykul->odczytajTresc() );
 		$this->assertEquals( $daneArtykulu["dataZmiany"], $artykul->odczytajDateUtworzenia() );
 		$this->assertEquals( $daneArtykulu["idHistori"], $artykul->pobierzIDHistori() );
+	}
+}
+
+class testStronaZArtykulem extends WebTestCase
+{
+	public function testStronaZArtykulem()
+	{
+		$client = static::createClient();
+		$clawler = $client->request('GET', '/artykul/Artykul_test');
+		
+		/////////////////////////////////////////////////////////////////////
+		$results = $clawler->filter('html:contains("Artykul_test")')->count();
+		$this->assertGreaterThan(0, $results);
+
+
+		/////////////////////////////////////////////////////////////////////
+		$results = $clawler->filter('html:contains("Husaria")')->count();
+		$this->assertGreaterThan(0, $results);
+
+		/////////////////////////////////////////////////////////////////////
+		$content = $client->getResponse()->getContent();
+		$this->assertRegExp('/Husaria – polska jazda należąca do autoramentu narodowego, znana z wielu zwycięstw formacja kawaleryjska Rzeczypospolitej, obecna na polach bitew od początku XVI/', $content);		
 	}
 }

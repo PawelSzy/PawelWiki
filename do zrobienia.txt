@@ -1,1 +1,9 @@
 popraw htacces w web directory
+
+dodaj stopkê 
+
+dodatkowy controller ktory pobiera repository
+
+dodaj zapis przy artykule
+
+Artkul Factory - utworz nowy artykul
