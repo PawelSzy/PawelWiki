@@ -10,11 +10,18 @@ define('artykulRepository','PawelWikiBundle:ArtykulDB:ArtykulDB');
 
 class WyswietlArtykulController extends Controller
 {
+
+    private function pobierzRepository()
+    {
+        $repository = $this->getDoctrine()->getRepository( artykulRepository );
+        return $repository;
+    }
+
     public function WyswietlArtykulAction( $tytul )
     {
-    $this->repository = $this->getDoctrine()->getRepository( artykulRepository );
+    $repository = $this->pobierzRepository();
     
-    $this->ArtykulFactory = new ArtykulFactory( $this->repository );
+    $this->ArtykulFactory = new ArtykulFactory( $repository );
     $artykul = $this->ArtykulFactory->odczytajArtykul( $tytul ); 
 
     return $this->render( 'PawelWikiBundle:Default:artykul.html.twig', array('tytul' => $artykul->odczytajTytul(),
