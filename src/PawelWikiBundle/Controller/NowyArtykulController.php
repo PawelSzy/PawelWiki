@@ -13,12 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class NowyArtykulController extends Controller
 {
-     use PobierzRepositoryTrait { pobierzRepository as protected; }
-    // private function pobierzRepository()
-    // {
-    //     $repository = $this->getDoctrine()->getRepository( artykulRepository );
-    //     return $repository;
-    // }
+    use PobierzRepositoryTrait { pobierzRepository as protected; pobierzDoctrine as protected; pobierzMenager as protected; }
 
     public function NowyArtykulAction( Request $request )
     {
@@ -34,23 +29,28 @@ class NowyArtykulController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // perform some action, such as saving the task to the database
+            //////////////////////////////////////
+            // zapis artykulu do bazu danych
+            //////////////////////////////////////
+            
+            //odczytaj dane z form
             $arrayArtykul = array();
             $arrayArtykul["tytul"] =$form->get('tytul')->getData();
             $arrayArtykul["tresc"] =$form->get('tresc')->getData();
 
+            //zapisz dane z form do bazy danych
             $repository = $this->pobierzRepository();
+            $doctrine = $this->pobierzDoctrine();
             
-            $this->ArtykulFactory = new ArtykulFactory( $repository );
+            $this->ArtykulFactory = new ArtykulFactory( $repository, $doctrine );
             $artykul = $this->ArtykulFactory->nowyArtykul( $arrayArtykul ); 
 
-            if ($artykul!== NULL){
-                var_dump($artykul);
-            }    
-
-            // return $this->redirect($this->generateUrl('task_success'));
+            if ($artykul!== NULL)
+            {
+                $artykul = $this->ArtykulFactory->zapiszArtykul( $artykul );
+                $this->redirectToRoute('strona/'.$artykul->odczytajTytul());
+            }
         }
-
         return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
                 'form' => $form->createView() )
         );

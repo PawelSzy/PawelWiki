@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @UniqueEntity("tytul")
  * @ORM\Table(name="artykul")
+ * @ORM\HasLifecycleCallbacks
  */
 class ArtykulDB
 {
@@ -49,8 +50,15 @@ class ArtykulDB
     private $idHistori;
 
 
-    /**
-     * Get id
+
+
+    public function __construct() 
+    {
+        // we set up "created"+"modified"
+        $this->setDataZmiany(new \DateTime());
+    }
+
+     /** Get id
      *
      * @return integer 
      */

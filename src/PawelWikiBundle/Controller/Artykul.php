@@ -15,18 +15,14 @@ class Artykul implements ArtykulInterface
     private $tresc;
     private $dataZmiany;
     private $idHistori;
+    private $repository;
     function __construct($artykulObject)
     {
-        
         $this->id = isset(  $artykulObject["id"] )? $artykulObject["id"] : NULL;
-
         $this->tytul = $artykulObject["tytul"];
         $this->tresc = $artykulObject["tresc"];
-
         $this->dataZmiany= isset(  $artykulObject["dataZmiany"] )? $artykulObject["dataZmiany"] : NULL;
-
-        $this->idHistori= isset(  $artykulObject["idHistori"] )? $artykulObject["idHistori"] : NULL;        
-        //$this->idHistori = $artykulObject["idHistori"];
+        $this->idHistori= isset(  $artykulObject["idHistori"] )? $artykulObject["idHistori"] : NULL;         
     }
 
 
@@ -63,7 +59,10 @@ class Artykul implements ArtykulInterface
 
     public function zapiszArtykul()
     {
-        pass;
+        if ( isset( $this->repository) )
+        {
+
+        }    
     }
 
 }

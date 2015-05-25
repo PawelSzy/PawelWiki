@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use PawelWikiBundle\Controller\Artykul;
 
+use PawelWikiBundle\Entity\ArtykulDB;
+
 /**
 * 
 */
@@ -15,9 +17,10 @@ class ArtykulFactory extends Controller
     *Funkcja zwraca artykulu pozwala na zapis i odczyt
     ***************************************************/
     
-    function __construct($repository)
+    function __construct($repository, $doctrine)
     {
         $this->repository = $repository;
+        $this->doctrine = $doctrine;
     }
 
     public function odczytajArtykul($tytul)
@@ -58,5 +61,30 @@ class ArtykulFactory extends Controller
         $artykulObject["idHistori"] = $artykulEntity->getIdHistori();   
 
         return $artykulObject;     
+    }
+
+    private function artykulIntoEntinyDB( $artykul ) 
+    {
+        //zamienia artykul w entity do zapisanie w bazie danych
+        $artykulEntity = new ArtykulDB;
+        $artykulEntity->setTytul( $artykul->odczytajTytul() );
+        $artykulEntity->setArtykul( $artykul->odczytajTresc() );
+        $artykulEntity->setIdHistori( 0 );
+        return $artykulEntity;
+
+    }
+
+    public function zapiszArtykul( $artykul )
+    {
+        $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
+
+        //zapisz do bazy danych
+        $em = $this->doctrine->getManager();
+        $em->persist($artykulEntity);
+        $em->flush();
+
+        $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
+        return $this->nowyArtykul( $newArrayArtykul);
+
     }
 }
