@@ -6,16 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use PawelWikiBundle\Controller\ArtykulFactory;
 
-define('artykulRepository','PawelWikiBundle:ArtykulDB:ArtykulDB');
+// define('artykulRepository','PawelWikiBundle:ArtykulDB:ArtykulDB');
+require_once('PobierzRepositoryTrait.php');
 
 class WyswietlArtykulController extends Controller
 {
 
-    private function pobierzRepository()
-    {
-        $repository = $this->getDoctrine()->getRepository( artykulRepository );
-        return $repository;
-    }
+    use PobierzRepositoryTrait { pobierzRepository as protected; }
 
     public function WyswietlArtykulAction( $tytul )
     {

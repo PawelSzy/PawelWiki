@@ -6,18 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use PawelWikiBundle\Controller\ArtykulFactory;
 
+require_once('PobierzRepositoryTrait.php');
+
 use Symfony\Component\HttpFoundation\Request;
 
-define('artykulRepository','PawelWikiBundle:ArtykulDB:ArtykulDB');
 
 class NowyArtykulController extends Controller
 {
-
-    private function pobierzRepository()
-    {
-        $repository = $this->getDoctrine()->getRepository( artykulRepository );
-        return $repository;
-    }
+     use PobierzRepositoryTrait { pobierzRepository as protected; }
+    // private function pobierzRepository()
+    // {
+    //     $repository = $this->getDoctrine()->getRepository( artykulRepository );
+    //     return $repository;
+    // }
 
     public function NowyArtykulAction( Request $request )
     {
