@@ -48,7 +48,7 @@ class NowyArtykulController extends Controller
             if ($artykul!== NULL)
             {
                 $artykul = $this->ArtykulFactory->zapiszArtykul( $artykul );
-                $this->redirectToRoute('strona/'.$artykul->odczytajTytul());
+                return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));
             }
         }
         return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,

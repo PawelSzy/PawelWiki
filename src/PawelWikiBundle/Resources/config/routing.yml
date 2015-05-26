@@ -6,7 +6,7 @@ pawel_wiki_db_test:
     path:     /strona/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlStrone:WyswietlStrone }
 
-pawel_wiki_artykul_test:
+pawel_wiki_artykul:
     path:     /artykul/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlArtykul:WyswietlArtykul }
 
