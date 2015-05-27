@@ -32,8 +32,11 @@ class testNowaStrone extends WebTestCase
 		$this->assertEquals($tytul_testowanie, $data['form']['tytul']);
 		$this->assertEquals($tresc_testowanie, $data['form']['tresc']);
 
-		
-		
+		//sprawdz czy zdrona zostala zapisana i mozna ja wyswietlic
+		$clawler = $client->request('GET', '/strona/'.$tytul_testowanie);
+		$content = $client->getResponse()->getContent();
+		$this->assertRegExp('/'.$tresc_testowanie.'/', $content);
+
 		// /////////////////////////////////////////////////////////////////////
 		// $results = $clawler->filter('html:contains("Artykul_test")')->count();
 		// $this->assertGreaterThan(0, $results);
