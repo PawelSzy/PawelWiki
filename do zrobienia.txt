@@ -4,5 +4,5 @@ popraw htacces w web directory
 
 dodatkowy controller ktory pobiera repository
 
-dodaj zapis przy artykule!!!!!!!!!!!!!!!!!!!!!!!!!
+wyswietl storne artykul o tej nazwie istnieje przy zapisie nowej strony!!!!!!!!!!!!!!!!!!!!!!!!!
 

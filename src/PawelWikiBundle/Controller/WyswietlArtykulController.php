@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class WyswietlArtykulController extends Controller
 {
 
-    use PobierzRepositoryTrait { pobierzRepository as protected; pobierzDoctrine as protected; pobierzMenager as protected; }
+    use PobierzRepositoryTrait { pobierzRepository as protected; pobierzDoctrine as protected; pobierzMenager as protected; pobierzNazweBaze as protected;}
 
     public function WyswietlArtykulAction( $tytul )
     {
@@ -60,8 +60,16 @@ class WyswietlArtykulController extends Controller
 
             if ($artykul!== NULL)
             {
-                $artykul = $this->ArtykulFactory->zapiszNowyArtykul( $artykul );
-                return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));
+                $tytulArtykulu = $artykul->odczytajTytul();
+                if( $this->ArtykulFactory->czyIstniejeTytul( $tytulArtykulu ))
+                {
+                    $artykul = $this->ArtykulFactory->zapiszNowyArtykul( $artykul );
+                    return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));                   
+                }
+                else {
+                    echo "artykul Istnieje!!!!!!!!!!!!!11";
+                }
+
             }
         }
         return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,

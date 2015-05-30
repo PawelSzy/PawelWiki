@@ -16,11 +16,12 @@ class ArtykulFactory extends Controller
     /***************************************************
     *Funkcja zwraca artykulu pozwala na zapis i odczyt
     ***************************************************/
-    
+ use PobierzRepositoryTrait { pobierzAdresBazyDanych as protected;}    
     function __construct($repository, $doctrine)
     {
         $this->repository = $repository;
         $this->doctrine = $doctrine;
+       // $this->$entityManager = $this->doctrine->getManager();
     }
 
     public function odczytajArtykul($tytul)
@@ -80,7 +81,7 @@ class ArtykulFactory extends Controller
 
         //zapisz do bazy danych
         $em = $this->doctrine->getManager();
-       if ( !$this->czyIstniejeTytul( $artykul->odczytajTytul(), $em )){
+        if ( !$this->czyIstniejeTytul( $artykul->odczytajTytul() )){
             return Null;
        }
         $em->persist($artykulEntity);
@@ -90,22 +91,20 @@ class ArtykulFactory extends Controller
 
     }
 
-    private function czyIstniejeTytul( $tytul, $entityManager )
+    public function czyIstniejeTytul( $tytul )
     {
     /////////////////////////////
     //Funkcja zwraca True jesli istnieje artykul o podanej nazwie a bazie danyc
     //zwraca false jesli nie istnieje artykul
     ///////////////////////////
-        $product = $entityManager->find('Tytul', $tytul);
-        $dql = 'SELECT 1 FROM App\Model\User user WHERE user.email = :email';
-        $query = $em->createQuery($dql);
+        //$product = $entityManager->find('Tytul', $tytul);
+        $entityManager = $this->doctrine->getManager();
+        $adres_bazy = $this->pobierzAdresBazyDanych();
+        $dql = "SELECT ArtykulDB FROM ".$adres_bazy.' ArtykulDB WHERE ArtykulDB.tytul = :tytul';
+        $query = $entityManager->createQuery($dql);
         $query->setParameter('tytul', $tytul);
 
         $res = $query->getResult();
         return empty($res);
-        // if ($product === null) {
-        //     return false;
-        // }
-        // return true; 
     }
 }

@@ -5,12 +5,23 @@ namespace PawelWikiBundle\Controller;
 trait PobierzRepositoryTrait
 {
 
+    public function pobierzNazweBaze()
+    {
+        $nazwa_bazy = 'PawelWikiBundle:ArtykulDB:ArtykulDB' ;
+        return $nazwa_bazy;
+    }
+
+    public function pobierzAdresBazyDanych()
+    {
+        $adresBazyDanych =' PawelWikiBundle\Entity\ArtykulDB';
+        return $adresBazyDanych;
+    }
 	
     public function pobierzRepository()
     {
-    	$artykulRepository = 'PawelWikiBundle:ArtykulDB:ArtykulDB' ;
+    	$nazwa_bazy = $this->pobierzNazweBaze();
     	//define('artykulRepository','PawelWikiBundle:ArtykulDB:ArtykulDB');
-        $repository = $this->getDoctrine()->getRepository( $artykulRepository );
+        $repository = $this->getDoctrine()->getRepository( $nazwa_bazy );
         return $repository;
     }
 
