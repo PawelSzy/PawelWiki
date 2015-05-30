@@ -74,17 +74,38 @@ class ArtykulFactory extends Controller
 
     }
 
-    public function zapiszArtykul( $artykul )
+    public function zapiszNowyArtykul( $artykul )
     {
         $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
 
         //zapisz do bazy danych
         $em = $this->doctrine->getManager();
+       if ( !$this->czyIstniejeTytul( $artykul->odczytajTytul(), $em )){
+            return Null;
+       }
         $em->persist($artykulEntity);
-        $em->flush();
-
+        $em->flush(); 
         $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
         return $this->nowyArtykul( $newArrayArtykul);
 
+    }
+
+    private function czyIstniejeTytul( $tytul, $entityManager )
+    {
+    /////////////////////////////
+    //Funkcja zwraca True jesli istnieje artykul o podanej nazwie a bazie danyc
+    //zwraca false jesli nie istnieje artykul
+    ///////////////////////////
+        $product = $entityManager->find('Tytul', $tytul);
+        $dql = 'SELECT 1 FROM App\Model\User user WHERE user.email = :email';
+        $query = $em->createQuery($dql);
+        $query->setParameter('tytul', $tytul);
+
+        $res = $query->getResult();
+        return empty($res);
+        // if ($product === null) {
+        //     return false;
+        // }
+        // return true; 
     }
 }

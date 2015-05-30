@@ -60,7 +60,7 @@ class WyswietlArtykulController extends Controller
 
             if ($artykul!== NULL)
             {
-                $artykul = $this->ArtykulFactory->zapiszArtykul( $artykul );
+                $artykul = $this->ArtykulFactory->zapiszNowyArtykul( $artykul );
                 return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));
             }
         }
