@@ -19,9 +19,9 @@ class WyswietlArtykulController extends Controller
     {
     $repository = $this->pobierzRepository();
     $doctrine = $this->pobierzDoctrine();
-    
+
     $this->ArtykulFactory = new ArtykulFactory( $repository, $doctrine );
-    $artykul = $this->ArtykulFactory->odczytajArtykul( $tytul ); 
+    $artykul = $this->ArtykulFactory->odczytajArtykul( $tytul );
 
     return $this->render( 'PawelWikiBundle:Default:artykul.html.twig', array('tytul' => $artykul->odczytajTytul(),
             'tresc' => $artykul->odczytajTresc()
@@ -38,14 +38,14 @@ class WyswietlArtykulController extends Controller
         ->add('tresc', 'text')
         ->add('Zapisz', 'submit')
         ->getForm();
-   
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             //////////////////////////////////////
             // zapis artykulu do bazu danych
             //////////////////////////////////////
-            
+
             //odczytaj dane z form
             $arrayArtykul = array();
             $arrayArtykul["tytul"] =$form->get('tytul')->getData();
@@ -54,17 +54,17 @@ class WyswietlArtykulController extends Controller
             //zapisz dane z form do bazy danych
             $repository = $this->pobierzRepository();
             $doctrine = $this->pobierzDoctrine();
-            
+
             $this->ArtykulFactory = new ArtykulFactory( $repository, $doctrine );
-            $artykul = $this->ArtykulFactory->nowyArtykul( $arrayArtykul ); 
+            $artykul = $this->ArtykulFactory->nowyArtykul( $arrayArtykul );
 
             if ($artykul!== NULL)
             {
                 $tytulArtykulu = $artykul->odczytajTytul();
-                if( $this->ArtykulFactory->czyIstniejeTytul( $tytulArtykulu ))
+                if( !$this->ArtykulFactory->czyIstniejeTytul( $tytulArtykulu ))
                 {
                     $artykul = $this->ArtykulFactory->zapiszNowyArtykul( $artykul );
-                    return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));                   
+                    return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));
                 }
                 else {
                     return $this->wyswietlStronaIstnieje( $tytulArtykulu );
@@ -77,13 +77,28 @@ class WyswietlArtykulController extends Controller
         );
     }
 
+    public function SkasujArtykulAction( $tytul )
+    {
+        $ArtykulFactory = new ArtykulFactory( $this->pobierzRepository(), $this->pobierzDoctrine() );
+        $ArtykulFactory->skasujArtykul( $tytul );
+        $wiadomosc ="Skasowano artykul o nazwie: ".$tytul;
+        $tytul_strony = "PawelWiki Skasowano strone";
+        return $this->wyswietlWiadomosc( $wiadomosc, $tytul_strony);
+    }
+
     private function wyswietlStronaIstnieje( $tytul )
     {
         $blad = 'Istnieje juz artykul o nazwie: '.$tytul;
-        $tytulStrony = 'PawelWikiBlad';
+        $tytul_strony = 'PawelWikiBlad';
         return $this->render( 'PawelWikiBundle:Default:informacje_o_bledzie.html.twig', array('blad' => $blad,
-            'tytul' => $tytulStrony));
-        
+            'tytul' => $tytul_strony));
+
+    }
+
+    private function wyswietlWiadomosc( $wiadomosc, $tytul_strony = "PawelWiki Wiadomosc")
+    {
+        return $this->render( 'PawelWikiBundle:Default:wiadomosc.html.twig', array('wiadomosc' => $wiadomosc,
+            'tytul' => $tytul_strony));
     }
 
 }

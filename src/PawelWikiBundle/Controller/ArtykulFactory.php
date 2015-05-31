@@ -28,9 +28,7 @@ class ArtykulFactory extends Controller
     /*****************************************
     //Pobierz artykul o nazwie i zwroc obiekt
     ******************************************/
-        $artykulEntity = $this->repository
-                        ->findOneBy(array('tytul' => $tytul));
-
+        $artykulEntity = $this->pobierzArtykulEntity( $tytul );
         if (!$artykulEntity) 
         {
             throw $this->createNotFoundException(
@@ -49,6 +47,71 @@ class ArtykulFactory extends Controller
         $artykul = new Artykul( $artykulArray );
         return $artykul; 
 
+    }
+
+
+    public function zapiszNowyArtykul( $artykul )
+    {
+        $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
+
+        //zapisz do bazy danych
+        $em = $this->doctrine->getManager();
+        if ( $this->czyIstniejeTytul( $artykul->odczytajTytul() )){
+            return Null;
+       }
+        $em->persist($artykulEntity);
+        $em->flush(); 
+        $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
+        return $this->nowyArtykul( $newArrayArtykul);
+
+    }
+
+    public function skasujArtykul( $tytul )
+    {
+        $artykulEntity = $this->pobierzArtykulEntity( $tytul );
+
+        //kasowanie
+        $em = $this->doctrine->getManager();
+        $em->remove($artykulEntity);
+        $em->flush(); 
+        
+        return True;
+
+    }
+
+    public function czyIstniejeTytul( $tytul )
+    {
+    /////////////////////////////
+    //Funkcja zwraca True jesli istnieje artykul o podanej nazwie a bazie danyc
+    //zwraca false jesli nie istnieje artykul
+    ///////////////////////////
+        //$product = $entityManager->find('Tytul', $tytul);
+        $entityManager = $this->doctrine->getManager();
+        $adres_bazy = $this->pobierzAdresBazyDanych();
+        $dql = "SELECT ArtykulDB FROM ".$adres_bazy.' ArtykulDB WHERE ArtykulDB.tytul = :tytul';
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter('tytul', $tytul);
+
+        $res = $query->getResult();
+        return !empty($res);
+    }
+
+
+    private function pobierzArtykulEntity( $tytul )
+    {
+    /*****************************************
+    //Pobierz artykulEntuty z bazy danych
+    ******************************************/
+        $artykulEntity = $this->repository
+                        ->findOneBy(array('tytul' => $tytul));
+
+        if (!$artykulEntity) 
+        {
+            throw $this->createNotFoundException(
+                'Nie znaleziono tytulu '.$tytul
+            );
+        }
+        return $artykulEntity;       
     }
 
     private function artykulEntintyIntoArray( $artykulEntity )
@@ -74,36 +137,4 @@ class ArtykulFactory extends Controller
 
     }
 
-    public function zapiszNowyArtykul( $artykul )
-    {
-        $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
-
-        //zapisz do bazy danych
-        $em = $this->doctrine->getManager();
-        if ( !$this->czyIstniejeTytul( $artykul->odczytajTytul() )){
-            return Null;
-       }
-        $em->persist($artykulEntity);
-        $em->flush(); 
-        $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
-        return $this->nowyArtykul( $newArrayArtykul);
-
-    }
-
-    public function czyIstniejeTytul( $tytul )
-    {
-    /////////////////////////////
-    //Funkcja zwraca True jesli istnieje artykul o podanej nazwie a bazie danyc
-    //zwraca false jesli nie istnieje artykul
-    ///////////////////////////
-        //$product = $entityManager->find('Tytul', $tytul);
-        $entityManager = $this->doctrine->getManager();
-        $adres_bazy = $this->pobierzAdresBazyDanych();
-        $dql = "SELECT ArtykulDB FROM ".$adres_bazy.' ArtykulDB WHERE ArtykulDB.tytul = :tytul';
-        $query = $entityManager->createQuery($dql);
-        $query->setParameter('tytul', $tytul);
-
-        $res = $query->getResult();
-        return empty($res);
-    }
 }

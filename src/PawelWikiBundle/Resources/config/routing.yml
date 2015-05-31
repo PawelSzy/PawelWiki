@@ -12,4 +12,8 @@ pawel_wiki_artykul:
 
 pawel_wiki_nowy_artykul:
     path:     /nowy_artykul
-    defaults: { _controller: PawelWikiBundle:WyswietlArtykul:NowyArtykul }    
+    defaults: { _controller: PawelWikiBundle:WyswietlArtykul:NowyArtykul }
+
+pawel_wiki_skasuj_artykul:
+    path:     /skasuj/{tytul}
+    defaults: { _controller: PawelWikiBundle:WyswietlArtykul:SkasujArtykul }
