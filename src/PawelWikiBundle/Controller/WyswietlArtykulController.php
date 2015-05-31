@@ -28,16 +28,13 @@ class WyswietlArtykulController extends Controller
         ));
     }
 
+
     public function NowyArtykulAction( Request $request )
     {
         $repository = $this->pobierzRepository();
         $tytulNowejStrony = "Nowa strona wiki";
 
-        $form = $this->createFormBuilder()
-        ->add('tytul', 'text')
-        ->add('tresc', 'text')
-        ->add('Zapisz', 'submit')
-        ->getForm();
+        $form = $this->utworzFormZapisu();
 
         $form->handleRequest($request);
 
@@ -77,6 +74,24 @@ class WyswietlArtykulController extends Controller
         );
     }
 
+    public function edytujArtykulAction( $tytul, Request $request)
+    {
+        $repository = $this->pobierzRepository();
+        $tytulNowejStrony = "Edytuj strone PawelWiki";
+
+        $form = $this->utworzFormZapisu();
+        $this->ArtykulFactory = new ArtykulFactory( $this->pobierzRepository(), $this->pobierzDoctrine() );
+        $artykul = $this->ArtykulFactory->odczytajArtykul( $tytul );
+
+        $form['value'] = $artykul->odczytajTytul();
+        $form['value'] = $artykul->odczytajTresc();
+
+        
+        $form->handleRequest($request);
+        return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
+                'form' => $form->createView() ));
+    }
+
     public function SkasujArtykulAction( $tytul )
     {
         $ArtykulFactory = new ArtykulFactory( $this->pobierzRepository(), $this->pobierzDoctrine() );
@@ -85,7 +100,16 @@ class WyswietlArtykulController extends Controller
         $tytul_strony = "PawelWiki Skasowano strone";
         return $this->wyswietlWiadomosc( $wiadomosc, $tytul_strony);
     }
-
+    
+    private function utworzFormZapisu()
+    {
+        $form = $this->createFormBuilder()
+        ->add('tytul', 'text')
+        ->add('tresc', 'text')
+        ->add('Zapisz', 'submit')
+        ->getForm();
+        return $form;
+    }
     private function wyswietlStronaIstnieje( $tytul )
     {
         $blad = 'Istnieje juz artykul o nazwie: '.$tytul;

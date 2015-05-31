@@ -4,5 +4,6 @@ popraw htacces w web directory
 
 dodatkowy controller ktory pobiera repository
 
-wyswietl storne artykul o tej nazwie istnieje przy zapisie nowej strony!!!!!!!!!!!!!!!!!!!!!!!!!
-
+edytuj
+zamiana wiki stylu na HTML
+wyglad graficzny
