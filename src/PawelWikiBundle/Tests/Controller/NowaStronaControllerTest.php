@@ -37,5 +37,11 @@ class testNowaStrone extends WebTestCase
 		$content = $client->getResponse()->getContent();
 		$this->assertRegExp('/'.$tresc_testowanie.'/', $content);
 
+		//skasuj kontroler
+		$clawler = $client->request('GET', '/skasuj/'.$tytul_testowanie);
+		//sprawdz czy nie wyswietla artykulu
+		$clawler = $client->request('GET', '/strona/'.$tytul_testowanie);
+		$content = $client->getResponse()->getContent();
+		$this->assertRegExp('/Nie znaleziono tytulu/', $content);		
 	}
 }
