@@ -21,7 +21,6 @@ class ArtykulFactory extends Controller
     {
         $this->repository = $repository;
         $this->doctrine = $doctrine;
-       // $this->$entityManager = $this->doctrine->getManager();
     }
 
     public function odczytajArtykul($tytul)

@@ -67,7 +67,7 @@ class WyswietlArtykulController extends Controller
                     return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));                   
                 }
                 else {
-                    echo "artykul Istnieje!!!!!!!!!!!!!11";
+                    return $this->wyswietlStronaIstnieje( $tytulArtykulu );
                 }
 
             }
@@ -75,6 +75,15 @@ class WyswietlArtykulController extends Controller
         return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
                 'form' => $form->createView() )
         );
+    }
+
+    private function wyswietlStronaIstnieje( $tytul )
+    {
+        $blad = 'Istnieje juz artykul o nazwie: '.$tytul;
+        $tytulStrony = 'PawelWikiBlad';
+        return $this->render( 'PawelWikiBundle:Default:informacje_o_bledzie.html.twig', array('blad' => $blad,
+            'tytul' => $tytulStrony));
+        
     }
 
 }
