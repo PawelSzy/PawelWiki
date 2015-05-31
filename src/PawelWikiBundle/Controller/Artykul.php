@@ -26,6 +26,16 @@ class Artykul implements ArtykulInterface
     }
 
 
+    public function zmienTytul($nowyTytul)
+    {
+        $this->tytul = $nowyTytul;
+    }
+
+    public function zmienTresc($nowaTresc)
+    {
+        $this->tresc = $nowaTresc;
+    }    
+
     public function odczytajID()
     {
         return $this->id;

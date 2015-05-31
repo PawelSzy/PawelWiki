@@ -66,6 +66,20 @@ class ArtykulFactory extends Controller
 
     }
 
+
+    public function edytujArtykul( $artykul )
+    {
+        $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
+
+        //zapisz do bazy danych
+        $em = $this->doctrine->getManager();
+        $em->persist($artykulEntity);
+        $em->flush(); 
+        $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
+        return $this->nowyArtykul( $newArrayArtykul);
+
+    }
+
     public function skasujArtykul( $tytul )
     {
         $artykulEntity = $this->pobierzArtykulEntity( $tytul );

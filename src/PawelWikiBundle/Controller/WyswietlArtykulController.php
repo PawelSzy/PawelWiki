@@ -79,15 +79,34 @@ class WyswietlArtykulController extends Controller
         $repository = $this->pobierzRepository();
         $tytulNowejStrony = "Edytuj strone PawelWiki";
 
-        $form = $this->utworzFormZapisu();
+
         $this->ArtykulFactory = new ArtykulFactory( $this->pobierzRepository(), $this->pobierzDoctrine() );
         $artykul = $this->ArtykulFactory->odczytajArtykul( $tytul );
 
-        $form['value'] = $artykul->odczytajTytul();
-        $form['value'] = $artykul->odczytajTresc();
 
-        
-        $form->handleRequest($request);
+        if ($artykul!== NULL)
+        {             
+           //utworz Form i wpisz do niego tresc z artykulu
+            $textWForm = array('tytul' => $artykul->odczytajTytul(), 'tresc' => $artykul->odczytajTresc() );
+            $form = $this->utworzFormZapisu($textWForm);
+            $form->handleRequest($request);
+           if ($form->isValid()) 
+           {
+                //////////////////////////////////////
+                // zapis artykulu do bazu danych
+                //////////////////////////////////////
+
+                //odczytaj dane z form
+                //$arrayArtykul["tytul"] =$form->get('tytul')->getData();
+                $artykul->zmienTresc( $form->get('tresc')->getData() );
+                $artykul = $this->ArtykulFactory->edytujArtykul( $artykul );                
+                if ($artykul!== NULL)
+                {
+                    //zapisz artykul
+                    return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));
+                }
+            }
+        }        
         return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
                 'form' => $form->createView() ));
     }
@@ -101,9 +120,9 @@ class WyswietlArtykulController extends Controller
         return $this->wyswietlWiadomosc( $wiadomosc, $tytul_strony);
     }
     
-    private function utworzFormZapisu()
+    private function utworzFormZapisu($napisyWForm = NULL)
     {
-        $form = $this->createFormBuilder()
+        $form = $this->createFormBuilder($napisyWForm)
         ->add('tytul', 'text')
         ->add('tresc', 'text')
         ->add('Zapisz', 'submit')
