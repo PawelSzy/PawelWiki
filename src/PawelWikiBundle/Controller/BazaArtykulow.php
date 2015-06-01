@@ -11,7 +11,7 @@ use PawelWikiBundle\Entity\ArtykulDB;
 /**
 * 
 */
-class ArtykulFactory extends Controller
+class BazaArtykulow extends Controller
 {
     /***************************************************
     *Funkcja zwraca artykulu pozwala na zapis i odczyt

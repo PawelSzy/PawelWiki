@@ -4,7 +4,7 @@ namespace PawelWikiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use PawelWikiBundle\Controller\ArtykulFactory;
+use PawelWikiBundle\Controller\BazaArtykulow;
 
 require_once('PobierzRepositoryTrait.php');
 
@@ -20,8 +20,8 @@ class WyswietlArtykulController extends Controller
     $repository = $this->pobierzRepository();
     $doctrine = $this->pobierzDoctrine();
 
-    $this->ArtykulFactory = new ArtykulFactory( $repository, $doctrine );
-    $artykul = $this->ArtykulFactory->odczytajArtykul( $tytul );
+    $this->BazaArtykulow = new BazaArtykulow( $repository, $doctrine );
+    $artykul = $this->BazaArtykulow->odczytajArtykul( $tytul );
 
     return $this->render( 'PawelWikiBundle:Default:artykul.html.twig', array('tytul' => $artykul->odczytajTytul(),
             'tresc' => $artykul->odczytajTresc()
@@ -52,15 +52,15 @@ class WyswietlArtykulController extends Controller
             $repository = $this->pobierzRepository();
             $doctrine = $this->pobierzDoctrine();
 
-            $this->ArtykulFactory = new ArtykulFactory( $repository, $doctrine );
-            $artykul = $this->ArtykulFactory->nowyArtykul( $arrayArtykul );
+            $this->BazaArtykulow = new BazaArtykulow( $repository, $doctrine );
+            $artykul = $this->BazaArtykulow->nowyArtykul( $arrayArtykul );
 
             if ($artykul!== NULL)
             {
                 $tytulArtykulu = $artykul->odczytajTytul();
-                if( !$this->ArtykulFactory->czyIstniejeTytul( $tytulArtykulu ))
+                if( !$this->BazaArtykulow->czyIstniejeTytul( $tytulArtykulu ))
                 {
-                    $artykul = $this->ArtykulFactory->zapiszNowyArtykul( $artykul );
+                    $artykul = $this->BazaArtykulow->zapiszNowyArtykul( $artykul );
                     return $this->redirectToRoute('pawel_wiki_artykul', array('tytul' => $artykul->odczytajTytul() ));
                 }
                 else {
@@ -80,8 +80,8 @@ class WyswietlArtykulController extends Controller
         $tytulNowejStrony = "Edytuj strone PawelWiki";
 
 
-        $this->ArtykulFactory = new ArtykulFactory( $this->pobierzRepository(), $this->pobierzDoctrine() );
-        $artykul = $this->ArtykulFactory->odczytajArtykul( $tytul );
+        $this->BazaArtykulow = new BazaArtykulow( $this->pobierzRepository(), $this->pobierzDoctrine() );
+        $artykul = $this->BazaArtykulow->odczytajArtykul( $tytul );
 
 
         if ($artykul!== NULL)
@@ -100,7 +100,7 @@ class WyswietlArtykulController extends Controller
                 //$arrayArtykul["tytul"] =$form->get('tytul')->getData();
                 $artykul->zmienTytul( $form->get('tytul')->getData() );
                 $artykul->zmienTresc( $form->get('tresc')->getData() );
-                $artykul = $this->ArtykulFactory->edytujArtykul( $artykul );                
+                $artykul = $this->BazaArtykulow->edytujArtykul( $artykul );                
                 if ($artykul!== NULL)
                 {
                     //zapisz artykul
@@ -114,8 +114,8 @@ class WyswietlArtykulController extends Controller
 
     public function SkasujArtykulAction( $tytul )
     {
-        $ArtykulFactory = new ArtykulFactory( $this->pobierzRepository(), $this->pobierzDoctrine() );
-        $ArtykulFactory->skasujArtykul( $tytul );
+        $BazaArtykulow = new BazaArtykulow( $this->pobierzRepository(), $this->pobierzDoctrine() );
+        $BazaArtykulow->skasujArtykul( $tytul );
         $wiadomosc ="Skasowano artykul o nazwie: ".$tytul;
         $tytul_strony = "PawelWiki Skasowano strone";
         return $this->wyswietlWiadomosc( $wiadomosc, $tytul_strony);
