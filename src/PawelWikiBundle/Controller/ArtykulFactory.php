@@ -43,7 +43,7 @@ class ArtykulFactory extends Controller
 
     public function nowyArtykul( $artykulArray )
     {
-       //utworz nowy Artykul z podanego tytulu i tekstu 
+       //zwraca instacje klassy Artykul z podanego tytulu i tekstu 
         $artykul = new Artykul( $artykulArray );
         return $artykul; 
 
@@ -52,6 +52,7 @@ class ArtykulFactory extends Controller
 
     public function zapiszNowyArtykul( $artykul )
     {
+        //zapisuje informacje z objectu o klasie Artykul w bazie danych
         $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
 
         //zapisz do bazy danych
@@ -71,10 +72,10 @@ class ArtykulFactory extends Controller
     {
         $tytul = $artykul->odczytajTytul();
         $tresc = $artykul->odczytajTresc();
-        //$artykulEntity = $this->artykulIntoEntinyDB( $artykul );
 
         if( $this->czyIstniejeTytul( $tytul ))
         {
+            //modyfikacja istniejacego artykulu
             $artykulEntity = $this->pobierzArtykulEntity( $tytul );
             $artykulEntity->setTytul( $tytul );
             $artykulEntity->setArtykul( $tresc );
@@ -84,6 +85,10 @@ class ArtykulFactory extends Controller
             $em->flush(); 
             $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
             return $this->nowyArtykul( $newArrayArtykul);
+        }
+        else
+        {
+            return $this->zapiszNowyArtykul( $artykul );
         }        
 
     }

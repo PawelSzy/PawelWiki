@@ -98,6 +98,7 @@ class WyswietlArtykulController extends Controller
 
                 //odczytaj dane z form
                 //$arrayArtykul["tytul"] =$form->get('tytul')->getData();
+                $artykul->zmienTytul( $form->get('tytul')->getData() );
                 $artykul->zmienTresc( $form->get('tresc')->getData() );
                 $artykul = $this->ArtykulFactory->edytujArtykul( $artykul );                
                 if ($artykul!== NULL)
