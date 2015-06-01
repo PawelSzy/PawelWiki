@@ -23,9 +23,7 @@ class WyswietlArtykulController extends Controller
     $this->BazaArtykulow = new BazaArtykulow( $repository, $doctrine );
     $artykul = $this->BazaArtykulow->odczytajArtykul( $tytul );
 
-    return $this->render( 'PawelWikiBundle:Default:artykul.html.twig', array('tytul' => $artykul->odczytajTytul(),
-            'tresc' => $artykul->odczytajTresc()
-        ));
+    return $this->wyswietlArtykul( $artykul );
     }
 
 
@@ -69,9 +67,7 @@ class WyswietlArtykulController extends Controller
 
             }
         }
-        return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
-                'form' => $form->createView() )
-        );
+        return $this->wyswietlStroneForm($tytulNowejStrony, $form); 
     }
 
     public function edytujArtykulAction( $tytul, Request $request)
@@ -108,8 +104,7 @@ class WyswietlArtykulController extends Controller
                 }
             }
         }        
-        return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
-                'form' => $form->createView() ));
+        return $this->wyswietlStroneForm($tytulNowejStrony, $form); 
     }
 
     public function SkasujArtykulAction( $tytul )
@@ -129,6 +124,18 @@ class WyswietlArtykulController extends Controller
         ->add('Zapisz', 'submit')
         ->getForm();
         return $form;
+    }
+
+    private function wyswietlArtykul( $artykul )
+    {
+        return $this->render( 'PawelWikiBundle:Default:artykul.html.twig', array('tytul' => $artykul->odczytajTytul(),
+            'tresc' => $artykul->odczytajTresc() )) ;        
+    }
+
+    private function wyswietlStroneForm($tytulNowejStrony, $form)
+    {
+        return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
+                'form' => $form->createView() ));
     }
     private function wyswietlStronaIstnieje( $tytul )
     {
