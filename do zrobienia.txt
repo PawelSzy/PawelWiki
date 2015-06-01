@@ -4,6 +4,13 @@ popraw htacces w web directory
 
 dodatkowy controller ktory pobiera repository
 
-edytuj
+dzia³ajace edytowanie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
 zamiana wiki stylu na HTML
 wyglad graficzny
+
+wikikod
+http://pl.wikipedia.org/wiki/Pomoc:Formatowanie_tekstu
+http://www.jan.mielno.pl/slug,Wikipedia:Wikikod.cgi

@@ -69,14 +69,22 @@ class ArtykulFactory extends Controller
 
     public function edytujArtykul( $artykul )
     {
-        $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
+        $tytul = $artykul->odczytajTytul();
+        $tresc = $artykul->odczytajTresc();
+        //$artykulEntity = $this->artykulIntoEntinyDB( $artykul );
 
-        //zapisz do bazy danych
-        $em = $this->doctrine->getManager();
-        $em->persist($artykulEntity);
-        $em->flush(); 
-        $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
-        return $this->nowyArtykul( $newArrayArtykul);
+        if( $this->czyIstniejeTytul( $tytul ))
+        {
+            $artykulEntity = $this->pobierzArtykulEntity( $tytul );
+            $artykulEntity->setTytul( $tytul );
+            $artykulEntity->setArtykul( $tresc );
+            //zapisz do bazy danych
+            $em = $this->doctrine->getManager();
+            $em->persist($artykulEntity);
+            $em->flush(); 
+            $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
+            return $this->nowyArtykul( $newArrayArtykul);
+        }        
 
     }
 
