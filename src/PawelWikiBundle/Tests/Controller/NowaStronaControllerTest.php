@@ -22,6 +22,7 @@ class testNowaStrone extends WebTestCase
 		
 		$tytul_testowanie = 'Tytul_Do_testowania' ; 
 		$tresc_testowanie = "Tresc form do testowania";
+		$tresc_testowanie_zmiany_tresci = "Tresc form do testowania zmiany tresc artykulu";
 		$form['form[tytul]'] = $tytul_testowanie;
 		$form['form[tresc]'] = $tresc_testowanie;
 
@@ -37,7 +38,20 @@ class testNowaStrone extends WebTestCase
 		$content = $client->getResponse()->getContent();
 		$this->assertRegExp('/'.$tresc_testowanie.'/', $content);
 
-		//skasuj kontroler
+		//sprawdz edytowanie strony
+		$clawler = $client->request('GET', '/edytuj/'.$tytul_testowanie);
+		$form = $clawler->selectButton('Zapisz')->form();
+		$form['form[tresc]'] = $tresc_testowanie_zmiany_tresci;
+		$crawler2 = $client->submit($form);
+		//sprawdz czy form popralo odpowiednie wartosc
+		$data = $form->getPhpValues();
+		$this->assertEquals($tresc_testowanie_zmiany_tresci, $data['form']['tresc']);
+		//sprawdz czy edycja strony zostala zapisana i mozna ja wyswietlic
+		$clawler = $client->request('GET', '/strona/'.$tytul_testowanie);
+		$content = $client->getResponse()->getContent();
+		$this->assertRegExp('/'.$tresc_testowanie_zmiany_tresci.'/', $content);
+
+		//skasuj strone
 		$clawler = $client->request('GET', '/skasuj/'.$tytul_testowanie);
 		//sprawdz czy nie wyswietla artykulu
 		$clawler = $client->request('GET', '/strona/'.$tytul_testowanie);

@@ -4,7 +4,7 @@ popraw htacces w web directory
 
 dodatkowy controller ktory pobiera repository
 
-dzia³ajace edytowanie!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+przy edytowanie zmiana tytulu oznacza opcje "nowy artykul" czy "modyfikacja istniejacego"  
 
 
 
