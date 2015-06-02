@@ -8,7 +8,8 @@ przy edytowanie zmiana tytulu oznacza opcje "nowy artykul" czy "modyfikacja istn
 
 
 
-zamiana wiki stylu na HTML
+zamiana wiki stylu na HTML i wyswietlanie bez escaping {% autoescape false %} {{tresc}} {% endautoescape %}
+	najlepie w funckji wyswietl artykul
 wyglad graficzny
 
 wikikod

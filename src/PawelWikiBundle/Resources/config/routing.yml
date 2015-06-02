@@ -2,7 +2,7 @@ pawel_wiki_homepage:
     path:     /hello/{name}
     defaults: { _controller: PawelWikiBundle:Default:index }
 
-pawel_wiki_db_test:
+pawel_wiki_strona:
     path:     /strona/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlStrone:WyswietlStrone }
 
@@ -12,12 +12,12 @@ pawel_wiki_artykul:
 
 pawel_wiki_nowy_artykul:
     path:     /nowy_artykul
-    defaults: { _controller: PawelWikiBundle:WyswietlArtykul:NowyArtykul }
+    defaults: { _controller: PawelWikiBundle:WyswietlStrone:NowyArtykul }
+
+pawel_wiki_edytuj_artykul:
+    path:     /edytuj/{tytul}
+    defaults: { _controller: PawelWikiBundle:WyswietlStrone:edytujArtykul }
 
 pawel_wiki_skasuj_artykul:
     path:     /skasuj/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlArtykul:SkasujArtykul }
-
-pawel_wiki_edytuj_artykul:
-    path:     /edytuj/{tytul}
-    defaults: { _controller: PawelWikiBundle:WyswietlArtykul:edytujArtykul }
