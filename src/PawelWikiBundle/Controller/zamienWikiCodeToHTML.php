@@ -9,8 +9,11 @@ class zamienWikiCodeToHTML
 		"/==([^=]*)==/" => '<h2>\1</h2>',
 		"/''''([^\']*)''''/" => '<i><b>\1</b></i>',
 		"/'''([^\']*)'''/" => '<b>\1</b>',
-		"/''([^\']*)''/" => '<i>\1</i>',		
+		"/''([^\']*)''/" => '<i>\1</i>',	
+			
 		'/(https?):\/\/(([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]+((\/|\.)[A-Za-z0-9_-]+)*))/' => '<url="\1://\2">\2</url>',
+		'/\[<url=([^>]*)>([^<]*)<\/url> ([^\]]*)\]/' => '<url =\1>\3</url>',
+		//'/\[(https?):\/\/(([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]+((\/|\.)[A-Za-z0-9_-]+)*)) ([^\]]+)\]/' => '<url="\1://\2">\2</url>',
 		"/\[\[([^\[\]]*)\|([^\[\]]*)\]\]/" => '<url="$router->generate(\'pawel_wiki_artykul\', array(\'tytul\' => \'\1\'))\'">\2</url>',
 		"/\[\[([^\[\]]*)\]\]/" => '$router->generate("pawel_wiki_artykul", array("tytul" => "\1"))',
 		"/\[\[([^\[\]]*)#([^\[\]]*)\]\]/" => '$router->generate("pawel_wiki_artykul", array("tytul" => "\1#\2"))',
@@ -21,14 +24,8 @@ class zamienWikiCodeToHTML
 		//ordered
 		"/[\n\r]?#.+([\n|\r]#.+)+/" => '\n<ul>\n$0\n</ul>', 
 		"/# (.+)/"=> '<il>\1</il>',
-		"/<\/ul><\/il>/" => '</il></ul>'		
-		//"/[\n\r]#(?!#) *(.+)(([\n\r]#{2,}.+)+)/" => '<ul>\1</ul>',
-		// "/((\*([A-Za-z0-9_-]+))+)+/" => '<li>\3</li>',
-		// //"/((<li>.*<\/li>)\s?(<li>.*<\/li>)+)/" => '<ul>\1</ul>',
-		// "/((#([A-Za-z0-9_-]+))+)+/" => '<li>\3</li>',
-		// "/((<li>.*<\/li>)\s?(<li>.*<\/li>)*)/" => '<ul>\1</ul>',		
-		
-		
+		"/<\/ul><\/il>/" => '</il></ul>',
+		//"/\\n/" => '<br>'
 
 	);
 
@@ -43,12 +40,13 @@ class zamienWikiCodeToHTML
 	}
 }
 echo "test";
-$string = "==tekst==   ==tekst2==CCC  ===H3=== ''italic''  '''bold'''  ''''ib'''' "."\n"
-." https://google.com/"."\n".
+$string = "==tekst==   ==tekst2==CCC  ===H3=== ''italic''  '''bold'''  ''''ib'''' "."\n".
+" https://google.com/"."\n".
 "  https://google.com "."\n".
 "http://go_og_le.com/test"."\n".
 "http://go_og-le.com.pl/test/test2   "."\n".
-"http://google.com/test/test2/test3"."\n".
+ "http://google.com/test/test2/test3"."\n".
+"[https://google.com.pl/test1/test2 google]"."\n".
 "[[husaria]]"."\n".
 "[[husaria#bron]]"."\n".
 "[[husaria|husariiiiii]]"."\n".
