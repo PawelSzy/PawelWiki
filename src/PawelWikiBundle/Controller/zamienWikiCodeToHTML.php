@@ -14,10 +14,19 @@ class zamienWikiCodeToHTML
 		"/\[\[([^\[\]]*)\|([^\[\]]*)\]\]/" => '<url="$router->generate(\'pawel_wiki_artykul\', array(\'tytul\' => \'\1\'))\'">\2</url>',
 		"/\[\[([^\[\]]*)\]\]/" => '$router->generate("pawel_wiki_artykul", array("tytul" => "\1"))',
 		"/\[\[([^\[\]]*)#([^\[\]]*)\]\]/" => '$router->generate("pawel_wiki_artykul", array("tytul" => "\1#\2"))',
-		"/((\*([A-Za-z0-9_-]+))+)+/" => '<li>\3</li>',
-		//"/((<li>.*<\/li>)\s?(<li>.*<\/li>)+)/" => '<ul>\1</ul>',
-		"/((#([A-Za-z0-9_-]+))+)+/" => '<li>\3</li>',
-		"/((<li>.*<\/li>)\s?(<li>.*<\/li>)*)/" => '<ul>\1</ul>',		
+		//unordered list
+		"/[\n\r]?\*.+([\n|\r]\*.+)+/" =>'\n<ul>\n$0\n</ul>', 
+		"/\* (.+)/"=> '<il>\1</il>',
+		"/<\/ul><\/il>/" => '</il></ul>',
+		//ordered
+		"/[\n\r]?#.+([\n|\r]#.+)+/" => '\n<ul>\n$0\n</ul>', 
+		"/# (.+)/"=> '<il>\1</il>',
+		"/<\/ul><\/il>/" => '</il></ul>'		
+		//"/[\n\r]#(?!#) *(.+)(([\n\r]#{2,}.+)+)/" => '<ul>\1</ul>',
+		// "/((\*([A-Za-z0-9_-]+))+)+/" => '<li>\3</li>',
+		// //"/((<li>.*<\/li>)\s?(<li>.*<\/li>)+)/" => '<ul>\1</ul>',
+		// "/((#([A-Za-z0-9_-]+))+)+/" => '<li>\3</li>',
+		// "/((<li>.*<\/li>)\s?(<li>.*<\/li>)*)/" => '<ul>\1</ul>',		
 		
 		
 
@@ -43,10 +52,12 @@ $string = "==tekst==   ==tekst2==CCC  ===H3=== ''italic''  '''bold'''  ''''ib'''
 "[[husaria]]"."\n".
 "[[husaria#bron]]"."\n".
 "[[husaria|husariiiiii]]"."\n".
-"*tesr"."\n"."*test2"."\n".
+"* tesr"."\n"."* test2"."\n".
+"* tes2.5"."\n"."* 2.75test2"."\n".
+"_______________________"."\n".
 "#tesr3"."\n"."#test4"."\n".
 "tessssssssssssssssss"."\n".
-"*tes5r"."\n"."*test6"."\n"
+"* tes5r"."\n"."* Test6"."\n"
 ;
 echo zamienWikiCodeToHTML::konwersjaWikiCodeToHTML( $string );
 echo "\n";
