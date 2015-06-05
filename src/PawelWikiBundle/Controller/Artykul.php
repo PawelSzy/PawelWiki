@@ -6,6 +6,7 @@ namespace PawelWikiBundle\Controller;
 
 use PawelWikiBundle\Controller\ArtykulInterface;
 use PawelWikiBundle\Controller\getActualRepository;
+use PawelWikiBundle\Controller\ZamienWikiCodeToHTML;
 
 class Artykul implements ArtykulInterface
 {
@@ -67,13 +68,17 @@ class Artykul implements ArtykulInterface
         return $this->idHistori;
     }    
 
-    public function zapiszArtykul()
+    public function zwrocHTML()
     {
-        if ( isset( $this->repository) )
-        {
+        //@return funcka zwraca zkonwertowany tekst odczytany z bazy danych (w kodzie WikiCode) na html
 
-        }    
+        //w celu bezpieczenstwa tekst z bazy danych pozbadz sie html
+        $escapedTresc = htmlentities( $this->odczytajTresc() );
+        //konwersja i zwroc dane 
+        $htmlTresc = ZamienWikiCodeToHTML::konwersjaWikiCodeToHTML( $escapedTresc );
+        return $htmlTresc;
     }
+
 
 }
 

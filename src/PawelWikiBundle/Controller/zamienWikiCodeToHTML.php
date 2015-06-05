@@ -16,7 +16,7 @@ class ZamienWikiCodeToHTML
 		'/\[<url=([^>]*)>([^<]*)<\/url> ([^\]]*)\]/' => '<url =\1>\3</url>',
 		//'/\[(https?):\/\/(([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]+((\/|\.)[A-Za-z0-9_-]+)*)) ([^\]]+)\]/' => '<url="\1://\2">\2</url>',
 		"/\[\[([^\[\]]*)\|([^\[\]]*)\]\]/" => '<url="$router->generate(\'pawel_wiki_artykul\', array(\'tytul\' => \'\1\'))\'">\2</url>',
-		"/\[\[([^\[\]]*)\]\]/" => '$router->generate("pawel_wiki_artykul", array("tytul" => "\1"))',
+		"/\[\[([^\[\]]*)\]\]/" =>  '{{ $router->generate("pawel_wiki_artykul", array("tytul" => "\1"),true) }} ',
 		"/\[\[([^\[\]]*)#([^\[\]]*)\]\]/" => '$router->generate("pawel_wiki_artykul", array("tytul" => "\1#\2"))',
 		//unordered list
 		"/[\n\r]?\*.+([\n|\r]\*.+)+/" =>'<ul>$0</ul>', 

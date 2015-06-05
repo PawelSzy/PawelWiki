@@ -12,5 +12,4 @@ interface ArtykulInterface
     public function odczytajDateUtworzenia();
     public function pobierzLinkDoHistori();
     public function pobierzIDHistori();
-    public function zapiszArtykul();
 }
