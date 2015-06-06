@@ -68,16 +68,35 @@ class Artykul implements ArtykulInterface
         return $this->idHistori;
     }    
 
-    public function zwrocHTML()
+    public function zwrocHTML( $router = NULL)
     {
-        //@return funcka zwraca zkonwertowany tekst odczytany z bazy danych (w kodzie WikiCode) na html
+        //@param - router - obiekt pochodzacy z Symfony - sluzy do wyznaczania adresu 
+        //@return - funkcja zwraca zkonwertowany tekst odczytany z bazy danych (w kodzie WikiCode) na html
 
         //w celu bezpieczenstwa tekst z bazy danych pozbadz sie html
         $escapedTresc = htmlentities( $this->odczytajTresc() );
         //konwersja i zwroc dane 
         $htmlTresc = ZamienWikiCodeToHTML::konwersjaWikiCodeToHTML( $escapedTresc );
+        if( $router !== NULL)
+        {
+            list($stringsToChange, $URL) =ZamienWikiCodeToHTML::pobierzGeneracjaUrl($htmlTresc);
+            $listaUrlDoStrony = array();
+            foreach ($URL as $key => $nazwaArtykulu) {   
+                $urlDoStrony = $router->generate("pawel_wiki_strona", array("tytul" => $nazwaArtykulu), true);
+                $urlDoStrony = '<a href="'.$urlDoStrony.'">'.$nazwaArtykulu."</a>";
+                array_push($listaUrlDoStrony, $urlDoStrony);
+
+            };
+            $htmlTresc = str_replace($stringsToChange, $listaUrlDoStrony, $htmlTresc);
+        }
         return $htmlTresc;
     }
+
+    private function podzielURLnaAdresNazwa($url)
+    {
+        if 
+    }
+
 
 
 }

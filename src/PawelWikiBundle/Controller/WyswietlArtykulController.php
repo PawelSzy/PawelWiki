@@ -57,10 +57,11 @@ class WyswietlArtykulController extends Controller
 
         //jedyne miejsce w programie gdzie moge przekazac HTML (z bazy danych) bez escaping do wyswietlania
         //na stronie
-        $trescHTML = $artykul->zwrocHTML();
-
         $router = $this->get('router');
-        var_dump($router->generate("pawel_wiki_artykul", array("tytul" => "Sapkowski4"), true) );
+        $trescHTML = $artykul->zwrocHTML( $router );
+
+  
+        //var_dump($router->generate("pawel_wiki_artykul", array("tytul" => "Sapkowski4"), true) );
         return $this->render( 'PawelWikiBundle:Default:artykul_bez_escaping.html.twig', array('tytul' => $artykul->odczytajTytul(),
             'tresc' =>  $trescHTML  )) ;        
     }    
