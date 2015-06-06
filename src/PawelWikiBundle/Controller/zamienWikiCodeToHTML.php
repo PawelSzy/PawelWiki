@@ -40,6 +40,8 @@ class ZamienWikiCodeToHTML
 
 	public static function konwersjaWikiCodeToHTML( $string)
 	{
+		//p@aram string zawierajacy WikiCode
+		//@return string zawierajacy HTML
 		foreach (SELF::$RULES as $pattern => $replacement) {
 			$string = preg_replace($pattern, $replacement, $string);		
 		};

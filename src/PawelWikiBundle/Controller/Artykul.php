@@ -77,6 +77,7 @@ class Artykul implements ArtykulInterface
         $escapedTresc = htmlentities( $this->odczytajTresc() );
         //konwersja i zwroc dane
         $htmlTresc = ZamienWikiCodeToHTML::konwersjaWikiCodeToHTML( $escapedTresc );
+        
         //zamien wszystkie linki_code na linki w HTML
         if( $router !== NULL)
         {
@@ -106,6 +107,10 @@ class Artykul implements ArtykulInterface
 
     private function podzielAdresLnaAdresNazweLinki($url)
     {
+        //@param - string zawierajacy pierwszy wyraz - nazwaArtykulu, drugi wyraz - nazwa linku wyswietlana w przegladarce
+        //wyrazy rozdzielane sa spacja
+        //@return - zwraca array zawierajacy podzial wyrazow gdy string zawiera dwa wyrazy, zwraca FALSE gdy jest tylko jeden wyraz
+
         //pozbadz sie spacji z poczatki i konca
         $url = trim($url);
         //sprawdz czy url zawiera spacje
