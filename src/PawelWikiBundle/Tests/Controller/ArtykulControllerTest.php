@@ -41,7 +41,6 @@ class testStronaZArtykulem extends WebTestCase
 		$results = $clawler->filter('html:contains("Artykul_test")')->count();
 		$this->assertGreaterThan(0, $results);
 
-
 		/////////////////////////////////////////////////////////////////////
 		$results = $clawler->filter('html:contains("Husaria")')->count();
 		$this->assertGreaterThan(0, $results);
