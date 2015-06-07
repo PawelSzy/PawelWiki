@@ -16,8 +16,8 @@ class ZamienWikiCodeToHTML
 		//zamiana linkow
 		//linki bezposrednie - zwykle do URL na zewnatrz
 		'/(https?):\/\/(([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]+((\/|\.)[A-Za-z0-9_-]+)*))/' => '<a href="\1://\2">\2</a>',
-		'/\[<url=([^>]*)>([^<]*)<\/url> ([^\]]*)\]/' => '<a href=\1>\3</a>',
-		//'/\[(https?):\/\/(([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]+((\/|\.)[A-Za-z0-9_-]+)*)) ([^\]]+)\]/' => '<url="\1://\2">\2</url>',
+		'/\[<a href=([^>]*)>([^<]*)<\/a> ([^\]]*)\]/' => '<a href=\1>\3</a>',
+		//'/\[(https?):\/\/(([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]+((\/|\.)[A-Za-z0-9_-]+)*)) ([^\]]+)\]/' => '<a href="\1://\2">\2</a>',
 		
 		//linki posrednie zwykle do URL nalezacych do symfony
 		"/\[\[([^\[\]]*)\|([^\[\]]*)\]\]/" => '<a href="URL_SYMFONY(\'\1\')END_URL">\2</a>',
