@@ -47,9 +47,9 @@ class BazaArtykulow extends Controller
 
     public function nowyArtykul( $artykulArray )
     {
+        //@return fukcja zwraca nowy obiekt o klasie artykul
         //pozbadz sie spacji z tytulu
         $tytul = MyHellpers::zamienSpacjeNaPodkreslenia( $artykulArray['tytul'] );
-        echo $tytul;
        $artykulArray['tytul'] = $tytul;
        //zwraca instacje klassy Artykul z podanego tytulu i tekstu l
         $artykul = new Artykul( $artykulArray );

@@ -78,7 +78,7 @@ class WyswietlStroneController extends Controller
         {             
            //utworz Form i wpisz do niego tresc z artykulu
             $textWForm = array('tytul' => $artykul->odczytajTytul(), 'tresc' => $artykul->odczytajTresc() );
-            $form = $this->utworzFormZapisu($textWForm);
+            $form = $this->utworzEdytujForm($textWForm);
             $form->handleRequest($request);
            if ($form->isValid()) 
            {
@@ -90,7 +90,14 @@ class WyswietlStroneController extends Controller
                 //$arrayArtykul["tytul"] =$form->get('tytul')->getData();
                 $artykul->zmienTytul( $form->get('tytul')->getData() );
                 $artykul->zmienTresc( $form->get('tresc')->getData() );
-                $artykul = $this->BazaArtykulow->edytujArtykul( $artykul );                
+                $czyNowyArtykul = $form->get('utworzNowyArtykul')->getData();
+                if ( $czyNowyArtykul){
+                    $artykul = $this->BazaArtykulow->zapiszNowyArtykul( $artykul );
+                }
+                else {
+                    $artykul = $this->BazaArtykulow->edytujArtykul( $artykul );              
+                }
+                
                 if ($artykul!== NULL)
                 {
                     //zapisz artykul
@@ -110,6 +117,20 @@ class WyswietlStroneController extends Controller
         ->getForm();
         return $form;
     } 
+
+    private function utworzEdytujForm($napisyWForm = NULL)
+    {
+        $form = $this->createFormBuilder($napisyWForm)
+        ->add('tytul', 'text')
+        ->add('utworzNowyArtykul', 'checkbox', array('label'=> 'Zaznacz aby utworzyc nowy artykul',
+                'required'  => false,
+        ))        
+        ->add('tresc', 'textarea')
+        ->add('Zapisz', 'submit')
+        ->getForm();
+        return $form;
+    } 
+
 
     private function przeniescDoStrony( $tytul )
     {
