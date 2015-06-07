@@ -6,7 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use PawelWikiBundle\Controller\Artykul;
 
+use PawelWikiBundle\Controller\MyHellpers;
+
 use PawelWikiBundle\Entity\ArtykulDB;
+
+
 
 /**
 * 
@@ -43,7 +47,11 @@ class BazaArtykulow extends Controller
 
     public function nowyArtykul( $artykulArray )
     {
-       //zwraca instacje klassy Artykul z podanego tytulu i tekstu 
+        //pozbadz sie spacji z tytulu
+        $tytul = MyHellpers::zamienSpacjeNaPodkreslenia( $artykulArray['tytul'] );
+        echo $tytul;
+       $artykulArray['tytul'] = $tytul;
+       //zwraca instacje klassy Artykul z podanego tytulu i tekstu l
         $artykul = new Artykul( $artykulArray );
         return $artykul; 
 

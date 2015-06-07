@@ -15,8 +15,8 @@ class testArtykul extends \PHPUnit_Framework_TestCase
 
 		$daneArtykulu = array(
 	    	"id" => 555,
-	    	"tytul" => "Przykladowy tytul",
-	    	"tresc" => "Przykladowa tresc",
+	    	"tytul" => "Przykladowy_tytul",
+	    	"tresc" => "Przykladowa_tresc",
 	    	"dataZmiany" => "24.05.2015",
 	    	"idHistori" => 777
 		);
