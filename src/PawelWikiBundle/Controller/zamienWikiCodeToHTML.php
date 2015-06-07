@@ -51,7 +51,9 @@ class ZamienWikiCodeToHTML
 
 	public static function pobierzGeneracjaUrl( $string )
 	{
-		//@Return zwraca array zawierajacy string z generatorami URL
+		//@Return zwraca array zawierajacy string z wszystkimi URL w WikiCode
+		//pierwszy zwracany wyraz to caly kod w WikiCode
+		//drugi to  URL pobranyz z kody
 		preg_match_all(SELF::$RULES_URL, $string, $matches);
 		return array($matches[0], $matches[1]);
 	}

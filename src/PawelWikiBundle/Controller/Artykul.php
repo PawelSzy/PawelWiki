@@ -75,6 +75,7 @@ class Artykul implements ArtykulInterface
 
         //w celu bezpieczenstwa tekst z bazy danych pozbadz sie html
         $escapedTresc = htmlentities( $this->odczytajTresc() );
+
         //konwersja i zwroc dane
         $htmlTresc = ZamienWikiCodeToHTML::konwersjaWikiCodeToHTML( $escapedTresc );
         
@@ -85,7 +86,7 @@ class Artykul implements ArtykulInterface
             $listaUrlDoStrony = array();
             foreach ( $URL as $key => $nazwaArtykulu ) {
 
-                list( $nazwaArtykulu2, $nazwa_linku ) =  $this->podzielAdresLnaAdresNazweLinki( $nazwaArtykulu );
+                list( $nazwaArtykulu2, $nazwa_linku ) =  $this->podzielAdresnaAdresNazweLinki( $nazwaArtykulu );
                 if ( $nazwaArtykulu2 !==FALSE ) {
                     //url zostal zakodowany w postaci [[nazwaArtykulu, nazwaLinkuWyswietlanaNastronie]]
                     $urlDoStrony = $router->generate("pawel_wiki_strona", array("tytul" => $nazwaArtykulu2), true);
@@ -105,7 +106,7 @@ class Artykul implements ArtykulInterface
         return $htmlTresc;
     }
 
-    private function podzielAdresLnaAdresNazweLinki($url)
+    private function podzielAdresnaAdresNazweLinki($url)
     {
         //@param - string zawierajacy pierwszy wyraz - nazwaArtykulu, drugi wyraz - nazwa linku wyswietlana w przegladarce
         //wyrazy rozdzielane sa spacja

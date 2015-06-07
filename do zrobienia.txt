@@ -7,6 +7,10 @@ dodatkowy controller ktory pobiera repository
 przy edytowanie zmiana tytulu oznacza opcje "nowy artykul" czy "modyfikacja istniejacego"  
 
 
+test zamienWikiCodeToHTML
+
+PRzy tworzeniu nowego artykulu poka¿ odrazu wyswietlanie w kodzie HTML (najlepiej JQUery)
+
 Napis przy tworzeniu strony jakie s¹ zasady robienia kodu aby wyswietli³ siê html
 
 wyglad graficzny

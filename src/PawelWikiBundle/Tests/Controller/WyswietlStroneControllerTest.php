@@ -27,7 +27,8 @@ class testWyswietlStrone extends WebTestCase
 
 		/////////////////////////////////////////////////////////////////////
 		$content = $client->getResponse()->getContent();
-		$this->assertRegExp('/Husaria – polska jazda należąca do autoramentu narodowego, znana z wielu zwycięstw formacja kawaleryjska Rzeczypospolitej, obecna na polach bitew od początku XVI/', $content);		
+		$tekstDoTestowanie = htmlentities("Husaria – polska jazda należąca do autoramentu narodowego, znana z wielu zwycięstw formacja kawaleryjska Rzeczypospolitej, obecna na polach bitew od początku XVI");
+		$this->assertRegExp('/'.$tekstDoTestowanie.'/', $content);		
 	
 		//sprawdz czy istnieje stopka  /////////////////////////////////////////////////////////
 		$this->assertRegExp('/Testowa wersja Wiki stworzona przez Pawla Szymańskiego/', $content);
