@@ -60,6 +60,11 @@ class BazaArtykulow extends Controller
 
     public function zapiszNowyArtykul( $artykul )
     {
+        //zmien tytule spacje na podkreslenie 
+        $tytul = $artykul->odczytajTytul();
+        $nowy_tytul = MyHellpers::zamienSpacjeNaPodkreslenia( $tytul );
+        $artykul->zmienTytul( $nowy_tytul );
+
         //zapisuje informacje z objectu o klasie Artykul w bazie danych
         $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
 
