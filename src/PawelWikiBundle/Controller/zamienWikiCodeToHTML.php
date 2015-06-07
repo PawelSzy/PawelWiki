@@ -33,7 +33,7 @@ class ZamienWikiCodeToHTML
 		"/[\n\r]?#.+([\n|\r]#.+)+/" => '<ol>$0</ol>', 
 		"/# (.+)/"=> '<li>\1</li>',
 		"/<\/ol><\/li>/" => '</li></ol>',
-		//"/\\n/" => '<br>',
+		"/\\n\\n/" => '<br>',
 	);
 	private static $RULES_URL = '/URL_SYMFONY\(([^\)]+)\)END_URL/'; 
 
