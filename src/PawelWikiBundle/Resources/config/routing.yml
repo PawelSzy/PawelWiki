@@ -1,6 +1,6 @@
-pawel_wiki_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: PawelWikiBundle:Default:index }
+pawel_wiki_strona_glowna:
+    path:     /index
+    defaults: { _controller: PawelWikiBundle:StronaGlowna:StronaGlowna }
 
 pawel_wiki_strona:
     path:     /strona/{tytul}
