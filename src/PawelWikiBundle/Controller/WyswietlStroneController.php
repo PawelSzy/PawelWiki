@@ -18,7 +18,7 @@ class WyswietlStroneController extends Controller
     public function WyswietlStroneAction($tytul)
     {
         
-    return $this->render('PawelWikiBundle:Default:wiki_strona.html.twig', array('tytul' => $tytul));
+        return $this->WyswietlStroneArtykul( $tytul );
     }
 
     public function NowyArtykulAction( Request $request )
@@ -67,7 +67,7 @@ class WyswietlStroneController extends Controller
     public function edytujArtykulAction( $tytul, Request $request)
     {
         $repository = $this->pobierzRepository();
-        $tytulNowejStrony = "Edytuj strone PawelWiki";
+        $tytulNowejStrony = $tytul;
 
 
         $this->BazaArtykulow = new BazaArtykulow( $this->pobierzRepository(), $this->pobierzDoctrine() );
@@ -97,6 +97,7 @@ class WyswietlStroneController extends Controller
                 else {
                     $artykul = $this->BazaArtykulow->edytujArtykul( $artykul );              
                 }
+                $tytulNowejStrony = $artykul->odczytajTytul(); 
                 
                 if ($artykul!== NULL)
                 {
@@ -104,8 +105,9 @@ class WyswietlStroneController extends Controller
                     return $this->przeniescDoStrony( $artykul->odczytajTytul() );
                 }
             }
-        }        
-        return $this->wyswietlStroneForm($tytulNowejStrony, $form); 
+        }  
+             
+        return $this->wyswietlStroneEdytuj($tytulNowejStrony, $form); 
     }
 
   	private function utworzFormZapisu($napisyWForm = NULL)
@@ -136,12 +138,6 @@ class WyswietlStroneController extends Controller
     {
     	return $this->redirectToRoute('pawel_wiki_strona', array('tytul' => $tytul ));
     }
-    
-    private function wyswietlStroneForm($tytulNowejStrony, $form)
-    {
-        return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
-                'form' => $form->createView() ));
-    }
 
     private function wyswietlStronaIstnieje( $tytul )
     {
@@ -149,7 +145,29 @@ class WyswietlStroneController extends Controller
         $tytul_strony = 'PawelWikiBlad';
         return $this->render( 'PawelWikiBundle:Default:informacje_o_bledzie.html.twig', array('blad' => $blad,
             'tytul' => $tytul_strony));
-
     }
+
+
+    private function WyswietlStroneArtykul($tytul)
+    {
+        
+        return $this->render('PawelWikiBundle:Default:wiki_strona.html.twig', array('tytul' => $tytul));
+    }   
+    
+    private function wyswietlStroneForm($tytulNowejStrony, $form)
+    {
+        return $this->render( 'PawelWikiBundle:Default:nowa_strona.html.twig', array('tytul' => $tytulNowejStrony,
+                'form' => $form->createView() ));
+    }
+
+    private function wyswietlStroneEdytuj($tytulNowejStrony, $form)
+    {
+        return $this->render( 'PawelWikiBundle:Default:edytuj_strone.html.twig', array('tytul' => $tytulNowejStrony,
+                'form' => $form->createView() ));
+    }
+
+
+
+
 
 }
