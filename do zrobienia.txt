@@ -2,9 +2,7 @@ popraw htacces w web directory
 
 
 
-dodatkowy controller ktory pobiera repository
-
-przy edytowanie zmiana tytulu oznacza opcje "nowy artykul" czy "modyfikacja istniejacego"  
+dodatkowy controller ktory pobiera repository 
 
 
 test zamienWikiCodeToHTML

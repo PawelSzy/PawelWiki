@@ -21,3 +21,7 @@ pawel_wiki_edytuj_artykul:
 pawel_wiki_skasuj_artykul:
     path:     /skasuj/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlArtykul:SkasujArtykul }
+
+pawel_wiki_info:
+    path:     /info
+    defaults: { _controller: PawelWikiBundle:PawelWikiInfo:PawelWikiInfo }
