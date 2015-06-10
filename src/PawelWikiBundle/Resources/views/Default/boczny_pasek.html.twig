@@ -5,12 +5,15 @@
 		<img src="{{ asset('bundles/pawelwiki/images/Logo.png') }}" alt="Ikona PawelWiki" title="Strona Glowna PawelWiki" />
 	</a>
 	<hr><br>
-	<a href="{{ path('pawel_wiki_strona_glowna') }}"> Strona glowna</a> <br>
+		<a href="{{ path('pawel_wiki_strona_glowna') }}"> Strona glowna</a> <br>
 	Losowy artykul <br>
 	<hr>
-	<a href="{{ path('pawel_wiki_info') }}">O PawelWiki</a> <br>
+		<a href="{{ path('pawel_wiki_nowy_artykul') }}" title="Utworz nowy Wiki Artykul"> Nowy Artykul</a> <br>	
+		<a href="{{ path('pawel_wiki_edytuj_artykul', {'tytul': tytul } ) }}" title = "Edytuj aktualny Wiki Artykul"> Edytuj Artykul</a> 	
 	<hr>
-	Jak modyfikowac dane <br>
+		<a href="{{ path('pawel_wiki_info') }}" title="Informacje o autorze portalu i zastosowanej technologi">O PawelWiki</a> <br>
+	<hr>
+		Jak modyfikowac dane <br>
 	<hr>
 </div>
  
