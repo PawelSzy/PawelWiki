@@ -11,7 +11,13 @@ PRzy tworzeniu nowego artykulu poka¿ odrazu wyswietlanie w kodzie HTML (najlepie
 
 Napis przy tworzeniu strony jakie s¹ zasady robienia kodu aby wyswietli³ siê html
 
+historia
+
+
+
 wyglad graficzny
+	kolory
+	obramowanie
 
 wikikod
 http://pl.wikipedia.org/wiki/Pomoc:Formatowanie_tekstu
