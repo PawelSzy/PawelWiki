@@ -1,0 +1,49 @@
+@lekkiSzaryNiebieski: #F6F6F6;
+@lekkiNiebieski: #A7D7F9;
+@szaryNiebieski: #EEEEEE;
+@bialy: #FFFFFF;
+@szary: #DDDDDD;
+
+
+.Gradient_lekki{
+	@gradient_poczatek: @lekkiSzaryNiebieski;
+	@gradient_koniec: @bialy;	
+	  background: -webkit-radial-gradient(left top, @gradient_poczatek 40%, @gradient_koniec ); /* For Safari 5.1 to 6.0 */
+	  background: -o-radial-gradient(bottom right, @gradient_poczatek 40%, @gradient_koniec); /* For Opera 11.1 to 12.0 */
+	  background: -moz-radial-gradient(bottom right, @gradient_poczatek 40%, @gradient_koniec); /* For Firefox 3.6 to 15 */
+	  background: radial-gradient(to bottom right, @gradient_poczatek 40%, @gradient_koniec); /* Standard syntax */ 	
+}
+
+.Gradient_ciezki {
+	@gradient_poczatek: @bialy;
+	@gradient_koniec: @lekkiNiebieski;	
+	
+	  background: -webkit-linear-gradient( top, @gradient_poczatek 70%, @gradient_koniec ); /* For Safari 5.1 to 6.0 */
+	  background: -o-linear-gradient(bottom , @gradient_poczatek 70%, @gradient_koniec); /* For Opera 11.1 to 12.0 */
+	  background: -moz-linear-gradient(bottom , @gradient_poczatek 70%, @gradient_koniec); /* For Firefox 3.6 to 15 */
+	  background: linear-gradient(to bottom , @gradient_poczatek 70%, @gradient_koniec); /* Standard syntax */ 
+}
+
+
+.Granica_pomocnicze_elem_pion {
+	border-right-style: solid;
+    border-left-style: solid; 
+    border-width: 1px;
+    border-color: @lekkiNiebieski;
+  	
+}
+
+
+.boczny_pasek {
+	.Gradient_lekki;
+	.Granica_pomocnicze_elem_pion;
+	 padding: 0.5em;
+}
+
+.stopka {
+	.Gradient_lekki;	
+}
+
+#form_tresc {
+	height: 20em;
+}

@@ -10,13 +10,11 @@ test zamienWikiCodeToHTML
 1) Napis przy tworzeniu strony jakie s¹ zasady robienia kodu aby wyswietli³ siê html
 2) PRzy tworzeniu nowego artykulu poka¿ odrazu wyswietlanie w kodzie HTML (najlepiej JQUery)
 
-3) wyglad graficzny
-	kolory
-	obramowanie
+3) logowanie i historia zmian
+4) Losowy artykul
 
-4) historia
-5) Losowy artykul
-6) 
+6)wyswietlanie zdjecia/rysunkow
+7) wyglad graficzny
 
 
 
