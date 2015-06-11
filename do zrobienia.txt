@@ -7,17 +7,19 @@ dodatkowy controller ktory pobiera repository
 
 test zamienWikiCodeToHTML
 
-PRzy tworzeniu nowego artykulu poka¿ odrazu wyswietlanie w kodzie HTML (najlepiej JQUery)
+1) Napis przy tworzeniu strony jakie s¹ zasady robienia kodu aby wyswietli³ siê html
+2) PRzy tworzeniu nowego artykulu poka¿ odrazu wyswietlanie w kodzie HTML (najlepiej JQUery)
 
-Napis przy tworzeniu strony jakie s¹ zasady robienia kodu aby wyswietli³ siê html
-
-historia
-
-
-
-wyglad graficzny
+3) wyglad graficzny
 	kolory
 	obramowanie
+
+4) historia
+5) Losowy artykul
+6) 
+
+
+
 
 wikikod
 http://pl.wikipedia.org/wiki/Pomoc:Formatowanie_tekstu
