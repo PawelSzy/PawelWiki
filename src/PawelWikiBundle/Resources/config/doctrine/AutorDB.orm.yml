@@ -1,0 +1,20 @@
+PawelWikiBundle\Entity\AutorDB:
+    type: entity
+    table: null
+    uniqueConstraints:
+        uniqueConstraint:
+            columns: [id, login]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        login:
+            type: string    
+        passwordHash:
+            type: string
+        email:
+            type: text
+
