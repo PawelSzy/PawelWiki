@@ -31,10 +31,10 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login_check
-                default_target_path: /
+                default_target_path: /index
             logout:
                 path: /logout
-                target: /
+                target: /index
             security: true
             anonymous: true
     # disables authentication for assets and the profiler, adapt it according to your needs

@@ -21,13 +21,14 @@ class SecurityController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
-
+        $tytul_strony = "PawelWiki login";
         return $this->render(
             'PawelWikiBundle:Security:login.html.twig',
             array(
                 // last username entered by the user
                 'last_username' => $session->get(SecurityContext::LAST_USERNAME),
                 'error'         => $error,
+                'tytul'         => $tytul_strony
             )
         );
     }
