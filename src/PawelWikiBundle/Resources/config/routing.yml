@@ -33,3 +33,13 @@ pawel_wiki_info:
 pawel_wiki_nowy_autor:
     path:     /nowy_autor
     defaults: { _controller: PawelWikiBundle:Zaloguj:nowy_autor }
+
+login:
+    path: /login
+    defaults: { _controller: PawelWikiBundle:Security:login }
+
+login_check:
+    path: /login_check
+
+logout:
+    pattern: /logout
