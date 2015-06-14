@@ -3,9 +3,10 @@
 security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
-        Symfony\Component\Security\Core\User\User:
-            algorithm: bcrypt
-            cost: 12
+        Symfony\Component\Security\Core\User\User: plaintext
+            #algorithm: bcrypt
+            #cost: 12
+        PawelWikiBundle\Entity\User: bcrypt
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
