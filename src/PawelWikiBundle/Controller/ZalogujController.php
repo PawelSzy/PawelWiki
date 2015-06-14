@@ -26,7 +26,7 @@ class ZalogujController extends Controller
 
         ///////////test///////////////////////////////////////////////////////
         $autor = $bazaAutorow->odczytajAutora( "test" );
-        var_dump( $autor );
+        //var_dump( $autor );
         ///////////test koniec///////////////////////////////////////////////////////
       
         $form = $this->utworzForm();
@@ -40,20 +40,26 @@ class ZalogujController extends Controller
 
             //odczytaj dane z form
             $arrayArtykul = array();
-            $arrayArtykul["tytul"] =    $form->get('login')->getData();
+            $arrayArtykul["login"] =    $form->get('login')->getData();
             $arrayArtykul["haslo"] = $form->get('haslo')->getData();
             $arrayArtykul["email"] =    $form->get('email')->getData(); 
 
+            echo "yrdf";
+            //zakoduj haslo
             $user = new AppBundle\Entity\User();
-            // $plainPassword = 'ryanpass';
-            $encoder = $this->container->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($user,  $arrayArtykul["haslo"]);
+            var_dump($user);
+            // // $plainPassword = 'ryanpass';
+            // $encoder = $this->container->get('security.password_encoder');
+            // $encoded = $encoder->encodePassword($user,  $arrayArtykul["haslo"]);
+            echo "345";
 
-            var_dump( $encoded);
-            $user->setPassword($encoded);
+
+            //var_dump( $encoded);
+            //$user->setPassword($encoded);
             /////////////////////////////////TUTAJ DODAJ ZAPIS DO BAZY DANYCH////////////////////////////////////////////////////        
         }    
    
+        
         $tytul = "Nowy autor PawelWiki";
         $form = $this->utworzForm();
         return $this->wyswietlNowyAutor($tytul, $form);
@@ -64,7 +70,7 @@ class ZalogujController extends Controller
     {
 
         $form = $this->createFormBuilder($napisyWForm)
-        ->add('Login', 'text')
+        ->add('login', 'text')
         ->add('haslo', 'password')
         ->add('email', 'email')
         ->add('Zapisz', 'submit')

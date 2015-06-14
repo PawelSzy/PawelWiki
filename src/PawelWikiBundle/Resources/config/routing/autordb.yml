@@ -1,0 +1,30 @@
+autordb:
+    path:     /
+    defaults: { _controller: "PawelWikiBundle:AutorDB:index" }
+
+autordb_show:
+    path:     /{id}/show
+    defaults: { _controller: "PawelWikiBundle:AutorDB:show" }
+
+autordb_new:
+    path:     /new
+    defaults: { _controller: "PawelWikiBundle:AutorDB:new" }
+
+autordb_create:
+    path:     /create
+    defaults: { _controller: "PawelWikiBundle:AutorDB:create" }
+    methods:  POST
+
+autordb_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PawelWikiBundle:AutorDB:edit" }
+
+autordb_update:
+    path:     /{id}/update
+    defaults: { _controller: "PawelWikiBundle:AutorDB:update" }
+    methods:  [POST, PUT]
+
+autordb_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PawelWikiBundle:AutorDB:delete" }
+    methods:  [POST, DELETE]

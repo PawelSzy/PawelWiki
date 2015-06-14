@@ -1,3 +1,7 @@
+pawel_wiki_autordb:
+    resource: "@PawelWikiBundle/Resources/config/routing/autordb.yml"
+    prefix:   /autordb
+
 pawel_wiki_strona_glowna:
     path:     /index
     defaults: { _controller: PawelWikiBundle:StronaGlowna:StronaGlowna }

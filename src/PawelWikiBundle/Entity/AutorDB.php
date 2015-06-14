@@ -4,13 +4,15 @@ namespace PawelWikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+ use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * Autor
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PawelWikiBundle\Entity\AutorRepository")
  */
-class AutorDB
+class AutorDB implements UserInterface
 {
     /**
      * @var integer
@@ -76,18 +78,42 @@ class AutorDB
         return $this->login;
     }
 
+    public function getUsername()
+    {
+        return $this->login;
+    }
+
     /**
      * Set passwordHash
      *
      * @param string $passwordHash
      * @return Autor
      */
-    public function setPasswordHash($passwordHash)
+    public function setPassword($password)
     {
-        $this->passwordHash = $passwordHash;
+        $this->passwordHash = password_hash( $password, PASSWORD_BCRYPT );
 
         return $this;
     }
+
+    /**
+     * Get passwordHash
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->passwordHash;
+    }
+
+
+    public function setPasswordHash($password)
+    {
+        $this->passwordHash = password_hash( $password, PASSWORD_BCRYPT );
+
+        return $this;
+    }
+
 
     /**
      * Get passwordHash
@@ -121,4 +147,20 @@ class AutorDB
     {
         return $this->email;
     }
+
+    public function getSalt() 
+    {
+        return null;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
 }
