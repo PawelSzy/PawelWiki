@@ -83,6 +83,13 @@ class AutorDB implements UserInterface
         return $this->login;
     }
 
+
+    public function setUsername($login)
+    {
+        $this->login = $login;
+
+        return $this;
+    }
     /**
      * Set passwordHash
      *
