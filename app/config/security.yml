@@ -6,7 +6,7 @@ security:
         Symfony\Component\Security\Core\User\User: plaintext
             #algorithm: bcrypt
             #cost: 12
-        PawelWikiBundle\Entity\User: bcrypt
+        PawelWikiBundle\Entity\AutorDB: bcrypt
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
@@ -15,11 +15,15 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
         in_memory:
             memory:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    #entity: { class: PawelWikiBundle:AutorDB, property: username }
         user_db:
             entity: { class: PawelWikiBundle:AutorDB, property: username}
 
