@@ -67,7 +67,7 @@ class AutorDBController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Utworz'));
 
         return $form;
     }

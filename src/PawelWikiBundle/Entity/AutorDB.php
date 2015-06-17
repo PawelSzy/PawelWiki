@@ -113,6 +113,15 @@ class AutorDB implements UserInterface
         return $this->passwordHash;
     }
 
+    public function getHaslo()
+    {
+        return $this->passwordHash;
+    }
+
+    public function setHaslo($password)
+    {
+        return $this->setPassword($password);
+    }    
 
     public function setPasswordHash($password)
     {

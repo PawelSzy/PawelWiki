@@ -72,5 +72,7 @@ security:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /autordb/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /autordb/show, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /autordb, roles: ROLE_ADMIN }
         - { path: /*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
