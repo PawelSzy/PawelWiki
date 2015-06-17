@@ -44,7 +44,15 @@ class PasekLogowaniaController extends Controller
 
 		if ( $czy_zalogowany === true )
 		{
-			$zwracany_tekst = $id->getLogin();
+			if ( $this->get( 'security.authorization_checker' )->isGranted( 'ROLE_ADMIN' ) )
+			{
+				$zwracany_tekst = "Admin";	
+			}
+			else 
+			{
+				$zwracany_tekst = $id->getLogin();
+			}
+			
 		}
 		else 
 		{
