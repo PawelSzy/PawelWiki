@@ -1,3 +1,8 @@
-<div>
-	 {{ render(controller("PawelWikiBundle:PasekLogowania:pokazLogowanie" )) }}
+<div class="pasek_logowania">
+	{% if render(controller("PawelWikiBundle:PasekLogowania:czyZalogowany" )) =="true" %}
+		Witaj {{ render(controller("PawelWikiBundle:PasekLogowania:pobierzLogin")) }}
+		<a href=" {{ path('logout') }}">Wyloguj sie</a>
+	{% else %}
+	<a href=" {{ path('login') }}">Zaloguj sie</a>	
+	{% endif %}
  </div>

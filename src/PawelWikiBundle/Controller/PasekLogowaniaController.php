@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 */
 class PasekLogowaniaController extends Controller
 {
-	public function pokazLogowanieAction()
+	public function czyZalogowanyAction()
 	{
 		$id =  $this->get('security.token_storage')->getToken()->getUser();
 
@@ -19,14 +19,12 @@ class PasekLogowaniaController extends Controller
 
 		if ( $czy_zalogowany === true )
 		{
-			$zwracany_tekst = "Witaj ".$id->getLogin();
+			$zwracany_tekst = "true"; //"Witaj ".$id->getLogin();
 		}
 		else 
 		{
-			$zwracany_tekst = "Zaloguj sie";
+			$zwracany_tekst = "false" ;//"Zaloguj sie "."{{ path('login') }}";
 		}
-
-
 
 		$response = new Response();
 
@@ -35,8 +33,32 @@ class PasekLogowaniaController extends Controller
 		$response->headers->set('Content-Type', 'text/html');
 
 		// prints the HTTP headers followed by the content
-		return $response;
-
-		
+		return $response;		
 	}
+
+	public function pobierzLoginAction()
+	{
+		$id =  $this->get('security.token_storage')->getToken()->getUser();
+
+		$czy_zalogowany  = ($id !== "anon." ? true : false);
+
+		if ( $czy_zalogowany === true )
+		{
+			$zwracany_tekst = $id->getLogin();
+		}
+		else 
+		{
+			$zwracany_tekst = "false" ;
+		}
+
+		$response = new Response();
+
+		$response->setContent($zwracany_tekst);
+		$response->setStatusCode(Response::HTTP_OK);
+		$response->headers->set('Content-Type', 'text/html');
+
+		// prints the HTTP headers followed by the content
+		return $response;		
+	}
+
 }
