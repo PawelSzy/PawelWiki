@@ -3,6 +3,7 @@
 		Witaj {{ render(controller("PawelWikiBundle:PasekLogowania:pobierzLogin")) }}
 		<a href=" {{ path('logout') }}">Wyloguj sie</a>
 	{% else %}
+	<a href=" {{ path('nowy_autor') }}">Zarejestruj sie</a>	
 	<a href=" {{ path('login') }}">Zaloguj sie</a>	
 	{% endif %}
  </div>
