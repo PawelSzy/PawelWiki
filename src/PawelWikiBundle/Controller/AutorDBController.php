@@ -44,6 +44,7 @@ class AutorDBController extends Controller
             $em->persist($entity);
             $em->flush();
 
+
             return $this->redirect($this->generateUrl('autordb_show', array('id' => $entity->getId())));
         }
 

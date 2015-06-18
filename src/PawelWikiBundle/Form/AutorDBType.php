@@ -16,8 +16,8 @@ class AutorDBType extends AbstractType
     {
         $builder
             ->add('login')
-            ->add('haslo')
-            ->add('email')
+            ->add('haslo', "password")
+            ->add('email', "email")
         ;
     }
     
