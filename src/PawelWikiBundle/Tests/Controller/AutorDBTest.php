@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AutorDBControllerTest extends WebTestCase
 {
-    /*
+    
     public function testCompleteScenario()
     {
         // Create a new client to browse the application
@@ -18,9 +18,10 @@ class AutorDBControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
-        $form = $crawler->selectButton('Create')->form(array(
-            'pawelwikibundle_autordb[field_name]'  => 'Test',
-            // ... other fields to fill
+        $form = $crawler->selectButton('Utworz')->form(array(
+            'pawelwikibundle_autordb[login]'  => 'Test',
+            'pawelwikibundle_autordb[haslo]'  => 'Test',
+            'pawelwikibundle_autordb[email]'  => 'Test@test.pl',
         ));
 
         $client->submit($form);
@@ -33,8 +34,9 @@ class AutorDBControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Update')->form(array(
-            'pawelwikibundle_autordb[field_name]'  => 'Foo',
-            // ... other fields to fill
+            'pawelwikibundle_autordb[login]'  => 'Foo',
+            'pawelwikibundle_autordb[haslo]'  => 'Foo',
+            'pawelwikibundle_autordb[email]'  => 'Foo@foo.pl',
         ));
 
         $client->submit($form);
@@ -51,5 +53,5 @@ class AutorDBControllerTest extends WebTestCase
         $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
     }
 
-    */
+    
 }
