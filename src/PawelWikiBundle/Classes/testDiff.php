@@ -14,13 +14,11 @@ $string1 = "
 7
 ";
 
-$string2 = "*
+$string2 = "
 1
 2
 new
 4
-*
-*
 new
 5
 new
@@ -29,33 +27,33 @@ new
 /** 
 Classa zajmuje sie roznica pomiedzy strigami 
 */
-class StringDiff 
+class StringDiff extends Diff
 {
 
   // const UNMODIFIED = 0;
   // const DELETED    = 1;
   // const INSERTED   = 2;
 
+	/**
+  	---- Funkcja zwraca skrocony diif - tylko dodane i skasowane linie
+	// @param diff - array zawierajacy roznice pomiedzy dwoma stringami - podzoci z classDiff
+	@return array skrocony diif - tylko dodane i skasowane linie
+	*/
+	static function skroconyDiff( $oldDiff )
+	{
+		$diff = array();
+		$lenDif = count($oldDiff);
+		print_r($oldDiff);
+		for ($i=0; $i < $lenDif; $i++) { 
+			if ($oldDiff[$i][1] !=SELF::UNMODIFIED)
+			{
+				$diff[(string)$i] = $oldDiff[$i]; 
+			}
+		}
+		//var_dump($diff);
 
-
-	// static function pokazRoznice( $string1, $string2 )
-	// {
-
-	// 	$allDiff  = Diff::compare($string1, $string2 );
-	// 	//echo Diff::toString( $allDiff );
-
-	// 	$diff = array();
-	// 	$lenDif = count($allDiff);
-	// 	for ($i=0; $i < $lenDif; $i++) { 
-	// 		if ($allDiff[$i][1] !=SELF::UNMODIFIED)
-	// 		{
-	// 			$diff[(string)$i] = $allDiff[$i]; 
-	// 		}
-	// 	}
-	// 	//var_dump($diff);
-	// 	$stringDiff =  Diff::toString( $diff );
-	// 	return array($diff, $stringDiff);
-	// }
+		return array($diff);
+	}
 
   	/**
   	---- Funkcja zwraca stara wersje tekstu na podstawie nowego i roznicy pomiedzy nimi
@@ -72,18 +70,18 @@ class StringDiff
 		foreach ($diff as $i => $daneLinii)
 		{ 
 			//dodaj stara linie
-			if ($daneLinii[1] ==Diff::DELETED)
+			if ($daneLinii[1] ==SELF::DELETED)
 			{
 				//fnkcja odwrotna do tworzenia
-				//dodaj nowa linie do array
+				//dodaj nowa linie w array
 				$arrString = SELF::dodajLinie( $arrString, $r, $daneLinii[0] );
 				$r +=1;
 			}
 			//usun linie
-			elseif ($daneLinii[1] ==DIff::INSERTED)
+			elseif ($daneLinii[1] ==SELF::INSERTED)
 			{
 				//fnkcja odwrotna do tworzenia
-				//usun nowa linie do array
+				//usun nowa linie w array
 				$arrString = SELF::usunLinie( $arrString, $r );
  			
 			}
@@ -91,9 +89,9 @@ class StringDiff
 			{
 				$r +=1;
 			}		
-			echo "i: ".$i."\n";
-			echo "r: ".$r."\n";	
-			echo "**************: \n";			
+			// echo "i: ".$i."\n";
+			// echo "r: ".$r."\n";	
+			// echo "**************: \n";			
 		}	
 		return implode("\n", $arrString);
 	}	
@@ -109,10 +107,31 @@ class StringDiff
 		$array = array_values($array);
 		return $array;
 	}		
+
+	/**
+	Funkcja zwraca ilosc dodanych i usunietych linii 
+	@param diif - array zawierajacy roznice pomiedzy dwoma stringami
+	@return array("+" => ilosc dodanych, "-" => ilosc usunietych)
+	*/
+	static function zwrocStatystyke($diff)
+	{
+		$array = array("+" => 0, "-" =>0);
+		return $array;
+		foreach ($diff as $key => $value) {
+			if( $value[1] ==SELF::INSERTED)
+			{
+				$array["+"] +=1;
+			}
+			elseif ( $value[1] ==SELF::DELETED )
+			{
+				$array["-"] +=1;
+			}
+		}
+	} 
 }
 
 
-$diff = Diff::compare($string1, $string2 );
+$diff = StringDiff::compare($string1, $string2 );
 
 echo "\n-------------- \n";
 var_dump($diff);
@@ -123,16 +142,19 @@ echo "\n-------------- \n";
 
 
 
-echo Diff::toString($diff);
+echo StringDiff::toString($diff);
 
 $oldString =  StringDiff::zwrocStaryString($diff, $string2) ;
-echo $oldString;
-echo $string1;
+// echo $oldString;
+// echo $string1;
 
+// echo "podaj statystyke: ";
+// print_r(StringDiff::zwrocStatystyke($diff) );
 
+echo "\nskroconyDiff\n";
+print_r( StringDiff::skroconyDiff($diff) );
 //testowanie klasy
-$ar1 = explode("\n", $string1);
-$ar2 = explode("\n", $oldString);
+
 
 echo "Czy udalo sie wrocic do starego tekstu ".assert( strcmp( $oldString, $string1 ) );  
 
