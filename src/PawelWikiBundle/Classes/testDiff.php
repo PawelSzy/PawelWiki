@@ -131,32 +131,32 @@ class StringDiff extends Diff
 }
 
 
-$diff = StringDiff::compare($string1, $string2 );
+// $diff = StringDiff::compare($string1, $string2 );
 
-echo "\n-------------- \n";
-var_dump($diff);
-
-
-echo "\n-------------- \n";
-// echo $stringDiff;
+// echo "\n-------------- \n";
+// var_dump($diff);
 
 
-
-echo StringDiff::toString($diff);
-
-$oldString =  StringDiff::zwrocStaryString($diff, $string2) ;
-// echo $oldString;
-// echo $string1;
-
-// echo "podaj statystyke: ";
-// print_r(StringDiff::zwrocStatystyke($diff) );
-
-echo "\nskroconyDiff\n";
-print_r( StringDiff::skroconyDiff($diff) );
-//testowanie klasy
+// echo "\n-------------- \n";
+// // echo $stringDiff;
 
 
-echo "Czy udalo sie wrocic do starego tekstu ".assert( strcmp( $oldString, $string1 ) );  
+
+// echo StringDiff::toString($diff);
+
+// $oldString =  StringDiff::zwrocStaryString($diff, $string2) ;
+// // echo $oldString;
+// // echo $string1;
+
+// // echo "podaj statystyke: ";
+// // print_r(StringDiff::zwrocStatystyke($diff) );
+
+// echo "\nskroconyDiff\n";
+// print_r( StringDiff::skroconyDiff($diff) );
+// //testowanie klasy
+
+
+// echo "Czy udalo sie wrocic do starego tekstu ".assert( strcmp( $oldString, $string1 ) );  
 
 
 //// Uzyj explode aby rozebrac na stringi po linie z podzialem \n 

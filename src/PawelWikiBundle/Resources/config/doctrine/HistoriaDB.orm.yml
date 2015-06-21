@@ -1,0 +1,29 @@
+PawelWikiBundle\Entity\HistoriaDB:
+    type: entity
+    table: null
+    uniqueConstraints:
+        uniqueConstraint:
+            columns: [id]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        autor:
+            type: string 
+        diff:
+            type: text
+        data:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create   
+        idPoprzedniej:
+            type: integer    
+        statystyka:
+            type: string
+        krotkiDiff:
+            type: text
+    lifecycleCallbacks: {  }

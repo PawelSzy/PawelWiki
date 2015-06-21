@@ -1,9 +1,9 @@
-PawelWikiBundle\Entity\Artykul:
+PawelWikiBundle\Entity\ArtykulDB:
     type: entity
     table: null
     uniqueConstraints:
         uniqueConstraint:
-            columns: [id, tytul]    
+            columns: [id]
     id:
         id:
             type: integer
