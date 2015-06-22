@@ -71,9 +71,6 @@ class BazaArtykulow extends Controller
         $artykul->zmienTytul( $nowy_tytul );
 
 
-        //zapisuje informacje z objectu o klasie Artykul w bazie danych
-        $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
-
 
         ///////////////////////////////////////
         //zapisz do bazy danych
@@ -84,9 +81,10 @@ class BazaArtykulow extends Controller
        }
 
         //zapisz w histori artykulu
-       $this->utworzNowaHistorie( $artykul );
+        $idHistori = $this->utworzNowaHistorie( $artykul );
 
-       return;
+        //zapisz id Historii
+        $artykul->zmienIDHistori($idHistori); 
 
         //zapisuje informacje z objectu o klasie Artykul w bazie danych
         $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
@@ -108,12 +106,8 @@ class BazaArtykulow extends Controller
     {
        $historia = new HistoriaDB;
 
+       $autor = "anonymous";
         $tekstArtykulu = $artykul->odczytajTresc();
-
-        var_dump($tekstArtykulu);
-
-
-        $autor = "anonymous";
 
         $diff = StringDiff::compare( $tekstArtykulu, "\n" );
 
@@ -121,23 +115,31 @@ class BazaArtykulow extends Controller
         $krotkiDiff = StringDiff::skroconyDiff( $diff );
         $idPoprzedniej = 0;
 
-        echo "hisotria";
+
         //konieczna serializacja array aby zapisac w bazie danych 
         $serializeDiff = serialize($diff);        
         $serializeStat = serialize($statystyka);
         $serializeKrotkiDiff = serialize($krotkiDiff);
 
+        //utworz entiy historia - z entity HistoriaDB
         $historia->setAutor( $autor );
         $historia->setDiff( $serializeDiff );
         $historia->setIdPoprzedniej( $idPoprzedniej );
         $historia->setStatystyka( $serializeStat );
         $historia->setKrotkiDiff( $serializeKrotkiDiff );
 
-        print_r( $historia );
+        //zapisz do bazy danych
         $em = $this->doctrine->getManager();;
         $em->persist( $historia );
         $em->flush();       
+
+        //pobierzID
+        $id = $historia->getId();
+        return $id;
     }
+
+
+
 
 
     public function edytujArtykul( $artykul )
@@ -231,7 +233,7 @@ class BazaArtykulow extends Controller
         $artykulEntity = new ArtykulDB;
         $artykulEntity->setTytul( $artykul->odczytajTytul() );
         $artykulEntity->setArtykul( $artykul->odczytajTresc() );
-        $artykulEntity->setIdHistori( 0 );
+        $artykulEntity->setIdHistori( $artykul->pobierzIDHistori() );
         return $artykulEntity;
 
     }

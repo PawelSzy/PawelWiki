@@ -63,6 +63,13 @@ class Artykul implements ArtykulInterface
         //return $this->idHistori;
     }
 
+
+    public function zmienIDHistori($idHistori)
+    {
+        $this->idHistori= $idHistori;
+        return $this;   
+    }
+
     public function pobierzIDHistori()
     {
         return $this->idHistori;
