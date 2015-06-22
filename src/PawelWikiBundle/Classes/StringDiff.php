@@ -1,5 +1,8 @@
 <?php
 
+
+namespace PawelWikiBundle\Classes;
+
 include 'classDiff.php';
 
 //echo "test";
@@ -39,18 +42,16 @@ class StringDiff extends Diff
 	// @param diff - array zawierajacy roznice pomiedzy dwoma stringami - podzoci z classDiff
 	@return array skrocony diif - tylko dodane i skasowane linie
 	*/
-	static function skroconyDiff( $oldDiff )
+	public static function skroconyDiff( $oldDiff )
 	{
 		$diff = array();
 		$lenDif = count($oldDiff);
-		print_r($oldDiff);
 		for ($i=0; $i < $lenDif; $i++) { 
 			if ($oldDiff[$i][1] !=SELF::UNMODIFIED)
 			{
 				$diff[(string)$i] = $oldDiff[$i]; 
 			}
 		}
-		//var_dump($diff);
 
 		return array($diff);
 	}
@@ -62,7 +63,7 @@ class StringDiff extends Diff
 	// @param $nowaLinia - znak rozdziajacy odzielne linie stringa
 	// @return - string bedacy starsza wersja
   	*/
-	static function zwrocStaryString($diff, $newString, $znakNowalinia = "\n") 
+	public static function zwrocStaryString($diff, $newString, $znakNowalinia = "\n") 
 	{ 
 
 		$arrString = explode("\n", $newString);
@@ -96,12 +97,12 @@ class StringDiff extends Diff
 		return implode("\n", $arrString);
 	}	
 
-	static function dodajLinie( $array, $nrLinii, $nowaLinia )
+	private static function dodajLinie( $array, $nrLinii, $nowaLinia )
 	{
 		array_splice( $array, $nrLinii, 0, $nowaLinia );
 		return $array;
 	}	
-	static function usunLinie( $array, $nrLinii)
+	private static function usunLinie( $array, $nrLinii)
 	{
 		unset($array[$nrLinii]);
 		$array = array_values($array);
@@ -113,7 +114,7 @@ class StringDiff extends Diff
 	@param diif - array zawierajacy roznice pomiedzy dwoma stringami
 	@return array("+" => ilosc dodanych, "-" => ilosc usunietych)
 	*/
-	static function zwrocStatystyke($diff)
+	public static function zwrocStatystyke($diff)
 	{
 		$array = array("+" => 0, "-" =>0);
 		return $array;

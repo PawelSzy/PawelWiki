@@ -12,6 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class HistoriaDB
 {
+
+
+    public function __construct() 
+    {
+        // we set up "created"+"modified"
+        $this->setData(new \DateTime());
+    }
+
     /**
      * @var integer
      *

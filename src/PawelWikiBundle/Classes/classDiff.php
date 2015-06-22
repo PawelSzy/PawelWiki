@@ -1,5 +1,7 @@
 <?php
 
+namespace PawelWikiBundle\Classes;
+
 /*
 
 class.Diff.php

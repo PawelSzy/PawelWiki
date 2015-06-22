@@ -1,6 +1,7 @@
 <?php
 
 namespace PawelWikiBundle\Controller;
+//namespace PawelWikiBundle\Classes;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -10,6 +11,10 @@ use PawelWikiBundle\Controller\MyHellpers;
 
 use PawelWikiBundle\Entity\ArtykulDB;
 
+
+//historia
+use PawelWikiBundle\Entity\HistoriaDB;
+use PawelWikiBundle\Classes\StringDiff;
 
 
 /**
@@ -65,19 +70,73 @@ class BazaArtykulow extends Controller
         $nowy_tytul = MyHellpers::zamienSpacjeNaPodkreslenia( $tytul );
         $artykul->zmienTytul( $nowy_tytul );
 
+
         //zapisuje informacje z objectu o klasie Artykul w bazie danych
         $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
 
+
+        ///////////////////////////////////////
         //zapisz do bazy danych
+        ///////////////////////////////////////
         $em = $this->doctrine->getManager();
         if ( $this->czyIstniejeTytul( $artykul->odczytajTytul() )){
             return Null;
        }
+
+        //zapisz w histori artykulu
+       $this->utworzNowaHistorie( $artykul );
+
+       return;
+
+        //zapisuje informacje z objectu o klasie Artykul w bazie danych
+        $artykulEntity = $this->artykulIntoEntinyDB( $artykul );
+
+        //zapis do bazy danych
         $em->persist($artykulEntity);
         $em->flush(); 
         $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
         return $this->nowyArtykul( $newArrayArtykul);
 
+    }
+
+    /**
+    Funkcja tworzy nowy zapis w bazie histori modyfikacji artykulu
+    @param - obiekt typu artykul
+    @return int - id Histori
+    */
+    private function utworzNowaHistorie( $artykul )
+    {
+       $historia = new HistoriaDB;
+
+        $tekstArtykulu = $artykul->odczytajTresc();
+
+        var_dump($tekstArtykulu);
+
+
+        $autor = "anonymous";
+
+        $diff = StringDiff::compare( $tekstArtykulu, "\n" );
+
+        $statystyka = StringDiff::zwrocStatystyke( $diff );
+        $krotkiDiff = StringDiff::skroconyDiff( $diff );
+        $idPoprzedniej = 0;
+
+        echo "hisotria";
+        //konieczna serializacja array aby zapisac w bazie danych 
+        $serializeDiff = serialize($diff);        
+        $serializeStat = serialize($statystyka);
+        $serializeKrotkiDiff = serialize($krotkiDiff);
+
+        $historia->setAutor( $autor );
+        $historia->setDiff( $serializeDiff );
+        $historia->setIdPoprzedniej( $idPoprzedniej );
+        $historia->setStatystyka( $serializeStat );
+        $historia->setKrotkiDiff( $serializeKrotkiDiff );
+
+        print_r( $historia );
+        $em = $this->doctrine->getManager();;
+        $em->persist( $historia );
+        $em->flush();       
     }
 
 
