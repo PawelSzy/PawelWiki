@@ -7,26 +7,7 @@ include 'classDiff.php';
 
 //echo "test";
 
-$string1 = "
-1
-2
-3
-4
-5
-6
-7
-";
 
-$string2 = "
-1
-2
-new
-4
-new
-5
-new
-6
-";
 /** 
 Classa zajmuje sie roznica pomiedzy strigami 
 */
