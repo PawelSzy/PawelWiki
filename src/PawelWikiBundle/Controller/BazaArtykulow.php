@@ -33,7 +33,11 @@ class BazaArtykulow extends Controller
     /***************************************************
     *Funkcja zwraca artykulu pozwala na zapis i odczyt
     ***************************************************/
- use PobierzRepositoryTrait { pobierzAdresBazyDanych as protected;}    
+ use PobierzRepositoryTrait { pobierzAdresBazyDanych as protected;}  
+     /**
+    Funkcja konstruktor - tworzy nowa instancje klasy BazaArtykulow
+    @param - $repository, $doctrine do odczytywania danych z bazy danych, $user - nazwa zalogowanego uzytkownika
+    */  
     function __construct($repository, $doctrine, $user ="anon")
     {
         $this->repository = $repository;
@@ -107,6 +111,43 @@ class BazaArtykulow extends Controller
 
     }
 
+
+    public function edytujArtykul( $artykul )
+    {
+        $tytul = $artykul->odczytajTytul();
+        $tresc = $artykul->odczytajTresc();
+
+        if( $this->czyIstniejeTytul( $tytul ))
+        {       
+
+
+            //zapisz w histori artykulu - $idHistori powienien byc idHistori poprzedniej modyfikacji
+            $idHistori = $this->edytujHistoria( $artykul );
+
+            //zapisz id Historii
+            $artykul->zmienIDHistori($idHistori);
+
+
+            //modyfikacja istniejacego artykulu
+            $artykulEntity = $this->pobierzArtykulEntity( $tytul );
+            $artykulEntity->setTytul( $tytul );
+            $artykulEntity->setArtykul( $tresc );
+            $artykulEntity->setIdHistori($idHistori);
+            //zapisz do bazy danych
+            $em = $this->doctrine->getManager();
+            $em->persist($artykulEntity);
+            $em->flush(); 
+            $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
+            return $this->nowyArtykul( $newArrayArtykul);
+        }
+        else
+        {
+            return $this->zapiszNowyArtykul( $artykul );
+        }        
+
+    }
+
+
     /**
     Funkcja tworzy nowy zapis w bazie histori modyfikacji artykulu
     @param - obiekt typu artykul
@@ -119,6 +160,18 @@ class BazaArtykulow extends Controller
     }
 
     /**
+    Funkcja edytuje "ciag" zapisow w bazie histori modyfikacji artykulu - dodaje najnowsza modyfikacje
+    @param - obiekt typu artykul
+    @return int - id Histori
+    */
+    private function edytujHistoria($artykul, $idPoprzedniej = 0  )
+    {
+        $idPoprzedniej = $artykul->pobierzIDHistori();
+        $id = $this->zapiszHistorie( $artykul, $idPoprzedniej);
+        return $id;
+    }
+
+    /**
     Funkcja zapisuje w bazie histori modyfikacje artykulu
     @param - obiekt typu artykul, $idPoprzedniej - nr id histori do artykulu ktory zostal zmieniony
     @return int - id Histori
@@ -127,7 +180,7 @@ class BazaArtykulow extends Controller
     {
        $historia = new HistoriaDB;
 
-
+       //zapisz nazwe autora, musi byc zalogowany gdy tworzymy classe BazaArtykulow
        $autor = "anon";
        if (isset( $this->user) ) {
         $autor = $this->user;
@@ -165,34 +218,6 @@ class BazaArtykulow extends Controller
     }
 
 
-
-
-
-
-    public function edytujArtykul( $artykul )
-    {
-        $tytul = $artykul->odczytajTytul();
-        $tresc = $artykul->odczytajTresc();
-
-        if( $this->czyIstniejeTytul( $tytul ))
-        {
-            //modyfikacja istniejacego artykulu
-            $artykulEntity = $this->pobierzArtykulEntity( $tytul );
-            $artykulEntity->setTytul( $tytul );
-            $artykulEntity->setArtykul( $tresc );
-            //zapisz do bazy danych
-            $em = $this->doctrine->getManager();
-            $em->persist($artykulEntity);
-            $em->flush(); 
-            $newArrayArtykul = $this->artykulEntintyIntoArray( $artykulEntity ); 
-            return $this->nowyArtykul( $newArrayArtykul);
-        }
-        else
-        {
-            return $this->zapiszNowyArtykul( $artykul );
-        }        
-
-    }
 
     public function skasujArtykul( $tytul )
     {
