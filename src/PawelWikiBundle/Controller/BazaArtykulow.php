@@ -114,6 +114,17 @@ class BazaArtykulow extends Controller
     */
     private function utworzNowaHistorie( $artykul )
     {
+        $id = $this->zapiszHistorie( $artykul);
+        return $id;
+    }
+
+    /**
+    Funkcja zapisuje w bazie histori modyfikacje artykulu
+    @param - obiekt typu artykul, $idPoprzedniej - nr id histori do artykulu ktory zostal zmieniony
+    @return int - id Histori
+    */
+    private function zapiszHistorie( $artykul, $idPoprzedniej = 0 )
+    {
        $historia = new HistoriaDB;
 
 
@@ -129,7 +140,6 @@ class BazaArtykulow extends Controller
 
         $statystyka = StringDiff::zwrocStatystyke( $diff );
         $krotkiDiff = StringDiff::skroconyDiff( $diff );
-        $idPoprzedniej = 0;
 
 
         //konieczna serializacja array aby zapisac w bazie danych 
@@ -153,6 +163,7 @@ class BazaArtykulow extends Controller
         $id = $historia->getId();
         return $id;
     }
+
 
 
 
