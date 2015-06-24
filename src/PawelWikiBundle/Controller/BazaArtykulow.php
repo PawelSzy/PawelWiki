@@ -12,9 +12,17 @@ use PawelWikiBundle\Controller\MyHellpers;
 use PawelWikiBundle\Entity\ArtykulDB;
 
 
+
+
 //historia
 use PawelWikiBundle\Entity\HistoriaDB;
 use PawelWikiBundle\Classes\StringDiff;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Response;
+
+
+
+use PawelWikiBundle\Controller\PasekLogowania;
 
 
 /**
@@ -26,10 +34,12 @@ class BazaArtykulow extends Controller
     *Funkcja zwraca artykulu pozwala na zapis i odczyt
     ***************************************************/
  use PobierzRepositoryTrait { pobierzAdresBazyDanych as protected;}    
-    function __construct($repository, $doctrine)
+    function __construct($repository, $doctrine, $user ="anon")
     {
         $this->repository = $repository;
         $this->doctrine = $doctrine;
+
+        $this->user = $user;
     }
 
     public function odczytajArtykul($tytul)
@@ -106,7 +116,13 @@ class BazaArtykulow extends Controller
     {
        $historia = new HistoriaDB;
 
-       $autor = "anonymous";
+
+       $autor = "anon";
+       if (isset( $this->user) ) {
+        $autor = $this->user;
+       }
+ 
+
         $tekstArtykulu = $artykul->odczytajTresc();
 
         $diff = StringDiff::compare( $tekstArtykulu, "\n" );

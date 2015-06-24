@@ -44,14 +44,14 @@ class ZalogujController extends Controller
             $arrayArtykul["haslo"] = $form->get('haslo')->getData();
             $arrayArtykul["email"] =    $form->get('email')->getData(); 
 
-            echo "yrdf";
+            //echo "yrdf";
             //zakoduj haslo
             $user = new AppBundle\Entity\User();
-            var_dump($user);
+            //var_dump($user);
             // // $plainPassword = 'ryanpass';
             // $encoder = $this->container->get('security.password_encoder');
             // $encoded = $encoder->encodePassword($user,  $arrayArtykul["haslo"]);
-            echo "345";
+            //echo "345";
 
 
             //var_dump( $encoded);

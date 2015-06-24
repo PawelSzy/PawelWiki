@@ -43,8 +43,10 @@ class WyswietlStroneController extends Controller
             //zapisz dane z form do bazy danych
             $repository = $this->pobierzRepository();
             $doctrine = $this->pobierzDoctrine();
+            $user = $this->pobierzUzytkownika();
+            
 
-            $this->BazaArtykulow = new BazaArtykulow( $repository, $doctrine );
+            $this->BazaArtykulow = new BazaArtykulow( $repository, $doctrine, $user);
             $artykul = $this->BazaArtykulow->nowyArtykul( $arrayArtykul );
 
             if ($artykul!== NULL)
@@ -68,9 +70,11 @@ class WyswietlStroneController extends Controller
     {
         $repository = $this->pobierzRepository();
         $tytulNowejStrony = $tytul;
+        $user = $this->pobierzUzytkownika();
+       
 
 
-        $this->BazaArtykulow = new BazaArtykulow( $this->pobierzRepository(), $this->pobierzDoctrine() );
+        $this->BazaArtykulow = new BazaArtykulow( $this->pobierzRepository(), $this->pobierzDoctrine(), $user );
         $artykul = $this->BazaArtykulow->odczytajArtykul( $tytul );
 
 
@@ -165,6 +169,13 @@ class WyswietlStroneController extends Controller
     {
         return $this->render( 'PawelWikiBundle:Default:edytuj_strone.html.twig', array('tytul' => $tytulNowejStrony,
                 'form' => $form->createView() ));
+    }
+
+
+    private function pobierzUzytkownika()
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser() ;
+        return $user;
     }
 
 
