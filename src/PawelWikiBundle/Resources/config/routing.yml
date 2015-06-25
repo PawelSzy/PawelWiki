@@ -22,6 +22,10 @@ pawel_wiki_edytuj_artykul:
     path:     /edytuj/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlStrone:edytujArtykul }
 
+pawel_wiki_historie_artykul:
+    path:     /historia/{tytul}
+    defaults: { _controller: PawelWikiBundle:WyswietlHistorie:WyswietlHistorie }
+
 pawel_wiki_skasuj_artykul:
     path:     /skasuj/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlArtykul:SkasujArtykul }

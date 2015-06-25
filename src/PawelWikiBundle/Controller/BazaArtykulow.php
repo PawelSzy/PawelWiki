@@ -33,7 +33,7 @@ class BazaArtykulow extends Controller
     /***************************************************
     *Funkcja zwraca artykulu pozwala na zapis i odczyt
     ***************************************************/
- use PobierzRepositoryTrait { pobierzAdresBazyDanych as protected;}  
+ use PobierzRepositoryTrait { pobierzAdresBazyDanych as protected; pobierzAdresBazyHistori as protected;}  
      /**
     Funkcja konstruktor - tworzy nowa instancje klasy BazaArtykulow
     @param - $repository, $doctrine do odczytywania danych z bazy danych, $user - nazwa zalogowanego uzytkownika
@@ -148,77 +148,6 @@ class BazaArtykulow extends Controller
     }
 
 
-    /**
-    Funkcja tworzy nowy zapis w bazie histori modyfikacji artykulu
-    @param - obiekt typu artykul
-    @return int - id Histori
-    */
-    private function utworzNowaHistorie( $artykul )
-    {
-        $id = $this->zapiszHistorie( $artykul);
-        return $id;
-    }
-
-    /**
-    Funkcja edytuje "ciag" zapisow w bazie histori modyfikacji artykulu - dodaje najnowsza modyfikacje
-    @param - obiekt typu artykul
-    @return int - id Histori
-    */
-    private function edytujHistoria($artykul, $idPoprzedniej = 0  )
-    {
-        $idPoprzedniej = $artykul->pobierzIDHistori();
-        $id = $this->zapiszHistorie( $artykul, $idPoprzedniej);
-        return $id;
-    }
-
-    /**
-    Funkcja zapisuje w bazie histori modyfikacje artykulu
-    @param - obiekt typu artykul, $idPoprzedniej - nr id histori do artykulu ktory zostal zmieniony
-    @return int - id Histori
-    */
-    private function zapiszHistorie( $artykul, $idPoprzedniej = 0 )
-    {
-       $historia = new HistoriaDB;
-
-       //zapisz nazwe autora, musi byc zalogowany gdy tworzymy classe BazaArtykulow
-       $autor = "anon";
-       if (isset( $this->user) ) {
-        $autor = $this->user;
-       }
- 
-
-        $tekstArtykulu = $artykul->odczytajTresc();
-
-        $diff = StringDiff::compare( $tekstArtykulu, "\n" );
-
-        $statystyka = StringDiff::zwrocStatystyke( $diff );
-        $krotkiDiff = StringDiff::skroconyDiff( $diff );
-
-
-        //konieczna serializacja array aby zapisac w bazie danych 
-        $serializeDiff = serialize($diff);        
-        $serializeStat = serialize($statystyka);
-        $serializeKrotkiDiff = serialize($krotkiDiff);
-
-        //utworz entiy historia - z entity HistoriaDB
-        $historia->setAutor( $autor );
-        $historia->setDiff( $serializeDiff );
-        $historia->setIdPoprzedniej( $idPoprzedniej );
-        $historia->setStatystyka( $serializeStat );
-        $historia->setKrotkiDiff( $serializeKrotkiDiff );
-
-        //zapisz do bazy danych
-        $em = $this->doctrine->getManager();;
-        $em->persist( $historia );
-        $em->flush();       
-
-        //pobierzID
-        $id = $historia->getId();
-        return $id;
-    }
-
-
-
     public function skasujArtykul( $tytul )
     {
         $artykulEntity = $this->pobierzArtykulEntity( $tytul );
@@ -288,6 +217,127 @@ class BazaArtykulow extends Controller
         $artykulEntity->setIdHistori( $artykul->pobierzIDHistori() );
         return $artykulEntity;
 
+    }
+
+
+    /**
+    Funkcja tworzy nowy zapis w bazie histori modyfikacji artykulu
+    @param - obiekt typu artykul
+    @return int - id Histori
+    */
+    private function utworzNowaHistorie( $artykul )
+    {
+        $id = $this->zapiszHistorie( $artykul);
+        return $id;
+    }
+
+    /**
+    Funkcja edytuje "ciag" zapisow w bazie histori modyfikacji artykulu - dodaje najnowsza modyfikacje
+    @param - obiekt typu artykul
+    @return int - id Histori
+    */
+    private function edytujHistoria($artykul, $idPoprzedniej = 0  )
+    {
+        $idPoprzedniej = $artykul->pobierzIDHistori();
+        $id = $this->zapiszHistorie( $artykul, $idPoprzedniej);
+        return $id;
+    }
+
+    /**
+    Funkcja zapisuje w bazie histori modyfikacje artykulu
+    @param - obiekt typu artykul, $idPoprzedniej - nr id histori do artykulu ktory zostal zmieniony
+    @return int - id Histori
+    */
+    private function zapiszHistorie( $artykul, $idPoprzedniej = 0 )
+    {
+       $historia = new HistoriaDB;
+
+       //zapisz nazwe autora, musi byc zalogowany gdy tworzymy classe BazaArtykulow
+       $autor = "anon";
+       if (isset( $this->user) ) {
+        $autor = $this->user;
+       }
+ 
+
+        $tekstArtykulu = $artykul->odczytajTresc();
+
+        $diff = StringDiff::compare( $tekstArtykulu, "\n" );
+
+        $statystyka = StringDiff::zwrocStatystyke( $diff );
+        $krotkiDiff = StringDiff::skroconyDiff( $diff );
+
+
+        //konieczna serializacja array aby zapisac w bazie danych 
+        $serializeDiff = serialize($diff);        
+        $serializeStat = serialize($statystyka);
+        $serializeKrotkiDiff = serialize($krotkiDiff);
+
+        //utworz entiy historia - z entity HistoriaDB
+        $historia->setAutor( $autor );
+        $historia->setDiff( $serializeDiff );
+        $historia->setIdPoprzedniej( $idPoprzedniej );
+        $historia->setStatystyka( $serializeStat );
+        $historia->setKrotkiDiff( $serializeKrotkiDiff );
+
+        //zapisz do bazy danych
+        $em = $this->doctrine->getManager();;
+        $em->persist( $historia );
+        $em->flush();       
+
+        //pobierzID
+        $id = $historia->getId();
+        return $id;
+    }
+
+    /**
+    Funkcja zwraca historia artykulu o podanym tytule
+    @param array zawierajacy diff (umozliwia odtworzenie poprzedniej wersji), skrocony_diff (do wyswietlania), statystyke(ile zostalo dodanyc, odjetych)
+    */
+    public function odczytajHistorie($tytul)
+    {
+        if ( $this->czyIstniejeTytul( $tytul ))
+        {
+            var_dump("tytul isnieje");
+            $idHistori = $this->zwrocIdHistori( $tytul );
+            var_dump($idHistori);
+            $historia = $this->poberzHistorie( $idHistori);
+            var_dump($historia);
+        }
+    }
+
+    /**
+    Funckcja zwraca historie artykulu i dostan jego idHistori
+    @param - idHistori 
+    $return  array zawierajacy diff (umozliwia odtworzenie poprzedniej wersji), skrocony_diff (do wyswietlania), statystyke(ile zostalo dodanyc, odjetych)
+    */
+    private function poberzHistorie($id)
+    {
+        $entityManager = $this->doctrine->getManager();
+        $adres_bazy = $this->pobierzAdresBazyHistori();
+        $dql = "SELECT HistoriaDB.id, HistoriaDB.diff FROM ".$adres_bazy.' HistoriaDB WHERE HistoriaDB.id = :id';
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter('id', $id);
+
+        $res = $query->getResult();
+        return $res;
+        //return $res[0]['idHistori'];
+    }
+
+    /**
+    Podaj tytul artykulu i dostan jego idHistori
+    @param - tytul artykuly
+    $return idHistori danego artykulu
+    */
+    private function zwrocIdHistori( $tytul )
+    {
+        $entityManager = $this->doctrine->getManager();
+        $adres_bazy = $this->pobierzAdresBazyDanych();
+        $dql = "SELECT ArtykulDB.idHistori FROM ".$adres_bazy.' ArtykulDB WHERE ArtykulDB.tytul = :tytul';
+        $query = $entityManager->createQuery($dql);
+        $query->setParameter('tytul', $tytul);
+
+        $res = $query->getResult();
+        return $res[0]['idHistori'];
     }
 
 }

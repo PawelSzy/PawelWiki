@@ -11,12 +11,19 @@ trait PobierzRepositoryTrait
         return $nazwa_bazy;
     }
 
+
     public function pobierzAdresBazyDanych()
     {
         $adresBazyDanych =' PawelWikiBundle\Entity\ArtykulDB';
         return $adresBazyDanych;
     }
 	
+    public function pobierzAdresBazyHistori()
+    {
+        $adresBazyDanych =' PawelWikiBundle\Entity\HistoriaDB';
+        return $adresBazyDanych;
+    }
+
     public function pobierzRepository()
     {
     	$nazwa_bazy = $this->pobierzNazweBaze();
