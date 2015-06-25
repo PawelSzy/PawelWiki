@@ -6,14 +6,19 @@
 				  <li class="active"><a href="{{ path('pawel_wiki_historie_artykul', {'tytul': tytul }) }}">Historia i autorzy</a></li>
 			</ul>
 			<br>
+			<div class="panel panel-default">
+			<div class="panel-heading">Historia artykulu</div>
 		    {% for historia in historiaArray %}
-		    	<div class="panel panel-default">
-  					<div class="panel-body">
-  						{{ historia.getID }}
-  					</div>
-				</div>	
+				<div class="panel-body">
+					<ul class="list-inline">
+						<il>{{ historia.getData|date('Y-m-d') }}</il>
+						<il>Ostatnio Modyfikowal: {{ historia.getAutor }}</il>
+						<il>+{{ historia.getArrayStatystyka["+"] }} -{{ historia.getArrayStatystyka["-"] }}</il>		   
+						</il>
+					</ul>
+				</div>
     		{% endfor %}
-    		<h1>Test2</h1>
-     	 	<!--{{ render(controller("PawelWikiBundle:WyswietlArtykul:WyswietlArtykul", {'tytul': tytul} )) }}-->
+    		</div>
+    		</div>
      {% endblock %}
        

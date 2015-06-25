@@ -297,9 +297,7 @@ class BazaArtykulow extends Controller
     {
         if ( $this->czyIstniejeTytul( $tytul ))
         {
-            var_dump("tytul isnieje");
             $idHistori = $this->zwrocIdHistori( $tytul );
-            var_dump($idHistori);
             $historia = $this->pobierzHistorie( $idHistori);
             return $historia;
         }

@@ -152,6 +152,14 @@ class HistoriaDB
     }
 
     /**
+    *Funkcja zwraca date utworzenia w postaci stringa
+    */
+    public function getStringData()
+    {
+        return (string)$this->getData();
+    }
+
+    /**
      * Set idPoprzedniej
      *
      * @param integer $idPoprzedniej
@@ -197,6 +205,11 @@ class HistoriaDB
         return $this->statystyka;
     }
 
+    public function getArrayStatystyka()
+    {
+        return unserialize( $this->getStatystyka() );
+    }
+
     /**
      * Set krotkiDiff
      *
@@ -218,5 +231,14 @@ class HistoriaDB
     public function getKrotkiDiff()
     {
         return $this->krotkiDiff;
+    }
+
+    /**
+    *Funkcja zwraca array zawierajacy tylko wersy ktore sie zmienily
+    * @return array
+    */
+    public function getArrayKrotkiDiff()
+    {
+        return unserialize($this->getKrotkiDiff());
     }
 }
