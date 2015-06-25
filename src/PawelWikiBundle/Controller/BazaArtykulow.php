@@ -300,27 +300,27 @@ class BazaArtykulow extends Controller
             var_dump("tytul isnieje");
             $idHistori = $this->zwrocIdHistori( $tytul );
             var_dump($idHistori);
-            $historia = $this->poberzHistorie( $idHistori);
-            var_dump($historia);
+            $historia = $this->pobierzHistorie( $idHistori);
+            return $historia;
         }
     }
 
     /**
     Funckcja zwraca historie artykulu i dostan jego idHistori
     @param - idHistori 
-    $return  array zawierajacy diff (umozliwia odtworzenie poprzedniej wersji), skrocony_diff (do wyswietlania), statystyke(ile zostalo dodanyc, odjetych)
+    $return zwraca array zawierajacy obiekt klasy Entity - HistoriaDB
     */
-    private function poberzHistorie($id)
+    private function pobierzHistorie($id)
     {
         $entityManager = $this->doctrine->getManager();
         $adres_bazy = $this->pobierzAdresBazyHistori();
-        $dql = "SELECT HistoriaDB.id, HistoriaDB.diff FROM ".$adres_bazy.' HistoriaDB WHERE HistoriaDB.id = :id';
+        $dql = "SELECT HistoriaDB FROM ".$adres_bazy.' HistoriaDB WHERE HistoriaDB.id = :id';
         $query = $entityManager->createQuery($dql);
         $query->setParameter('id', $id);
 
         $res = $query->getResult();
         return $res;
-        //return $res[0]['idHistori'];
+       
     }
 
     /**

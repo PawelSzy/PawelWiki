@@ -23,14 +23,16 @@ class WyswietlHistorieController extends Controller
 
         $bazaArtykulow = new BazaArtykulow( $repository, $doctrine);
 
-        $bazaArtykulow->odczytajHistorie($tytul);
+        $historiaArray = $bazaArtykulow->odczytajHistorie($tytul);
 
-        return $this->WyswietlStroneHistoria($tytul);
+        return $this->WyswietlStroneHistoria($tytul, $historiaArray);
     }
-    private function WyswietlStroneHistoria($tytul)
+    private function WyswietlStroneHistoria($tytul, $historiaArray = array())
     {        
-        return $this->render('PawelWikiBundle:Default:wiki_historia_strona.html.twig', array('tytul' => $tytul));
+        return $this->render('PawelWikiBundle:Default:wiki_historia_strona.html.twig', array('tytul' => $tytul, 'historiaArray' => $historiaArray));
     }   
+
+
 
 }
 

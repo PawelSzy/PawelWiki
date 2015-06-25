@@ -5,6 +5,15 @@
 				  <li class="inactive"><a href="{{ path('pawel_wiki_edytuj_artykul', {'tytul': tytul }) }}">Edytuj</a></li>
 				  <li class="active"><a href="{{ path('pawel_wiki_historie_artykul', {'tytul': tytul }) }}">Historia i autorzy</a></li>
 			</ul>
+			<br>
+		    {% for historia in historiaArray %}
+		    	<div class="panel panel-default">
+  					<div class="panel-body">
+  						{{ historia.getID }}
+  					</div>
+				</div>	
+    		{% endfor %}
+    		<h1>Test2</h1>
      	 	<!--{{ render(controller("PawelWikiBundle:WyswietlArtykul:WyswietlArtykul", {'tytul': tytul} )) }}-->
      {% endblock %}
        
