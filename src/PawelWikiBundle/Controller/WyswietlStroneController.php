@@ -175,7 +175,13 @@ class WyswietlStroneController extends Controller
     private function pobierzUzytkownika()
     {
         $user = $this->get('security.token_storage')->getToken()->getUser() ;
-        $userName = $user->getLogin();
+
+        if ( $user != 'anon.'){
+            $userName = $user->getLogin(); 
+        }
+        else {
+            $userName = $user;
+        }
         return $userName;
     }
 

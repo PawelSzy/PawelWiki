@@ -1,0 +1,10 @@
+{% extends "PawelWikiBundle:Default:szablon_wiki_strona.html.twig" %}
+     {% block content %}
+		     <ul class="nav nav-tabs">
+				  <li class="inactive"><a href="{{ path('pawel_wiki_strona', {'tytul': tytul }) }}">Czytaj</a></li>
+				  <li class="inactive"><a href="{{ path('pawel_wiki_edytuj_artykul', {'tytul': tytul }) }}">Edytuj</a></li>
+				  <li class="active"><a href="#">Historia i autorzy</a></li>
+			</ul>
+     	 	<!--{{ render(controller("PawelWikiBundle:WyswietlArtykul:WyswietlArtykul", {'tytul': tytul} )) }}-->
+     {% endblock %}
+       
