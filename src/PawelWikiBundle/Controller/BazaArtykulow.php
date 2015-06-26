@@ -277,13 +277,6 @@ class BazaArtykulow extends Controller
         $statystyka = StringDiff::zwrocStatystyke( $diff );
         $krotkiDiff = StringDiff::skroconyDiff( $diff );
 
-        var_dump($tekstArtykulu);
-        var_dump($staryTekst);
-
-           var_dump($diff);
-            var_dump($statystyka);
-            var_dump($krotkiDiff);
-            exit;
         //konieczna serializacja array aby zapisac w bazie danych 
         $serializeDiff = serialize($diff);        
         $serializeStat = serialize($statystyka);

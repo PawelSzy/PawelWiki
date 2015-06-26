@@ -98,7 +98,7 @@ class StringDiff extends Diff
 	public static function zwrocStatystyke($diff)
 	{
 		$array = array("+" => 0, "-" =>0);
-		return $array;
+
 		foreach ($diff as $key => $value) {
 			if( $value[1] ==SELF::INSERTED)
 			{
@@ -109,6 +109,7 @@ class StringDiff extends Diff
 				$array["-"] +=1;
 			}
 		}
+		return $array;
 	} 
 }
 
