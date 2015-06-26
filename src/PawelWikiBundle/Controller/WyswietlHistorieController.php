@@ -25,6 +25,18 @@ class WyswietlHistorieController extends Controller
 
         $historiaArray = $bazaArtykulow->odczytajHistorie($tytul);
 
+        //odczytaj ciag histori 
+        //kazda historia wskazuje na  poprzednia zgodnie z idPoprzedniej
+        //zwroc poprzednia historia zapisz w array i wyswietl na stronie
+        $i = 50;
+        do {
+            $historia = end($historiaArray);
+            $idPoprzedniej = $historia->getIdPoprzedniej();
+            $newhistoriaArray = $bazaArtykulow->pobierzHistorie($idPoprzedniej);
+            $historiaArray = array_merge($historiaArray, $newhistoriaArray);
+            $i-=1;
+        } while($idPoprzedniej !=0 or $i<0); 
+
         return $this->WyswietlStroneHistoria($tytul, $historiaArray);
     }
     private function WyswietlStroneHistoria($tytul, $historiaArray = array())

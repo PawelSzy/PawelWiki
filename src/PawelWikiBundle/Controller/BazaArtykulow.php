@@ -261,7 +261,15 @@ class BazaArtykulow extends Controller
 
         $tekstArtykulu = $artykul->odczytajTresc();
 
-        $diff = StringDiff::compare( $tekstArtykulu, "\n" );
+        if ($idPoprzedniej == 0)
+        {
+            $diff = StringDiff::compare( $tekstArtykulu, "\n" );
+        }
+        else 
+        {
+             ///////// DO POPRAWY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+             $diff = StringDiff::compare( $tekstArtykulu, "\n" );
+        }
 
         $statystyka = StringDiff::zwrocStatystyke( $diff );
         $krotkiDiff = StringDiff::skroconyDiff( $diff );
@@ -308,7 +316,7 @@ class BazaArtykulow extends Controller
     @param - idHistori 
     $return zwraca array zawierajacy obiekt klasy Entity - HistoriaDB
     */
-    private function pobierzHistorie($id)
+    public function pobierzHistorie($id)
     {
         $entityManager = $this->doctrine->getManager();
         $adres_bazy = $this->pobierzAdresBazyHistori();
