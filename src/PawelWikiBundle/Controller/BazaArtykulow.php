@@ -248,7 +248,7 @@ class BazaArtykulow extends Controller
     @param - obiekt typu artykul, $idPoprzedniej - nr id histori do artykulu ktory zostal zmieniony
     @return int - id Histori
     */
-    private function zapiszHistorie( $artykul, $idPoprzedniej = 0 )
+    private function zapiszHistorie( $artykul )
     {
        $historia = new HistoriaDB;
 
@@ -260,21 +260,30 @@ class BazaArtykulow extends Controller
  
 
         $tekstArtykulu = $artykul->odczytajTresc();
+        $idPoprzedniej = $artykul->pobierzIDHistori();
 
         if ($idPoprzedniej == 0)
         {
-            $diff = StringDiff::compare( $tekstArtykulu, "\n" );
+            $diff = StringDiff::compare( "\n", $tekstArtykulu  );
         }
         else 
         {
-             ///////// DO POPRAWY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-             $diff = StringDiff::compare( $tekstArtykulu, "\n" );
+            $tytul = $artykul->odczytajTytul();
+            $staryTekst = $this->odczytajArtykul($tytul)->odczytajTresc();
+            $diff = StringDiff::compare( $staryTekst, $tekstArtykulu );
+
         }
 
         $statystyka = StringDiff::zwrocStatystyke( $diff );
         $krotkiDiff = StringDiff::skroconyDiff( $diff );
 
+        var_dump($tekstArtykulu);
+        var_dump($staryTekst);
 
+           var_dump($diff);
+            var_dump($statystyka);
+            var_dump($krotkiDiff);
+            exit;
         //konieczna serializacja array aby zapisac w bazie danych 
         $serializeDiff = serialize($diff);        
         $serializeStat = serialize($statystyka);

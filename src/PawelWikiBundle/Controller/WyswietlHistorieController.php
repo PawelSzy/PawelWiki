@@ -16,7 +16,7 @@ class WyswietlHistorieController extends Controller
 {
 	 use PobierzRepositoryTrait { pobierzRepository as protected; pobierzDoctrine as protected; pobierzMenager as protected; pobierzNazweBaze as protected;}
 
-    public function WyswietlHistorieAction($tytul)
+    public function WyswietlHistorieAction($tytul, $maxIloscHistori = 50)
     {
     	$repository = $this->pobierzRepository();
         $doctrine = $this->pobierzDoctrine();
@@ -28,7 +28,7 @@ class WyswietlHistorieController extends Controller
         //odczytaj ciag histori 
         //kazda historia wskazuje na  poprzednia zgodnie z idPoprzedniej
         //zwroc poprzednia historia zapisz w array i wyswietl na stronie
-        $i = 50;
+        $i = $maxIloscHistori; //dla zabezpieczenia przed nieskonczona petla
         do {
             $historia = end($historiaArray);
             $idPoprzedniej = $historia->getIdPoprzedniej();
