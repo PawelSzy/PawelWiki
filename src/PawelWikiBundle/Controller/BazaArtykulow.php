@@ -262,9 +262,10 @@ class BazaArtykulow extends Controller
         $tekstArtykulu = $artykul->odczytajTresc();
         $idPoprzedniej = $artykul->pobierzIDHistori();
 
-        if ($idPoprzedniej == 0)
+        if ($idPoprzedniej ===NULL or $idPoprzedniej == 0)
         {
-            $diff = StringDiff::compare( "\n", $tekstArtykulu  );
+            $idPoprzedniej = 0;
+            $diff = StringDiff::compare( "", $tekstArtykulu  );
         }
         else 
         {
