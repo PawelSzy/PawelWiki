@@ -39,6 +39,7 @@ class WyswietlHistorieController extends Controller
 
         return $this->WyswietlStroneHistoria($tytul, $historiaArray);
     }
+    
     private function WyswietlStroneHistoria($tytul, $historiaArray = array())
     {        
         return $this->render('PawelWikiBundle:Default:wiki_historia_strona.html.twig', array('tytul' => $tytul, 'historiaArray' => $historiaArray));

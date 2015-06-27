@@ -4,6 +4,7 @@ namespace PawelWikiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * historiaDB
  *
@@ -12,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class HistoriaDB
 {
-
 
     public function __construct() 
     {
@@ -232,6 +232,8 @@ class HistoriaDB
     {
         return $this->krotkiDiff;
     }
+
+
 
     /**
     *Funkcja zwraca array zawierajacy tylko wersy ktore sie zmienily

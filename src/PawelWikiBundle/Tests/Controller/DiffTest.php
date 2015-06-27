@@ -60,4 +60,22 @@ class testDiff extends \PHPUnit_Framework_TestCase
  
 
 	}
+
+	public function testzwrocStatystyke()
+	{
+		$string1 = "
+			1
+			2
+		";
+		$string2 = "
+			2
+			3
+		";
+
+		$diff = StringDiff::compare($string1, $string2 );
+		$statystyka = StringDiff::zwrocStatystyke($diff);
+		$this->assertEquals($statystyka, array("+" => 1, "-" =>1) );
+	}
+
+
 }
