@@ -26,6 +26,10 @@ pawel_wiki_historie_artykul:
     path:     /historia/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlHistorie:WyswietlHistorie }
 
+pawel_wiki_pokaz_stary_artyku:
+    path:     /stary_artykul/{tytul}/{idStarejHistori}
+    defaults: { _controller: PawelWikiBundle:WyswietlHistorie:PokazStaraHistorie }
+
 pawel_wiki_skasuj_artykul:
     path:     /skasuj/{tytul}
     defaults: { _controller: PawelWikiBundle:WyswietlArtykul:SkasujArtykul }

@@ -243,4 +243,10 @@ class HistoriaDB
     {
         return unserialize($this->getKrotkiDiff());
     }
+
+
+    public function getArrayDiff()
+    {
+        return unserialize( $this->getDiff() );
+    }
 }
