@@ -333,6 +333,40 @@ class BazaArtykulow extends Controller
     }
 
     /**
+    *Zwraca stara wersje artykulu
+    *@param - $tytul - tytul artykulu, $idStarego - nr id sterej histori 
+    *@return - obiekt typu artykul gdzie tresc jest trescia starej wersji artykulu
+    */
+    public function pobierzStaryArtykul($tytul, $idStarejHistori, $maxIloscHistori = 50 )
+    {
+        //pobierz aktualna wersje artykulu
+        $artykul = $this->odczytajArtykul($tytul);  
+        $idHistori = $artykul->pobierzIDHistori();
+        $tekstArtykulu = $artykul->odczytajTresc();
+        // var_dump($tekstArtykulu);
+
+        $i = $maxIloscHistori; //dla zabezpieczenia przed nieskonczona petla
+        while($idHistori != $idStarejHistori and $idHistori != 0)
+        {
+            $historia = $this->pobierzHistorie($idHistori)[0] ;
+
+            //dokonaj konwersji na stara wersje - stary tekst artykulu
+            $diff =$historia->getArrayDiff();
+            $tekstArtykulu =  StringDiff::zwrocStaryString($diff, $tekstArtykulu);
+
+            //ustaw idHistori nastepnej wersji historii
+            $idHistori = $historia->getIdPoprzedniej();
+
+            $i-=1;
+            if( $i<=0 ) {break;}
+        }   
+
+        $artArray = array("tytul" => $tytul, "tresc" => $tekstArtykulu);
+        $artykul = $this->nowyArtykul( $artArray );  
+        return $artykul;      
+    }
+
+    /**
     Podaj tytul artykulu i dostan jego idHistori
     @param - tytul artykuly
     $return idHistori danego artykulu

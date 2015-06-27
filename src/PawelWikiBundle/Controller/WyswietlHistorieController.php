@@ -44,11 +44,6 @@ class WyswietlHistorieController extends Controller
         return $this->WyswietlStroneHistoria($tytul, $historiaArray);
     }
 
-    private function WyswietlStroneHistoria($tytul, $historiaArray = array())
-    {        
-        return $this->render('PawelWikiBundle:Default:wiki_historia_strona.html.twig', array('tytul' => $tytul, 'historiaArray' => $historiaArray));
-    }   
-
 
 
     /**
@@ -62,32 +57,50 @@ class WyswietlHistorieController extends Controller
 
         $bazaArtykulow = new BazaArtykulow( $repository, $doctrine);
 
-        //pobierz aktualna wersje artykulu
-        $artykul = $bazaArtykulow->odczytajArtykul($tytul);  
-        $idHistori = $artykul->pobierzIDHistori();
-        $tekstArtykulu = $artykul->odczytajTresc();
-        var_dump($tekstArtykulu);
+        $staryArtykul = $bazaArtykulow->pobierzStaryArtykul($tytul, $idStarejHistori); 
 
-        $i = $maxIloscHistori; //dla zabezpieczenia przed nieskonczona petla
-        while($idHistori != $idStarejHistori and $idHistori != 0)
-        {
-            $historia = $bazaArtykulow->pobierzHistorie($idHistori)[0] ;
+        // //pobierz aktualna wersje artykulu
+        // $artykul = $bazaArtykulow->odczytajArtykul($tytul);  
+        // $idHistori = $artykul->pobierzIDHistori();
+        // $tekstArtykulu = $artykul->odczytajTresc();
+        // // var_dump($tekstArtykulu);
 
-            //dokonaj konwersji na stara wersje - stary tekst artykulu
-            $diff =$historia->getArrayDiff();
-            $tekstArtykulu =  StringDiff::zwrocStaryString($diff, $tekstArtykulu);
+        // $i = $maxIloscHistori; //dla zabezpieczenia przed nieskonczona petla
+        // while($idHistori != $idStarejHistori and $idHistori != 0)
+        // {
+        //     $historia = $bazaArtykulow->pobierzHistorie($idHistori)[0] ;
 
-            //ustaw idHistori nastepnej wersji historii
-            $idHistori = $historia->getIdPoprzedniej();
+        //     //dokonaj konwersji na stara wersje - stary tekst artykulu
+        //     $diff =$historia->getArrayDiff();
+        //     $tekstArtykulu =  StringDiff::zwrocStaryString($diff, $tekstArtykulu);
 
-            $i-=1;
-            if( $i<=0 ) {break;}
-        }   
-        var_dump($tekstArtykulu);  
-        exit;
-        return; 
+        //     //ustaw idHistori nastepnej wersji historii
+        //     $idHistori = $historia->getIdPoprzedniej();
+
+        //     $i-=1;
+        //     if( $i<=0 ) {break;}
+        // }   
+
+        // $artArray = array("tytul" => $tytul, "tresc" => $tekstArtykulu);
+        // $artykul = $bazaArtykulow->nowyArtykul( $artArray );
+        // var_dump($tekstArtykulu);  
+        //var_dump($artykul);
+        return $this->WyswietlStroneHistoriaArtykulu($staryArtykul); 
 
     }
+
+    private function WyswietlStroneHistoria($tytul, $historiaArray = array())
+    {        
+        return $this->render('PawelWikiBundle:Historia:wiki_historia_strona.html.twig', array('tytul' => $tytul, 'historiaArray' => $historiaArray));
+    }   
+
+
+
+    private function WyswietlStroneHistoriaArtykulu($artykul)
+    {
+        
+        return $this->render('PawelWikiBundle:Historia:stary_artykul.html.twig', array('tytul' => $artykul->odczytajTytul(), 'artykul' => $artykul ));
+    }   
 
 
 
