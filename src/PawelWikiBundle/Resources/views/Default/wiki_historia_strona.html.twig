@@ -21,7 +21,11 @@
 							  <span class="caret"></span></button>
 							  <ul class="dropdown-menu">							  	
 						  		{% for zmienionyString in historia.getArrayKrotkiDiff[0] %}
-						  			<li> {{ zmienionyString[0] }} </li>
+						  			<li>
+						  				{%if zmienionyString[1] == 1 %} Usunieto: {% endif %}
+						  				{%if zmienionyString[1] == 2 %} Dodano: {% endif %}
+						  				{{ zmienionyString[0] }} 	
+						  			</li>
 						  		{% endfor %}
 							  </ul>
 							</div>
