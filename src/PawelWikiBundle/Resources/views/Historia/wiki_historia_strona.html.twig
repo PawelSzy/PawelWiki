@@ -11,13 +11,14 @@
 		    {% for historia in historiaArray %}
 				<div class="panel-body">
 					<ul class="list-inline">
-						<il>{{ historia.getData|date('Y-m-d') }}</il>
-						<il>Ostatnio Modyfikowal: {{ historia.getAutor }}</il>
-						<il>Zmienione wersy: +{{ historia.getArrayStatystyka["+"] }} -{{ historia.getArrayStatystyka["-"] }}</il>
-						<il>
+						<li>{{ historia.getData|date('Y-m-d') }}</li>
+						<li>Ostatnio Modyfikowal: {{ historia.getAutor }}</li>
+						<li>Zmienione wersy: +{{ historia.getArrayStatystyka["+"] }} -{{ historia.getArrayStatystyka["-"] }}</li>
+						<li> <a href="{{ path('pawel_wiki_pokaz_stary_artyku', {'tytul': tytul, 'idStarejHistori': historia.getId }) }}">Pokaz stara wersje artykulu</a> </li>
+						<li>
 							<div class="dropdown">
 							  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">		
-							  	Pokaż historie
+							  	Zmodyfikowane wersy
 							  <span class="caret"></span></button>
 							  <ul class="dropdown-menu">							  	
 						  		{% for zmienionyString in historia.getArrayKrotkiDiff[0] %}

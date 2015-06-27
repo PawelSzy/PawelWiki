@@ -57,34 +57,9 @@ class WyswietlHistorieController extends Controller
 
         $bazaArtykulow = new BazaArtykulow( $repository, $doctrine);
 
+        //pobierz stary obiekt klasy artykul zawierajacy stary tekst artykulu
         $staryArtykul = $bazaArtykulow->pobierzStaryArtykul($tytul, $idStarejHistori); 
 
-        // //pobierz aktualna wersje artykulu
-        // $artykul = $bazaArtykulow->odczytajArtykul($tytul);  
-        // $idHistori = $artykul->pobierzIDHistori();
-        // $tekstArtykulu = $artykul->odczytajTresc();
-        // // var_dump($tekstArtykulu);
-
-        // $i = $maxIloscHistori; //dla zabezpieczenia przed nieskonczona petla
-        // while($idHistori != $idStarejHistori and $idHistori != 0)
-        // {
-        //     $historia = $bazaArtykulow->pobierzHistorie($idHistori)[0] ;
-
-        //     //dokonaj konwersji na stara wersje - stary tekst artykulu
-        //     $diff =$historia->getArrayDiff();
-        //     $tekstArtykulu =  StringDiff::zwrocStaryString($diff, $tekstArtykulu);
-
-        //     //ustaw idHistori nastepnej wersji historii
-        //     $idHistori = $historia->getIdPoprzedniej();
-
-        //     $i-=1;
-        //     if( $i<=0 ) {break;}
-        // }   
-
-        // $artArray = array("tytul" => $tytul, "tresc" => $tekstArtykulu);
-        // $artykul = $bazaArtykulow->nowyArtykul( $artArray );
-        // var_dump($tekstArtykulu);  
-        //var_dump($artykul);
         return $this->WyswietlStroneHistoriaArtykulu($staryArtykul); 
 
     }
