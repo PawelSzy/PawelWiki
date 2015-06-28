@@ -205,7 +205,7 @@ class BazaArtykulow extends Controller
     */
     public function pobierzSkrotyNowychArtykulow($iloscArtykulow = 5)
     {
-        $najnowszeArt = $this->pobierzNajnowszeArtykulu( $iloscArtykulow = 5, $iloscPierwszychZnakow = 100);
+        $najnowszeArt = $this->pobierzNajnowszeArtykulu( $iloscArtykulow = 5, $iloscPierwszychZnakow = 400);
         foreach ($najnowszeArt as $key => $artykul) {
             $nowaTresc = $artykul->odczytajTresc();
             $nowaTresc = mb_substr($nowaTresc, 0, $iloscPierwszychZnakow);

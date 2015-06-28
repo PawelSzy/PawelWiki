@@ -19,8 +19,6 @@ class StronaGlownaController extends Controller
 		$tytul = "PawelWiki Strona GLowna";
 
 		$najnowszeArtykuly = $this->pobierzNajnowszeArtykuly();
-		var_dump($najnowszeArtykuly);
-		// exit;
     	return $this->render( 'PawelWikiBundle:Default:strona_glowna.html.twig', array('tytul' => $tytul, 'najnowszeArtykuly' => $najnowszeArtykuly)) ;        
 	}
 
