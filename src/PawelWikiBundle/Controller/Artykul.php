@@ -75,6 +75,23 @@ class Artykul implements ArtykulInterface
         return $this->idHistori;
     }
 
+    public function zapiszRouter($router)
+    {
+        $this->router = $router;
+        return $this;
+    }
+
+    private function getRouter()
+    {
+        if ( isset($this->router) )
+        {
+            return $this->router;
+        }
+        else {
+            return NULL;
+        }
+    }
+
     public function zwrocHTML( $router = NULL)
     {
         //@param - router - obiekt pochodzacy z Symfony - sluzy do wyznaczania adresu
@@ -86,6 +103,14 @@ class Artykul implements ArtykulInterface
         //konwersja i zwroc dane
         $htmlTresc = ZamienWikiCodeToHTML::konwersjaWikiCodeToHTML( $escapedTresc );
         
+        //jesli nie zapisano
+        //sprawdz czy istnieje router zapisany w obiekcie artykul
+        if ( $router == NULL )
+        {
+            $router = $this->getRouter();
+        }
+
+
         //zamien wszystkie linki_code na linki w HTML
         if( $router !== NULL)
         {

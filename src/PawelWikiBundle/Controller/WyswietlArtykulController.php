@@ -41,8 +41,10 @@ class WyswietlArtykulController extends Controller
 
     private function wyswietlArtykul( $artykul )
     {
+        $router = $this->get('router');
+        $artykul->zapiszRouter($router);   
         return $this->render( 'PawelWikiBundle:Default:artykul.html.twig', array('tytul' => $artykul->odczytajTytul(),
-            'tresc' => $artykul->odczytajTresc() )) ;        
+            'artykul' => $artykul )) ;        
     }
 
 

@@ -179,6 +179,25 @@ class BazaArtykulow extends Controller
     }
 
 
+    public function pobierzNajnowszeArtykulu( $iloscArtykulow = 5)
+    {
+         //$product = $entityManager->find('Tytul', $tytul);
+        $entityManager = $this->doctrine->getManager();
+        $adres_bazy = $this->pobierzAdresBazyDanych();
+        $dql = "SELECT ArtykulDB FROM ".$adres_bazy.' ArtykulDB ORDER BY ArtykulDB.dataZmiany DESC';
+        $query = $entityManager->createQuery($dql);
+        // $query->setParameter('iloscArtykulow', $iloscArtykulow);
+        $res = $query->getResult();
+
+        $pierwszeArty =array();
+        for($i=0; $i< $iloscArtykulow; ++$i)
+        {
+            $pierwszeArty[$i]= $res[$i];
+        }
+        return $pierwszeArty;      
+    }
+
+
     private function pobierzArtykulEntity( $tytul )
     {
     /*****************************************
