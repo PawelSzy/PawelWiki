@@ -7,6 +7,8 @@
   				<div class="panel-heading">Najnowsze artykulu</div>
   					<div class="panel-body">
   							{{ render(controller("PawelWikiBundle:WyswietlArtykul:wyswietlArtykulPozaBaza", {'artykul': artykul} )) }}
+  							<br>
+  							<a href="{{ path('pawel_wiki_strona', {'tytul': artykul.odczytajTytul } ) }}" title="Utworz nowy Wiki Artykul">Idź do artykulu</a>
   					</div>
 			</div>
   		{% endfor %}
