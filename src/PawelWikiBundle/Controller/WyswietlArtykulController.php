@@ -37,6 +37,16 @@ class WyswietlArtykulController extends Controller
         $tytul_strony = "PawelWiki Skasowano strone";
         return $this->wyswietlWiadomosc( $wiadomosc, $tytul_strony);
     }
+
+    /**
+    *widac braki polimofirmu w PHP
+    *musze utworzyc odzielna funkcje gdy wyswietlam Artykul gdy paremetr tytulu i dla artykulu
+    *@param - artykul
+    */
+    public function wyswietlArtykulPozaBazaAction( $artykul)
+    {
+        return $this->wyswietlArtykulNoEscaping( $artykul );
+    }
     
 
     private function wyswietlArtykul( $artykul )
@@ -62,8 +72,6 @@ class WyswietlArtykulController extends Controller
         $router = $this->get('router');
         $trescHTML = $artykul->zwrocHTML( $router );
 
-  
-        //var_dump($router->generate("pawel_wiki_artykul", array("tytul" => "Sapkowski4"), true) );
         return $this->render( 'PawelWikiBundle:Default:artykul_bez_escaping.html.twig', array('tytul' => $artykul->odczytajTytul(),
             'tresc' =>  $trescHTML  )) ;        
     }    

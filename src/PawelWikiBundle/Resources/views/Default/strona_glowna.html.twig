@@ -1,5 +1,14 @@
 {% extends "PawelWikiBundle:Default:szablon_wiki_strona.html.twig" %}
      {% block content %}
      	<h1>Witaj w Pawel Wiki <br> <small>Internetowej Encyklopedii <br> Strona Glowna</small></h1>
+     	<hr>
+     	{% for artykul in najnowszeArtykuly %}
+     		<div class="panel panel-default">
+  				<div class="panel-heading">Najnowsze artykulu</div>
+  					<div class="panel-body">
+  							{{ render(controller("PawelWikiBundle:WyswietlArtykul:wyswietlArtykulPozaBaza", {'artykul': artykul} )) }}
+  					</div>
+			</div>
+  		{% endfor %}
      {% endblock %}
        

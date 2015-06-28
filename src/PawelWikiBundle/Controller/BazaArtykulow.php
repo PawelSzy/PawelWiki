@@ -187,14 +187,32 @@ class BazaArtykulow extends Controller
         $dql = "SELECT ArtykulDB FROM ".$adres_bazy.' ArtykulDB ORDER BY ArtykulDB.dataZmiany DESC';
         $query = $entityManager->createQuery($dql);
         // $query->setParameter('iloscArtykulow', $iloscArtykulow);
-        $res = $query->getResult();
+        $query->setMaxResults($iloscArtykulow);
+        $najnowszeArt = $query->getResult();
 
-        $pierwszeArty =array();
-        for($i=0; $i< $iloscArtykulow; ++$i)
-        {
-            $pierwszeArty[$i]= $res[$i];
+        $res = array();
+        foreach ($najnowszeArt as $key => $artykul) {
+            $artykulArray = $this->artykulEntintyIntoArray($artykul);
+            $artykulObject = $this->nowyArtykul( $artykulArray );
+            array_push( $res,  $artykulObject );
         }
-        return $pierwszeArty;      
+
+        return $res;      
+    }
+
+    /**
+    *Funkcja zwraca skroty najnowszych artykulow pierwsz 100 znakow
+    */
+    public function pobierzSkrotyNowychArtykulow($iloscArtykulow = 5)
+    {
+        $najnowszeArt = $this->pobierzNajnowszeArtykulu( $iloscArtykulow = 5, $iloscPierwszychZnakow = 100);
+        foreach ($najnowszeArt as $key => $artykul) {
+            $nowaTresc = $artykul->odczytajTresc();
+            $nowaTresc = mb_substr($nowaTresc, 0, $iloscPierwszychZnakow);
+            $artykul->zmienTresc($nowaTresc);
+
+        }
+        return $najnowszeArt;
     }
 
 

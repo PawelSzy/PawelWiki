@@ -18,15 +18,16 @@ class StronaGlownaController extends Controller
 	{
 		$tytul = "PawelWiki Strona GLowna";
 
-		$najnowszeArtykulu = $this->pobierzNajnowszeArtykulu();
-		var_dump($najnowszeArtykulu);
-    	return $this->render( 'PawelWikiBundle:Default:strona_glowna.html.twig', array('tytul' => $tytul )) ;        
+		$najnowszeArtykuly = $this->pobierzNajnowszeArtykuly();
+		var_dump($najnowszeArtykuly);
+		// exit;
+    	return $this->render( 'PawelWikiBundle:Default:strona_glowna.html.twig', array('tytul' => $tytul, 'najnowszeArtykuly' => $najnowszeArtykuly)) ;        
 	}
 
-	private function pobierzNajnowszeArtykulu( $iloscNowychArtykulow = 5)
+	private function pobierzNajnowszeArtykuly( $iloscNowychArtykulow = 5)
 	{
         $BazaArtykulow = new BazaArtykulow( $this->pobierzRepository(), $this->pobierzDoctrine() );
-        $najnowszeArtykulu = $BazaArtykulow->pobierzNajnowszeArtykulu( $iloscNowychArtykulow );		
-		return $najnowszeArtykulu;
+        $najnowszeArtykuly = $BazaArtykulow->pobierzSkrotyNowychArtykulow( $iloscNowychArtykulow );		
+		return $najnowszeArtykuly;
 	}
 }
