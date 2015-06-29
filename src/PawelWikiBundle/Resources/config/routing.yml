@@ -38,6 +38,10 @@ pawel_wiki_info:
     path:     /info
     defaults: { _controller: PawelWikiBundle:PawelWikiInfo:PawelWikiInfo }
 
+pawel_wiki_zasady:
+    path:     /zasady
+    defaults: { _controller: PawelWikiBundle:WyswietlZasady:wyswietlStroneZasady }
+
 login:
     path: /login
     defaults: { _controller: PawelWikiBundle:Security:login }
