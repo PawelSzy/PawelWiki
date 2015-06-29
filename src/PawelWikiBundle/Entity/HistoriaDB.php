@@ -207,7 +207,7 @@ class HistoriaDB
 
     public function getArrayStatystyka()
     {
-        return unserialize( $this->getStatystyka() );
+        return unserialize( base64_decode( $this->getStatystyka() ) );
     }
 
     /**
@@ -241,12 +241,12 @@ class HistoriaDB
     */
     public function getArrayKrotkiDiff()
     {
-        return unserialize($this->getKrotkiDiff());
+        return unserialize( base64_decode($this->getKrotkiDiff() ));
     }
 
 
     public function getArrayDiff()
     {
-        return unserialize( $this->getDiff() );
+        return unserialize( base64_decode( $this->getDiff() ));
     }
 }

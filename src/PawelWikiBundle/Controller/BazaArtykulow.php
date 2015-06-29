@@ -299,6 +299,7 @@ class BazaArtykulow extends Controller
         $tekstArtykulu = $artykul->odczytajTresc();
         $idPoprzedniej = $artykul->pobierzIDHistori();
 
+
         if ($idPoprzedniej ===NULL or $idPoprzedniej == 0)
         {
             $idPoprzedniej = 0;
@@ -316,9 +317,9 @@ class BazaArtykulow extends Controller
         $krotkiDiff = StringDiff::skroconyDiff( $diff );
 
         //konieczna serializacja array aby zapisac w bazie danych 
-        $serializeDiff = serialize($diff);        
-        $serializeStat = serialize($statystyka);
-        $serializeKrotkiDiff = serialize($krotkiDiff);
+        $serializeDiff =  base64_encode( serialize( $diff ) );        
+        $serializeStat = base64_encode( serialize($statystyka ));
+        $serializeKrotkiDiff = base64_encode( serialize( $krotkiDiff ));
 
         //utworz entiy historia - z entity HistoriaDB
         $historia->setAutor( $autor );
