@@ -5,7 +5,9 @@ popraw htacces w web directory
 dodatkowy controller ktory pobiera repository 
 
 
-test zamienWikiCodeToHTML
+Blêdy: przy pokazuwaniu starej wersji histori sa bledy wynika to pewnie z kodowanie histori przy pomocy dodatkowej funcki 
+base64_encode
+Wykasuj i zapisz wszystkie artykulu, inaczej wystepuja bledy przy histori
 
 1) Napis przy tworzeniu strony jakie s¹ zasady robienia kodu aby wyswietli³ siê html
 2) PRzy tworzeniu nowego artykulu poka¿ odrazu wyswietlanie w kodzie HTML (najlepiej JQUery)
