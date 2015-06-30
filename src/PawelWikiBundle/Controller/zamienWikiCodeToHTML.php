@@ -4,6 +4,9 @@ namespace PawelWikiBundle\Controller;
 class ZamienWikiCodeToHTML
 {
 	private static $RULES = array(
+		//zamiana nowych lini
+		//"/\n\n/" => '<br>' ,
+
 		//Glowne tagi HTML
 		//****************************************************************************************************
 		"/=====([^=]*)=====/" => '<h5>\1</h5>' ,

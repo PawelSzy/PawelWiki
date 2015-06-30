@@ -127,7 +127,7 @@ class WyswietlStroneController extends Controller
     private function utworzEdytujForm($napisyWForm = NULL)
     {
         $form = $this->createFormBuilder($napisyWForm, array(
-      'attr' => array( "class" => "form", "role" => "form" ) ))
+      'attr' => array( "class" => "form", "role" => "form", ) ))
         ->add('tytul', 'text')
         ->add('utworzNowyArtykul', 'checkbox', array('label'=> 'Zaznacz aby utworzyc nowy artykul',
                 'required'  => false,
