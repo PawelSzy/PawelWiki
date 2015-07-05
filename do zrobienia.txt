@@ -1,6 +1,9 @@
 popraw htacces w web directory
 
 
+Dodaj wyszukiwanie w Bazie - w przyk³adnie szukaj Julius
+SELECT * FROM `artykuldb` WHERE match(artykul) against('+Julius' IN BOOLEAN MODE) LIMIT 10
+
 
 dodatkowy controller ktory pobiera repository 
 
