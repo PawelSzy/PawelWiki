@@ -42,6 +42,10 @@ pawel_wiki_zasady:
     path:     /zasady
     defaults: { _controller: PawelWikiBundle:WyswietlZasady:wyswietlStroneZasady }
 
+pawel_wiki_szukaj:
+    path:     /szukaj
+    defaults: { _controller: PawelWikiBundle:Szukaj:utworzFormSzukaj }
+
 login:
     path: /login
     defaults: { _controller: PawelWikiBundle:Security:login }

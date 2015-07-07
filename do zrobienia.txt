@@ -27,3 +27,18 @@ Wykasuj i zapisz wszystkie artykulu, inaczej wystepuja bledy przy histori
 wikikod
 http://pl.wikipedia.org/wiki/Pomoc:Formatowanie_tekstu
 http://www.jan.mielno.pl/slug,Wikipedia:Wikikod.cgi
+
+
+<!-- 
+<div class="text-right">
+
+ {{ form_start(form, { 'attr': {'class': 'form-search  col-xs-3 pull-right input-sm'}}) }}
+     {{ form_errors(form) }}
+	 <div class="input-append">
+     	{{ form_widget(form.szukaj ) }}
+	<button type="submit" class="btn-default"  id="form_Zapisz" name="form[Zapisz]"><span class="glyphicon glyphicon-search"></span></button>
+     </div> 
+ {{ form_end(form) }}
+ </div>
+ <br><br>
+ -->
