@@ -27,7 +27,7 @@ class SzukajController extends Controller
 
        $form = $this->createFormBuilder($data, array( 'method'=>'POST', 'action' => $this->generateUrl('pawel_wiki_szukaj') ))
         ->add('text', 'text')
-        ->add('Szukaj', 'submit')
+        ->add('Szukaj', 'submit', array( 'attr' => array("class" => "btn btn-default")) )
         ->getForm();
 
  //   var_dump( $this->getRequest()->query->all() );
