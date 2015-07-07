@@ -218,24 +218,45 @@ class BazaArtykulow extends Controller
 
     public function szukajWBazieDanych($szukaj, $iloscArtykulow = 10)
     {
+
+        // $em = $this->getDoctrine()->getEntityManager();
+        // $connection = $em->getConnection();
+        // $statement = $connection->prepare("SELECT something FROM somethingelse WHERE id = :id");
+        // $statement->bindValue('id', 123);
+        // $statement->execute();
+        // $results = $statement->fetchAll();
+
+
+
         $entityManager = $this->doctrine->getManager();
+        $connection = $entityManager->getConnection();
         $adres_bazy = $this->pobierzAdresBazyDanych();
-        // $dql = "SELECT ArtykulDB FROM ".$adres_bazy.' ArtykulDB WHERE ArtykulDB.tytul = :tytul';
-        $dql = "SELECT ArtykulDB FROM ".$adres_bazy." ArtykulDB WHERE match(artykul) against('+Julius' IN BOOLEAN MODE) LIMIT 10";                
-        // $dql = "SELECT * FROM ".$adres_bazy."`artykuldb` WHERE match(artykul) against(szukaj = :szukaj IN BOOLEAN MODE)";
-        $query = $entityManager->createQuery($dql);
-        // $query->setParameter('szukaj', $szukaj);
-        // $query->setMaxResults($iloscArtykulow);
-        $najnowszeArt = $query->getResult();
 
-        $res = array();
-        foreach ($najnowszeArt as $key => $artykul) {
-            $artykulArray = $this->artykulEntintyIntoArray($artykul);
-            $artykulObject = $this->nowyArtykul( $artykulArray );
-            array_push( $res,  $artykulObject );
-        }
+        $sql = "SELECT * FROM `artykuldb` WHERE match(artykul) against('+Julius' IN BOOLEAN MODE) LIMIT 10";  
+         $statement = $connection->prepare( $sql );
+        $statement->bindValue('id', 123);
+        $statement->execute();
+        $res = $statement->fetchAll();
 
-        return $res; 
+        return $res;
+
+        // $adres_bazy = $this->pobierzAdresBazyDanych();
+        // // $dql = "SELECT ArtykulDB FROM ".$adres_bazy.' ArtykulDB WHERE ArtykulDB.tytul = :tytul';
+        // $dql = "SELECT ArtykulDB FROM ".$adres_bazy." ArtykulDB WHERE match(artykul) against('+Julius' IN BOOLEAN MODE) LIMIT 10";                
+        // // $dql = "SELECT * FROM ".$adres_bazy."`artykuldb` WHERE match(artykul) against(szukaj = :szukaj IN BOOLEAN MODE)";
+        // $query = $entityManager->createQuery($dql);
+        // // $query->setParameter('szukaj', $szukaj);
+        // // $query->setMaxResults($iloscArtykulow);
+        // $najnowszeArt = $query->getResult();
+
+        // $res = array();
+        // foreach ($najnowszeArt as $key => $artykul) {
+        //     $artykulArray = $this->artykulEntintyIntoArray($artykul);
+        //     $artykulObject = $this->nowyArtykul( $artykulArray );
+        //     array_push( $res,  $artykulObject );
+        // }
+
+ 
     }
 
 
