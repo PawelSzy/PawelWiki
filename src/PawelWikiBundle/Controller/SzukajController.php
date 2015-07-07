@@ -21,19 +21,12 @@ class SzukajController extends Controller
 
     public function utworzFormSzukajAction(Request $request)
     {
+        //utworz form
+        $data = array();
+        $form = $this->utworzForm($data);
 
-                $data = array();
-        // $form = $this->utworzForm($data);
-
-       $form = $this->createFormBuilder($data, array( 'method'=>'POST', 'action' => $this->generateUrl('pawel_wiki_szukaj') ))
-        ->add('text', 'text')
-        ->add('Szukaj', 'submit', array( 'attr' => array("class" => "btn btn-default")) )
-        ->getForm();
-
- //   var_dump( $this->getRequest()->query->all() );
-         $form->handleRequest($request);
-
-
+        //odczytaj form
+        $form->handleRequest($request);
         if ($form->isValid() )
         {
             $data = $form->getData();
@@ -41,32 +34,18 @@ class SzukajController extends Controller
             exit;
 
         }
-       // if ($request->isMethod('POST')) {
-       //  echo "POSTTTTTTTTTTTTTTTTTT";
-       //     var_dump( $form2->handleRequest($request)); 
-
-       //      // $data is a simply array with your form fields 
-       //      // like "query" and "category" as defined above.
-       //      $data = $form2->getData();
-       //      var_dump($data);
-       //      exit;
-
-       //  }        
-
 
       return $this->wyswietlFormSzukaj( $form ) ; 
     }
 
     private function utworzForm($data)
     {
-         $form = $this->createFormBuilder(array($data, 'method'=>'POST', 'action' => $this->generateUrl('pawel_wiki_szukaj'),
-        'attr' => array( "class" => "form form-search", "role" => "form", ) ))
-            ->add("szukaj", 'text', array( 
-                'attr' => array( 'placeholder' => 'Szukaj', "class" => "span2 search-query" )))
-            ->add('Zapisz', 'submit')
-            ->getForm()  ;  
-        return $form;     
-    }
+       $form = $this->createFormBuilder($data, array( 'method'=>'POST', 'action' => $this->generateUrl('pawel_wiki_szukaj') ))
+        ->add('text', 'text')
+        ->add('Szukaj', 'submit', array( 'attr' => array("class" => "btn btn-default")) )
+        ->getForm();
+        return $form;
+    }    
 
 
     private function wyswietlFormSzukaj( $form  )

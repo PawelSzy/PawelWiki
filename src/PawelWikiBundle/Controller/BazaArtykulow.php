@@ -405,9 +405,9 @@ class BazaArtykulow extends Controller
     }
 
     /**
-    Podaj tytul artykulu i dostan jego idHistori
-    @param - tytul artykuly
-    $return idHistori danego artykulu
+    *Podaj tytul artykulu i dostan jego idHistori
+    *@param - tytul artykuly
+    *@return idHistori danego artykulu
     */
     private function zwrocIdHistori( $tytul )
     {
