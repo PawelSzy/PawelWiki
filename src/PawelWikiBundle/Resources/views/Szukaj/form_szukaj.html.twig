@@ -1,1 +1,10 @@
-{{ form(form) }}
+<div class="text-right">
+
+ {{ form_start(form, { 'attr': {'class': 'form-search  col-xs-3 pull-right input-sm'}}) }}
+     {{ form_errors(form) }}
+	 <div class="input-append">
+     	{{ form_widget(form.text ) }}
+     </div> 
+ {{ form_end(form) }}
+ </div>
+ <br><br>
