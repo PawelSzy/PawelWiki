@@ -216,6 +216,29 @@ class BazaArtykulow extends Controller
     }
 
 
+    public function szukajWBazieDanych($szukaj, $iloscArtykulow = 10)
+    {
+        $entityManager = $this->doctrine->getManager();
+        $adres_bazy = $this->pobierzAdresBazyDanych();
+        // $dql = "SELECT ArtykulDB FROM ".$adres_bazy.' ArtykulDB WHERE ArtykulDB.tytul = :tytul';
+        $dql = "SELECT ArtykulDB FROM ".$adres_bazy." ArtykulDB WHERE match(artykul) against('+Julius' IN BOOLEAN MODE) LIMIT 10";                
+        // $dql = "SELECT * FROM ".$adres_bazy."`artykuldb` WHERE match(artykul) against(szukaj = :szukaj IN BOOLEAN MODE)";
+        $query = $entityManager->createQuery($dql);
+        // $query->setParameter('szukaj', $szukaj);
+        // $query->setMaxResults($iloscArtykulow);
+        $najnowszeArt = $query->getResult();
+
+        $res = array();
+        foreach ($najnowszeArt as $key => $artykul) {
+            $artykulArray = $this->artykulEntintyIntoArray($artykul);
+            $artykulObject = $this->nowyArtykul( $artykulArray );
+            array_push( $res,  $artykulObject );
+        }
+
+        return $res; 
+    }
+
+
     private function pobierzArtykulEntity( $tytul )
     {
     /*****************************************

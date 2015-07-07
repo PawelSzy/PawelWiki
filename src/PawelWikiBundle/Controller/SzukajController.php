@@ -31,11 +31,20 @@ class SzukajController extends Controller
         {
             $data = $form->getData();
             var_dump($data);
+            $wyszukaneArtykuly = $this->szukajWBazieDanych( $data );
+            var_dump( $wyszukaneArtykuly );
             exit;
 
         }
 
       return $this->wyswietlFormSzukaj( $form ) ; 
+    }
+
+    private function szukajWBazieDanych( $szukaj )
+    {
+        $BazaArtykulow = new BazaArtykulow( $this->pobierzRepository(), $this->pobierzDoctrine() );
+        $wyszukaneArtykuly = $BazaArtykulow->szukajWBazieDanych( $szukaj );     
+        return $wyszukaneArtykuly;        
     }
 
     private function utworzForm($data)
