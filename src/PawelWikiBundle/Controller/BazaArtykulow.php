@@ -35,8 +35,8 @@ class BazaArtykulow extends Controller
     ***************************************************/
  use PobierzRepositoryTrait { pobierzAdresBazyDanych as protected; pobierzAdresBazyHistori as protected;}  
      /**
-    Funkcja konstruktor - tworzy nowa instancje klasy BazaArtykulow
-    @param - $repository, $doctrine do odczytywania danych z bazy danych, $user - nazwa zalogowanego uzytkownika
+    *Funkcja konstruktor - tworzy nowa instancje klasy BazaArtykulow
+    *@param - $repository, $doctrine do odczytywania danych z bazy danych, $user - nazwa zalogowanego uzytkownika
     */  
     function __construct($repository, $doctrine, $user ="anon")
     {
@@ -232,11 +232,18 @@ class BazaArtykulow extends Controller
         $connection = $entityManager->getConnection();
         $adres_bazy = $this->pobierzAdresBazyDanych();
 
-        $sql = "SELECT * FROM `artykuldb` WHERE match(artykul) against('+Julius' IN BOOLEAN MODE) LIMIT 10";  
-         $statement = $connection->prepare( $sql );
-        $statement->bindValue('id', 123);
+        $sql = "SELECT * FROM `artykuldb` WHERE match(artykul) against( '".$szukaj."' IN BOOLEAN MODE) LIMIT ".$iloscArtykulow;  
+        // $res =  mysql_query($sql);
+        // var_dump($szukaj);
+        // var_dump($sql);
+        $statement = $connection->prepare( $sql );
+        // echo "PRzed bind";
+        // $statement->bindValue(1, "Julius");
+        // echo " po bind";
+        // //var_dump($statement);
         $statement->execute();
         $res = $statement->fetchAll();
+        var_dump($res);
 
         return $res;
 

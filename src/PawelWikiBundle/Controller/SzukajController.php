@@ -31,7 +31,8 @@ class SzukajController extends Controller
         {
             $data = $form->getData();
             var_dump($data);
-            $wyszukaneArtykuly = $this->szukajWBazieDanych( $data );
+            $szukanyTekst = $data['text'];
+            $wyszukaneArtykuly = $this->szukajWBazieDanych( $szukanyTekst );
             var_dump( $wyszukaneArtykuly );
             exit;
 
