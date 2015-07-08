@@ -197,7 +197,7 @@ class BazaArtykulow extends Controller
 
     /**
     *zamiana array pobranego z bazy danych na obiekty typu artykul
-    *@param array zawierajacy artykulu entity pobrane z bazy danych
+    *@param array zawierajacy obiekty classy ArtykulDB - array entity pobrane z bazy danych 
     *@return array zawierajacy obiekty classy Artykul
     */
     private function zamienArrayEntityNaArtykuly( $arrayArtykul)
@@ -239,8 +239,11 @@ class BazaArtykulow extends Controller
 
         $statement->execute();
         $res = $statement->fetchAll();
+        // var_dump($res);
+        // exit();
 
-        return $res;
+        $artykuly = $this->arrayZDBIntoArtykuly( $res);
+        return $artykuly;    
     }
 
 
@@ -259,6 +262,24 @@ class BazaArtykulow extends Controller
             );
         }
         return $artykulEntity;       
+    }
+
+    /**
+    *zamiana array pobranego z bazy danych na obiekty typu artykul
+    *@param array zawierajacy tekst artykul pobrane z bazy danych
+    *@return array zawierajacy obiekty classy Artykul
+    */
+    private function arrayZDBIntoArtykuly( $arrayArtykuly)
+    {
+        $artykuly = array();
+        foreach ($arrayArtykuly as $key => $artykulArray) {
+            $artykulArray['tresc'] = $artykulArray['artykul'];
+            $artykul = new Artykul( $artykulArray );
+            array_push( $artykuly,  $artykul );
+        }
+
+        return $artykuly;
+
     }
 
     private function artykulEntintyIntoArray( $artykulEntity )
@@ -286,9 +307,9 @@ class BazaArtykulow extends Controller
 
 
     /**
-    Funkcja tworzy nowy zapis w bazie histori modyfikacji artykulu
-    @param - obiekt typu artykul
-    @return int - id Histori
+    *Funkcja tworzy nowy zapis w bazie histori modyfikacji artykulu
+    *@param - obiekt typu artykul
+    *@return int - id Histori
     */
     private function utworzNowaHistorie( $artykul )
     {
@@ -297,9 +318,9 @@ class BazaArtykulow extends Controller
     }
 
     /**
-    Funkcja edytuje "ciag" zapisow w bazie histori modyfikacji artykulu - dodaje najnowsza modyfikacje
-    @param - obiekt typu artykul
-    @return int - id Histori
+    *Funkcja edytuje "ciag" zapisow w bazie histori modyfikacji artykulu - dodaje najnowsza modyfikacje
+    *@param - obiekt typu artykul
+    *@return int - id Histori
     */
     private function edytujHistoria($artykul, $idPoprzedniej = 0  )
     {
@@ -309,9 +330,9 @@ class BazaArtykulow extends Controller
     }
 
     /**
-    Funkcja zapisuje w bazie histori modyfikacje artykulu
-    @param - obiekt typu artykul, $idPoprzedniej - nr id histori do artykulu ktory zostal zmieniony
-    @return int - id Histori
+    *Funkcja zapisuje w bazie histori modyfikacje artykulu
+    *@param - obiekt typu artykul, $idPoprzedniej - nr id histori do artykulu ktory zostal zmieniony
+    *@return int - id Histori
     */
     private function zapiszHistorie( $artykul )
     {
@@ -367,8 +388,8 @@ class BazaArtykulow extends Controller
     }
 
     /**
-    Funkcja zwraca historia artykulu o podanym tytule
-    @param array zawierajacy diff (umozliwia odtworzenie poprzedniej wersji), skrocony_diff (do wyswietlania), statystyke(ile zostalo dodanyc, odjetych)
+    *Funkcja zwraca historia artykulu o podanym tytule
+    *@param array zawierajacy diff (umozliwia odtworzenie poprzedniej wersji), skrocony_diff (do wyswietlania), statystyke(ile zostalo dodanyc, odjetych)
     */
     public function odczytajHistorie($tytul)
     {
