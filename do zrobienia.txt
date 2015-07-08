@@ -1,24 +1,33 @@
 popraw htacces w web directory
 
 
-Dodaj wyszukiwanie w Bazie - w przyk³adnie szukaj Julius
-SELECT * FROM `artykuldb` WHERE match(artykul) against('+Julius' IN BOOLEAN MODE) LIMIT 10
+popraw URL bez podkreslenia "_"
+szukaj tak¿e po tytule
+snipet szukaj - 
+testowanie szukaj
 
 
 dodatkowy controller ktory pobiera repository 
+
+
 
 
 Blêdy: przy pokazuwaniu starej wersji histori sa bledy wynika to pewnie z kodowanie histori przy pomocy dodatkowej funcki 
 base64_encode
 Wykasuj i zapisz wszystkie artykulu, inaczej wystepuja bledy przy histori
 
+4) Losowy artykul
+6)wyswietlanie zdjecia/rysunkow
+
+
+zrobione
+---------------------------------------------------
+
 1) Napis przy tworzeniu strony jakie s¹ zasady robienia kodu aby wyswietli³ siê html
 2) PRzy tworzeniu nowego artykulu poka¿ odrazu wyswietlanie w kodzie HTML (najlepiej JQUery)
 
 3) logowanie i historia zmian
-4) Losowy artykul
 
-6)wyswietlanie zdjecia/rysunkow
 7) wyglad graficzny
 
 
@@ -27,18 +36,3 @@ Wykasuj i zapisz wszystkie artykulu, inaczej wystepuja bledy przy histori
 wikikod
 http://pl.wikipedia.org/wiki/Pomoc:Formatowanie_tekstu
 http://www.jan.mielno.pl/slug,Wikipedia:Wikikod.cgi
-
-
-<!-- 
-<div class="text-right">
-
- {{ form_start(form, { 'attr': {'class': 'form-search  col-xs-3 pull-right input-sm'}}) }}
-     {{ form_errors(form) }}
-	 <div class="input-append">
-     	{{ form_widget(form.szukaj ) }}
-	<button type="submit" class="btn-default"  id="form_Zapisz" name="form[Zapisz]"><span class="glyphicon glyphicon-search"></span></button>
-     </div> 
- {{ form_end(form) }}
- </div>
- <br><br>
- -->
