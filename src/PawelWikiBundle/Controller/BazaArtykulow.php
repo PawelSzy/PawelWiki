@@ -190,14 +190,26 @@ class BazaArtykulow extends Controller
         $query->setMaxResults($iloscArtykulow);
         $najnowszeArt = $query->getResult();
 
-        $res = array();
-        foreach ($najnowszeArt as $key => $artykul) {
+        $artykuly = $this->zamienArrayEntityNaArtykuly( $najnowszeArt);
+
+        return $artykuly;      
+    }
+
+    /**
+    *zamiana array pobranego z bazy danych na obiekty typu artykul
+    *@param array zawierajacy artykulu entity pobrane z bazy danych
+    *@return array zawierajacy obiekty classy Artykul
+    */
+    private function zamienArrayEntityNaArtykuly( $arrayArtykul)
+    {
+         $artykuly = array();
+        foreach ($arrayArtykul as $key => $artykul) {
             $artykulArray = $this->artykulEntintyIntoArray($artykul);
             $artykulObject = $this->nowyArtykul( $artykulArray );
-            array_push( $res,  $artykulObject );
+            array_push( $artykuly,  $artykulObject );
         }
 
-        return $res;      
+        return $artykuly;        
     }
 
     /**

@@ -30,11 +30,10 @@ class SzukajController extends Controller
         if ($form->isValid() )
         {
             $data = $form->getData();
-            var_dump($data);
             $szukanyTekst = $data['text'];
             $wyszukaneArtykuly = $this->szukajWBazieDanych( $szukanyTekst );
-            var_dump( $wyszukaneArtykuly );
-            exit;
+            var_dump($wyszukaneArtykuly);
+            return $this->wyswietlStroneZnaleziono( $wyszukaneArtykuly, $szukanyTekst);
 
         }
 
@@ -56,6 +55,11 @@ class SzukajController extends Controller
         ->getForm();
         return $form;
     }    
+
+    private function wyswietlStroneZnaleziono( $artykuly, $szukanyTekst)
+    {
+        return $this->render( 'PawelWikiBundle:Szukaj:szukaj_wiki_strona.html.twig', array('tytul' => $szukanyTekst, 'artykuly' => $artykuly) ); 
+    }
 
 
     private function wyswietlFormSzukaj( $form  )
