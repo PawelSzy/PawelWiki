@@ -114,28 +114,40 @@ class Artykul implements ArtykulInterface
         //zamien wszystkie linki_code na linki w HTML
         if( $router !== NULL)
         {
-            list($stringsToChange, $URL) =ZamienWikiCodeToHTML::pobierzGeneracjaUrl($htmlTresc);
-            $listaUrlDoStrony = array();
-            foreach ( $URL as $key => $nazwaArtykulu ) {
-
-                list( $nazwaArtykulu2, $nazwa_linku ) =  $this->podzielAdresnaAdresNazweLinki( $nazwaArtykulu );
-                if ( $nazwaArtykulu2 !==FALSE ) {
-                    //url zostal zakodowany w postaci [[nazwaArtykulu, nazwaLinkuWyswietlanaNastronie]]
-                    $urlDoStrony = $router->generate("pawel_wiki_strona", array("tytul" => $nazwaArtykulu2), true);
-                    $urlDoStrony = '<a href="'.$urlDoStrony.'">'.$nazwa_linku."</a>";                   
-                }
-                else {
-                    //url zostal zakodowany [[nazwaArtykulu]] w wikicode
-                    $urlDoStrony = $router->generate("pawel_wiki_strona", array("tytul" => $nazwaArtykulu), true);
-                    $urlDoStrony = '<a href="'.$urlDoStrony.'">'.$nazwaArtykulu."</a>";                  
-                }
-                //dodaj url do listyUrl
-                array_push($listaUrlDoStrony, $urlDoStrony);
-
-            };
-            $htmlTresc = str_replace($stringsToChange, $listaUrlDoStrony, $htmlTresc);
+            $htmlTresc = $this->linkCodeToHTML( $htmlTresc, $router );
         }
         return $htmlTresc;
+    }
+
+    /**
+    * zamiana linkow zawartych w tresc( zapisanej w WikiCode) na linki w html
+    *@param - string z linkami w WikiCode
+    *@return - string z linkami w HTML
+    */
+    private function linkCodeToHTML( $htmlTresc, $router)
+    {
+        list($stringsToChange, $URL) =ZamienWikiCodeToHTML::pobierzGeneracjaUrl( $htmlTresc );
+        $listaUrlDoStrony = array();
+        foreach ( $URL as $key => $nazwaArtykulu ) {
+
+            list( $nazwaArtykulu2, $nazwa_linku ) =  $this->podzielAdresnaAdresNazweLinki( $nazwaArtykulu );
+            if ( $nazwaArtykulu2 !==FALSE ) {
+                //url zostal zakodowany w postaci [[nazwaArtykulu, nazwaLinkuWyswietlanaNastronie]]
+                $urlDoStrony = $router->generate("pawel_wiki_strona", array("tytul" => $nazwaArtykulu2), true);
+                $urlDoStrony = '<a href="'.$urlDoStrony.'">'.$nazwa_linku."</a>";                   
+            }
+            else {
+                //url zostal zakodowany [[nazwaArtykulu]] w wikicode
+                $urlDoStrony = $router->generate("pawel_wiki_strona", array("tytul" => $nazwaArtykulu), true);
+                $urlDoStrony = '<a href="'.$urlDoStrony.'">'.$nazwaArtykulu."</a>";                  
+            }
+            //dodaj url do listyUrl
+            array_push($listaUrlDoStrony, $urlDoStrony);
+
+        };
+        $htmlTresc = str_replace($stringsToChange, $listaUrlDoStrony, $htmlTresc);  
+        
+        return $htmlTresc;      
     }
 
     private function podzielAdresnaAdresNazweLinki($url)

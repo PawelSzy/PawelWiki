@@ -234,10 +234,11 @@ class BazaArtykulow extends Controller
     */
     public function szukajWBazieDanych($szukaj, $iloscArtykulow = 10)
     {
-
+        //szukaj po tytule artykulu
         $artykuly =  $this->szukajDBTytul($szukaj, $iloscArtykulow);
+        
+        //jesli po tytule znaleziono mniej niz wymagana szukaj w tresci artykulow
         $ilePobranychArt = count($artykuly);
-        //jesli po tytule znaleziono mniej szukja w tresci artykulow
         if ($ilePobranychArt < $iloscArtykulow) 
         {
             $iloscArtykulow -= count($artykuly);
