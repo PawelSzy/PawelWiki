@@ -227,23 +227,68 @@ class BazaArtykulow extends Controller
         return $najnowszeArt;
     }
 
-
+    /**
+    *Funckja szuka tekstu w tresc artykulow
+    *@param - string $szukaj - szukany tekst w bazie danych, int - $iloscArtykulow
+    *@return array zawierajazy obiekty klasy artykul zawierajacy szukany tekst w tytul/tresc
+    */
     public function szukajWBazieDanych($szukaj, $iloscArtykulow = 10)
     {
 
+        $artykuly =  $this->szukajDBTytul($szukaj, $iloscArtykulow);
+        if (count($artykuly) < $iloscArtykulow)
+        {
+            $artykuly2 = $this->szukajDBTekstuArtykul($szukaj, $iloscArtykulow);
+            $artykuly = array_merge($artykuly, $artykuly2);
+            $artykuly = array_map("unserialize", array_unique(array_map("serialize", $artykuly)));
+            // $artykulu = array_unique( $artykuly, SORT_REGULAR );
+        }
+        return $artykuly;
+        // return $this->szukajDBTekstuArtykul($szukaj, $iloscArtykulow = 10);
+    }
+
+    /**
+    *Funckja szuka tekstu w tresc artykulow
+    *@param - string $szukaj - szukany tekst w bazie danych, int - $iloscArtykulow
+    *@return array zawierajazy obiekty klasy artykul w swoim tekscie zawierajacy szukany tekst
+    */
+    private function szukajDBTekstuArtykul($szukaj, $iloscArtykulow = 10)
+    { 
+        $sql = "SELECT * FROM `artykuldb` WHERE match(artykul) against( '".$szukaj."' IN BOOLEAN MODE) LIMIT ".$iloscArtykulow;  
+        $arrayArtykuly = $this->uzyjSQL( $sql );
+        $artykuly = $this->arrayZDBIntoArtykuly( $arrayArtykuly);
+        return $artykuly;     
+    }
+    
+    /** 
+    *Funckja szuka artykulu o tytule
+    *@param - string $szukaj - szukany tytul w bazie danych, int - $iloscArtykulow
+    *@return array zawierajazy obiekty klasy artykul o tytule
+    */
+    private function szukajDBTytul($szukaj, $iloscArtykulow = 10)
+    {
+        $sql = "SELECT * FROM `artykuldb` WHERE match(tytul) against( '".$szukaj."' IN BOOLEAN MODE) LIMIT ".$iloscArtykulow;  
+        $arrayArtykuly = $this->uzyjSQL( $sql );
+        $artykuly = $this->arrayZDBIntoArtykuly( $arrayArtykuly);
+        return $artykuly;      
+    }
+
+    /**
+    *Podaj do bazy danych SQL
+    *@param string zawierajacy SQL
+    *@return array zawierajacy dane zwracane z bazy danych
+    */
+    private function uzyjSQL( $sql )
+    {
         $entityManager = $this->doctrine->getManager();
         $connection = $entityManager->getConnection();
-
-        $sql = "SELECT * FROM `artykuldb` WHERE match(artykul) against( '".$szukaj."' IN BOOLEAN MODE) LIMIT ".$iloscArtykulow;  
+ 
         $statement = $connection->prepare( $sql );
 
         $statement->execute();
         $res = $statement->fetchAll();
-        // var_dump($res);
-        // exit();
-
-        $artykuly = $this->arrayZDBIntoArtykuly( $res);
-        return $artykuly;    
+ 
+        return $res; 
     }
 
 
@@ -402,9 +447,9 @@ class BazaArtykulow extends Controller
     }
 
     /**
-    Funckcja zwraca historie artykulu i dostan jego idHistori
-    @param - idHistori 
-    $return zwraca array zawierajacy obiekt klasy Entity - HistoriaDB
+    *Funckcja zwraca historie artykulu i dostan jego idHistori
+    *@param - idHistori 
+    *$return zwraca array zawierajacy obiekt klasy Entity - HistoriaDB
     */
     public function pobierzHistorie($id)
     {
