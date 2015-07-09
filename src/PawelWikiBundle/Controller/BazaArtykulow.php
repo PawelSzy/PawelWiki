@@ -237,12 +237,15 @@ class BazaArtykulow extends Controller
 
         $artykuly =  $this->szukajDBTytul($szukaj, $iloscArtykulow);
         $ilePobranychArt = count($artykuly);
-        if ($ilePobranychArt < $iloscArtykulow)
+        //jesli po tytule znaleziono mniej szukja w tresci artykulow
+        if ($ilePobranychArt < $iloscArtykulow) 
         {
             $iloscArtykulow -= count($artykuly);
             assert($iloscArtykulow >= 0 );
             $artykuly2 = $this->szukajDBTekstuArtykul($szukaj, $iloscArtykulow);
+            //polacz array tytulow z arra artykulow wyszukanych po tresc
             $artykuly = array_merge($artykuly, $artykuly2);
+            //pozbadz sie zduplikowanych wartosci z array
             $artykuly = array_map("unserialize", array_unique(array_map("serialize", $artykuly)));
         }
         return $artykuly;
