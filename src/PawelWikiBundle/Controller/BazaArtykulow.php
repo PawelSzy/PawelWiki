@@ -236,15 +236,16 @@ class BazaArtykulow extends Controller
     {
 
         $artykuly =  $this->szukajDBTytul($szukaj, $iloscArtykulow);
-        if (count($artykuly) < $iloscArtykulow)
+        $ilePobranychArt = count($artykuly);
+        if ($ilePobranychArt < $iloscArtykulow)
         {
+            $iloscArtykulow -= count($artykuly);
+            assert($iloscArtykulow >= 0 );
             $artykuly2 = $this->szukajDBTekstuArtykul($szukaj, $iloscArtykulow);
             $artykuly = array_merge($artykuly, $artykuly2);
             $artykuly = array_map("unserialize", array_unique(array_map("serialize", $artykuly)));
-            // $artykulu = array_unique( $artykuly, SORT_REGULAR );
         }
         return $artykuly;
-        // return $this->szukajDBTekstuArtykul($szukaj, $iloscArtykulow = 10);
     }
 
     /**
