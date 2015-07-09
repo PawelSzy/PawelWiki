@@ -57,7 +57,9 @@ class SzukajController extends Controller
 
     private function wyswietlStroneZnaleziono( $artykuly, $szukanyTekst)
     {
-        return $this->render( 'PawelWikiBundle:Szukaj:szukaj_wiki_strona.html.twig', array('tytul' => $szukanyTekst, 'artykuly' => $artykuly) ); 
+        return $this->render( 'PawelWikiBundle:Szukaj:szukaj_wiki_strona.html.twig', array('tytul' => $szukanyTekst, 'artykuly' => $artykuly,
+                'szukanyTekst' => $szukanyTekst
+            ) ); 
     }
 
 

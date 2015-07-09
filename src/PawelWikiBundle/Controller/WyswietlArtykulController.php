@@ -47,6 +47,15 @@ class WyswietlArtykulController extends Controller
     {
         return $this->wyswietlArtykulNoEscaping( $artykul );
     }
+
+    public function wyswietlSnippetAction($artykul, $szukanyTekst)
+    {
+        $snippet = $artykul->wyszukajSnippet( $szukanyTekst );
+        var_dump($snippet);
+        $artykul->zmienTresc( $snippet );
+        var_dump($artykul->odczytajTresc());
+        return $this->wyswietlArtykulNoEscaping( $artykul );
+    }
     
 
     private function wyswietlArtykul( $artykul )
@@ -57,16 +66,14 @@ class WyswietlArtykulController extends Controller
             'artykul' => $artykul )) ;        
     }
 
-
+    /**
+    *Wyswietl artykul na stronie 
+    *funkcja dokonuje konwersji tresc z WikiCode do czystego HTML
+    *@param obiekt klasy artykul
+    *@return wyswietlona strona
+    */ 
     private function wyswietlArtykulNoEscaping( $artykul )
     {
-        ////////////////////////////////////////////////
-        // Wyswietl artykul na stronie 
-        // funkcja dokonuje konwersji tresc z WikiCode do czystego HTML
-        //@param obiekt klasy artykul
-        //@return wyswietlona strona
-        //////////////////////////////////////////////       
-
         //jedyne miejsce w programie gdzie moge przekazac HTML (z bazy danych) bez escaping do wyswietlania
         //na stronie
         $router = $this->get('router');

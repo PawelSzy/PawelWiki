@@ -92,10 +92,13 @@ class Artykul implements ArtykulInterface
         }
     }
 
+    /**
+    *@param - router - obiekt pochodzacy z Symfony - sluzy do wyznaczania adresu
+    *@return - funkcja zwraca zkonwertowany tekst odczytany z bazy danych (w kodzie WikiCode) na html
+    */
     public function zwrocHTML( $router = NULL)
     {
-        //@param - router - obiekt pochodzacy z Symfony - sluzy do wyznaczania adresu
-        //@return - funkcja zwraca zkonwertowany tekst odczytany z bazy danych (w kodzie WikiCode) na html
+
 
         //w celu bezpieczenstwa tekst z bazy danych pozbadz sie html
         $escapedTresc = htmlentities( $this->odczytajTresc() );
@@ -117,6 +120,26 @@ class Artykul implements ArtykulInterface
             $htmlTresc = $this->linkCodeToHTML( $htmlTresc, $router );
         }
         return $htmlTresc;
+    }
+
+    /**
+    *Funkcja zwraca kawalek tekstu zawierajacy szukany tekst
+    *@param szukanyTekst - string, route - obiekt pochodzacy z Symfony - sluzy do wyznaczania adresu
+    *@param ilosc znakow - ile znakow przed i po szukanym tekscie ma pokazac
+    *@return - string zawierajacy wyszukany wyraz oraz tekst z jego "okolic"
+    */
+    public function wyszukajSnippet($szukanyTekst = "", $iloscZnakow = 50, $router = NULL)
+    {
+
+        
+        if ( $szukanyTekst == "" or $szukanyTekst ==NULL )
+        {
+            return $this->zwrocHTML( $router);
+        }
+        $tekstArtykulu = $this->zwrocHTML( $router);
+        $snippet = $this->podzielString($tekstArtykulu, $szukanyTekst, $iloscZnakow);
+
+        return $snippet;
     }
 
     /**
@@ -175,6 +198,45 @@ class Artykul implements ArtykulInterface
     }
 
 
+    /**
+    *function that returns part of string before and after specified sub-string
+    */
+    private function podzielString($str, $query, $numOfWordToAdd) 
+    {
+        list($before, $after) = explode($query, $str);
 
+        $before = rtrim($before);
+        $after  = ltrim($after);
+
+        $beforeArray = array_reverse(explode(" ", $before));
+        $afterArray  = explode(" ", $after);
+
+        $countBeforeArray = count($beforeArray);
+        $countAfterArray  = count($afterArray);
+
+        $beforeString = "";
+        if($countBeforeArray < $numOfWordToAdd) {
+            $beforeString = implode(' ', $beforeArray);
+        }
+        else {
+            for($i = 0; $i < $numOfWordToAdd; $i++) {
+                $beforeString = $beforeArray[$i] . ' ' . $beforeString; 
+            }
+        }
+
+        $afterString = "";
+        if($countAfterArray < $numOfWordToAdd) {
+            $afterString = implode(' ', $afterArray);
+        }
+        else {
+            for($i = 0; $i < $numOfWordToAdd; $i++) {
+                $afterString = $afterString . $afterArray[$i] . ' '; 
+            }
+        }
+
+        $string = $beforeString . $query . ' ' . $afterString;
+
+        return $string;
+
+    }
 }
-
