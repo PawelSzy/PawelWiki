@@ -40,23 +40,13 @@ class WyswietlArtykulController extends Controller
 
     /**
     *widac braki polimofirmu w PHP
-    *musze utworzyc odzielna funkcje gdy wyswietlam Artykul gdy paremetr tytulu i dla artykulu
+    *musze utworzyc odzielna funkcje gdy wyswietlam Artykul i przekazuje  paremetr tytulu lub caly artykulu
     *@param - artykul
     */
     public function wyswietlArtykulPozaBazaAction( $artykul)
     {
         return $this->wyswietlArtykulNoEscaping( $artykul );
-    }
-
-    public function wyswietlSnippetAction($artykul, $szukanyTekst)
-    {
-        $snippet = $artykul->wyszukajSnippet( $szukanyTekst );
-        var_dump($snippet);
-        $artykul->zmienTresc( $snippet );
-        var_dump($artykul->odczytajTresc());
-        return $this->wyswietlArtykulNoEscaping( $artykul );
-    }
-    
+    }    
 
     private function wyswietlArtykul( $artykul )
     {

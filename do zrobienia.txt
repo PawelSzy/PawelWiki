@@ -2,7 +2,7 @@ popraw htacces w web directory
 
 
 popraw URL bez podkreslenia "_"
-szukaj tak¿e po tytule
+
 snipet szukaj - 
 testowanie szukaj
 
