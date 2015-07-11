@@ -38,7 +38,7 @@ class testStronaZArtykulem extends WebTestCase
 		$clawler = $client->request('GET', '/artykul/Artykul_test');
 		
 		/////////////////////////////////////////////////////////////////////
-		$results = $clawler->filter('html:contains("Artykul_test")')->count();
+		$results = $clawler->filter('html:contains("Artykul test")')->count();
 		$this->assertGreaterThan(0, $results);
 
 		/////////////////////////////////////////////////////////////////////

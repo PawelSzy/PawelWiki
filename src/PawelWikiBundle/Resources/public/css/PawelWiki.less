@@ -1,3 +1,5 @@
+@import "bootstrap/bootstrap.less";
+
 @lekkiSzaryNiebieski: #F6F6F6;
 @lekkiNiebieski: #A7D7F9;
 @szaryNiebieski: #EEEEEE;
@@ -33,15 +35,32 @@
   	
 }
 
+.Content {
+	.make-xs-column(12);	
+	.make-md-column(10); 
+	.pull-right;
+}
+
+.div_boczny_pasek {
+	.make-xs-column(12);
+	.make-md-column(2);	
+}
 
 .boczny_pasek {
 	.Gradient_lekki;
 	.Granica_pomocnicze_elem_pion;
-	 padding: 0.5em;
+	padding: 0.5em;
+}
+
+.row {
+	.make-xs-column(12);
+	.make-md-column(12);	
+	
 }
 
 .stopka {
-	.Gradient_lekki;	
+	.Gradient_lekki;
+	padding-left: 0.7em;	
 }
 
 #form_tresc {
