@@ -1,10 +1,10 @@
 popraw htacces w web directory
 
-
+Przeniesc na serwer
 popraw URL bez podkreslenia "_"
 
 snipet szukaj - 
-testowanie szukaj
+
 
 
 dodatkowy controller ktory pobiera repository 

@@ -69,8 +69,12 @@ class WyswietlArtykulController extends Controller
         $router = $this->get('router');
         $trescHTML = $artykul->zwrocHTML( $router );
 
-        return $this->render( 'PawelWikiBundle:Default:artykul_bez_escaping.html.twig', array('tytul' => $artykul->odczytajTytul(),
-            'tresc' =>  $trescHTML  )) ;        
+        $tytul = $artykul->odczytajTytul();
+        //pozbadz sie podkreslenia z tytulu
+        $tytul_naglowek =  str_replace("_", " ", $tytul); 
+
+        return $this->render( 'PawelWikiBundle:Default:artykul_bez_escaping.html.twig', array('tytul' => $tytul,
+            'tytul_naglowek' => $tytul_naglowek, 'tresc' =>  $trescHTML  )) ;        
     }    
 
     private function wyswietlWiadomosc( $wiadomosc, $tytul_strony = "PawelWiki Wiadomosc")
