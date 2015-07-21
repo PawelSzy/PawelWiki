@@ -8,7 +8,7 @@
 			<br>
 			<div><h3>Stara wersja artykulu:</h3></div>
 			<div>
-				{{ artykul.zwrocHTML }}
+				{{ render(controller("PawelWikiBundle:WyswietlArtykul:wyswietlArtykulPozaBaza", {'artykul': artykul} )) }}
 			</div>
 
      {% endblock %}

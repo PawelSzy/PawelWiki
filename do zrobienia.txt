@@ -2,7 +2,6 @@ popraw htacces w web directory
 
 Przeniesc na serwer
 popraw URL bez podkreslenia "_"
-Blady przy malym obrazie
 
 snipet szukaj - 
 
